@@ -1,3 +1,6 @@
+/**
+ * StashMap 프로젝트 전체 공통 설정
+ */
 object StashMapConfig {
     const val applicationId = "com.jayys.stashmap"
 
