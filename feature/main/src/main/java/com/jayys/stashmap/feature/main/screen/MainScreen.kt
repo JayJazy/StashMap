@@ -20,8 +20,7 @@ fun MainScreen(startDestination: NavKey = HomeRoute) {
     val backStack = rememberNavBackStack(startDestination)
 
     Scaffold(
-        modifier = Modifier
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         bottomBar = {
             MainBottomBar(backStack = backStack)
         }
