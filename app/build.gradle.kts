@@ -6,28 +6,16 @@ android {
     namespace = "com.jayys.stashmap"
 }
 
-dependencies {
-    // Core modules
-    implementation(project(":core:designsystem"))
+applyFeatureDependencies()
 
+dependencies {
     // Feature modules
     implementation(project(":feature:main"))
     implementation(project(":feature:home"))
     implementation(project(":feature:stash"))
     implementation(project(":feature:profile"))
 
-    implementation(libs.androidx.core.ktx)
+    // App specific dependencies
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.navigation3.runtime)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    debugImplementation(libs.androidx.compose.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
 }

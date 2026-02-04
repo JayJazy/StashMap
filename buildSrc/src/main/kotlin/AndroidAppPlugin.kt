@@ -18,7 +18,7 @@ class AndroidAppPlugin : Plugin<Project> {
             defaultConfig {
                 applicationId = StashMapConfig.applicationId
                 minSdk = StashMapConfig.minSdk
-                targetSdk = StashMapConfig.compileSdk
+                targetSdk = StashMapConfig.targetSdk
                 versionCode = StashMapConfig.versionCode
                 versionName = StashMapConfig.versionName
 
