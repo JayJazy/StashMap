@@ -11,6 +11,7 @@ class AndroidLibraryComposePlugin : Plugin<Project> {
         project.pluginManager.apply("com.android.library")
         project.pluginManager.apply("org.jetbrains.kotlin.android")
         project.pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
+        project.pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
 
         project.extensions.configure(LibraryExtension::class.java) {
             compileSdk = StashMapConfig.compileSdk

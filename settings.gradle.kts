@@ -30,3 +30,9 @@ include(":core:data")
 include(":core:database")
 include(":core:ui")
 include(":core:designsystem")
+
+// Feature modules
+include(":feature:main")
+include(":feature:home")
+include(":feature:stash")
+include(":feature:profile")

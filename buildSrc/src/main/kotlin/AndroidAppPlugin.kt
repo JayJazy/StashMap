@@ -3,7 +3,6 @@ import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 class AndroidAppPlugin : Plugin<Project> {
@@ -11,6 +10,7 @@ class AndroidAppPlugin : Plugin<Project> {
         project.pluginManager.apply("com.android.application")
         project.pluginManager.apply("org.jetbrains.kotlin.android")
         project.pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
+        project.pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
 
         project.extensions.configure(BaseAppModuleExtension::class.java) {
             compileSdk = StashMapConfig.compileSdk
