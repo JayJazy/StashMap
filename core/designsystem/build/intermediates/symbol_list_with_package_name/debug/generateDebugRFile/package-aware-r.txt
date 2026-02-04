@@ -1,1 +1,0 @@
-com.jayys.stashmap.core.designsystem
