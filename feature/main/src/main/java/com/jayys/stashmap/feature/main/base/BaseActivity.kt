@@ -23,7 +23,7 @@ import com.jayys.stashmap.core.designsystem.theme.StashMapTheme
  * ```kotlin
  * class MainActivity : BaseActivity() {
  *     @Composable
- *     override fun Content() {
+ *     override fun Screen() {
  *         MainScreen()
  *     }
  * }
@@ -41,7 +41,7 @@ import com.jayys.stashmap.core.designsystem.theme.StashMapTheme
  *     }
  *
  *     @Composable
- *     override fun Content() {
+ *     override fun Screen() {
  *         VideoPlayerScreen()
  *     }
  * }
@@ -56,7 +56,7 @@ import com.jayys.stashmap.core.designsystem.theme.StashMapTheme
  *     }
  *
  *     @Composable
- *     override fun Content() {
+ *     override fun Screen() {
  *         ImmersiveGameScreen()
  *     }
  * }
@@ -71,8 +71,8 @@ import com.jayys.stashmap.core.designsystem.theme.StashMapTheme
  *     }
  *
  *     @Composable
- *     override fun Content() {
- *         BottomSheetContent()
+ *     override fun Screen() {
+ *         BottomSheetScreen()
  *     }
  * }
  * ```
@@ -89,7 +89,7 @@ import com.jayys.stashmap.core.designsystem.theme.StashMapTheme
  *     }
  *
  *     @Composable
- *     override fun Content() {
+ *     override fun Screen() {
  *         ChatScreen()
  *     }
  * }
@@ -127,13 +127,10 @@ abstract class BaseActivity : ComponentActivity() {
     }
 
     private fun Modifier.applyWindowInsets(insets: List<WindowInsets>): Modifier {
-        var modifier = this
-        insets.forEach { inset ->
-            modifier = modifier.windowInsetsPadding(inset)
+        return insets.fold(this) { modifier, inset ->
+            modifier.windowInsetsPadding(inset)
         }
-        return modifier
     }
-
     @Composable
     abstract fun Screen()
 }
