@@ -7,6 +7,11 @@ import com.jayys.stashmap.feature.main.screen.MainScreen
 class MainActivity : BaseActivity() {
     @Composable
     override fun Screen() {
-        MainScreen()
+        MainScreen(
+            isDarkMode = isDarkMode,
+            onDarkModeChange = {
+                enabled -> setDarkMode(enabled)
+            }
+        )
     }
 }

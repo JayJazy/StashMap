@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
@@ -16,7 +17,11 @@ import com.jayys.stashmap.feature.profile.profileEntries
 import com.jayys.stashmap.feature.stash.stashEntries
 
 @Composable
-fun MainScreen(startDestination: NavKey = HomeRoute) {
+fun MainScreen(
+    isDarkMode: MutableState<Boolean>,
+    onDarkModeChange: (Boolean) -> Unit,
+    startDestination: NavKey = HomeRoute
+) {
     val backStack = rememberNavBackStack(startDestination)
 
     Scaffold(
@@ -35,7 +40,7 @@ fun MainScreen(startDestination: NavKey = HomeRoute) {
             entryProvider = entryProvider {
                 homeEntries()
                 stashEntries()
-                profileEntries()
+                profileEntries(isDarkMode, onDarkModeChange)
             },
             modifier = Modifier.padding(innerPadding)
         )

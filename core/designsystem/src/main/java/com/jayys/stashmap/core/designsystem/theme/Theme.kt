@@ -7,7 +7,5 @@ import androidx.compose.runtime.Composable
 fun StashMapTheme(
     content: @Composable () -> Unit
 ) {
-    MaterialTheme(
-        content = content
-    )
+    MaterialTheme(content = content)
 }
