@@ -22,6 +22,7 @@ private object FeatureLibraries {
     // Implementation dependencies
     val libraries = listOf(
         "androidx.core.ktx",
+        "androidx.appcompat",
         "androidx.compose.ui",
         "androidx.compose.ui.graphics",
         "androidx.compose.ui.tooling.preview",

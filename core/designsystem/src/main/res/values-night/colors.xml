@@ -115,6 +115,7 @@
     <color name="teal10">@color/teal_100</color>        <!-- Dark: 가장 연함 (Light: 가장 진함) -->
 
     <!-- Common Colors (공통 색상) - Light와 반대 -->
+    <color name="bg_color">@color/gray_800</color>      <!-- Dark: 진한 회색 (Light: 검정) -->
     <color name="base_color">@color/white</color>       <!-- Dark: 흰색 (Light: 검정) -->
 
 </resources>
