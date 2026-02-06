@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">StashMap</string>
+
+    <!-- Common -->
+    <string name="favorite">다시 먹을래요</string>
+    <string name="average">보통이에요</string>
+    <string name="avoid">다신 안 먹을래요</string>
+
+    <!-- Navigation -->
+    <string name="profile">프로필</string>
+    <string name="settings">설정</string>
+    <string name="theme">테마</string>
+
+    <!-- Profile -->
+    <string name="activity_stats">활동 분석</string>
+    <string name="preferred_category">자주 먹는 음식</string>
+    <string name="restaurants_this_month">이번 달 등록</string>
+    <string name="preferences">설정</string>
+    <string name="language">언어</string>
+    <string name="system_theme">테마</string>
+    <string name="informateion">정보</string>
+    <string name="contact">문의하기</string>
+    <string name="version">버전 : %s</string>
+    <string name="light_mode">라이트 모드</string>
+    <string name="dark_mode">다크 모드</string>
+</resources>

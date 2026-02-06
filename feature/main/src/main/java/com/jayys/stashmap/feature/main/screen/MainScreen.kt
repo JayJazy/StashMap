@@ -13,7 +13,7 @@ import androidx.navigation3.ui.NavDisplay
 import com.jayys.stashmap.feature.home.HomeRoute
 import com.jayys.stashmap.feature.home.homeEntries
 import com.jayys.stashmap.feature.main.ui.MainBottomBar
-import com.jayys.stashmap.feature.profile.profileEntries
+import com.jayys.stashmap.feature.profile.navigation.profileEntries
 import com.jayys.stashmap.feature.stash.stashEntries
 
 @Composable
@@ -23,6 +23,11 @@ fun MainScreen(
     startDestination: NavKey = HomeRoute
 ) {
     val backStack = rememberNavBackStack(startDestination)
+    val onBack = {
+        if (backStack.size > 1) {
+            backStack.removeLastOrNull()
+        }
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -32,15 +37,11 @@ fun MainScreen(
     ) { innerPadding ->
         NavDisplay(
             backStack = backStack,
-            onBack = {
-                if (backStack.size > 1) {
-                    backStack.removeLastOrNull()
-                }
-            },
+            onBack = onBack,
             entryProvider = entryProvider {
-                homeEntries()
-                stashEntries()
-                profileEntries(isDarkMode, onDarkModeChange)
+                homeEntries(onBack)
+                stashEntries(onBack)
+                profileEntries(isDarkMode, onDarkModeChange, onBack, backStack)
             },
             modifier = Modifier.padding(innerPadding)
         )
