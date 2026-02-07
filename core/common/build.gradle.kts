@@ -1,5 +1,14 @@
 plugins {
-    id("KotlinJvmPlugin")
+    id("AndroidLibraryPlugin")
 }
 
-applyKotlinJvmCoreDependencies()
+android {
+    namespace = "com.jayys.stashmap.core.common"
+}
+
+applyAndroidCoreDependencies()
+
+dependencies {
+    implementation(project(":core:model"))
+    implementation(project(":core:domain"))
+}

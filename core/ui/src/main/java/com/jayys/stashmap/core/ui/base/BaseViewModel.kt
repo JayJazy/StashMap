@@ -1,4 +1,4 @@
-package com.jayys.stashmap.feature.main.base
+package com.jayys.stashmap.core.ui.base
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

@@ -1,20 +1,45 @@
 package com.jayys.stashmap.core.data.di
 
+import android.content.Context
+import android.content.SharedPreferences
+import com.jayys.stashmap.core.data.language.LanguageRepositoryImpl
 import com.jayys.stashmap.core.data.sharedpreferences.SharedPreferenceStorageImpl
+import com.jayys.stashmap.core.domain.language.LanguageRepository
 import com.jayys.stashmap.core.domain.sharedpreferences.SharedPreferenceStorage
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class DataModule {
+object DataModule {
 
-    @Binds
+    private const val PREFERENCE_APP_KEY: String = "STASH_MAP_PREFERENCE_APP_KEY"
+
+    @Provides
     @Singleton
-    abstract fun bindPreferenceStorage(
-        sharedPreferDataSource: SharedPreferenceStorageImpl
-    ): SharedPreferenceStorage
+    fun provideSharedPreferences(
+        @ApplicationContext context: Context
+    ): SharedPreferences {
+        return context.getSharedPreferences(PREFERENCE_APP_KEY, Context.MODE_PRIVATE)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferenceStorage(
+        sharedPreferences: SharedPreferences
+    ): SharedPreferenceStorage {
+        return SharedPreferenceStorageImpl(sharedPreferences)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLanguageRepository(
+        sharedPreferenceStorage: SharedPreferenceStorage
+    ): LanguageRepository {
+        return LanguageRepositoryImpl(sharedPreferenceStorage)
+    }
 }

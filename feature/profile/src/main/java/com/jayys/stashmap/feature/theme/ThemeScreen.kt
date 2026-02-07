@@ -29,8 +29,6 @@ import com.jayys.stashmap.core.designsystem.theme.typography
 @Composable
 fun ThemeScreen(
     onBack: () -> Unit,
-    isDarkMode: Boolean,
-    onDarkModeChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -77,8 +75,8 @@ fun ThemeScreen(
                     )
                 ) {
                     RadioButton(
-                        selected = !isDarkMode,
-                        onClick = { onDarkModeChange(false) },
+                        selected = false,
+                        onClick = { },
                         modifier = Modifier.size(30.dp)
                     )
 
@@ -113,8 +111,8 @@ fun ThemeScreen(
                     )
                 ) {
                     RadioButton(
-                        selected = isDarkMode,
-                        onClick = { onDarkModeChange(true) },
+                        selected = false,
+                        onClick = { },
                         modifier = Modifier.size(30.dp)
                     )
 
@@ -132,8 +130,6 @@ fun ThemeScreen(
 @Composable
 private fun PreviewThemeScreen() {
     ThemeScreen(
-        onBack = {},
-        isDarkMode = false,
-        onDarkModeChange = {}
+        onBack = {}
     )
 }

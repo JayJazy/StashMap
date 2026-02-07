@@ -1,11 +1,11 @@
-package com.jayys.stashmap.feature.main.base
+package com.jayys.stashmap.core.ui.base
 
+import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,11 +13,9 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
+import com.jayys.stashmap.core.common.language.LanguageHelper
 import com.jayys.stashmap.core.designsystem.theme.StashMapTheme
-import com.jayys.stashmap.feature.main.DarkModeManager
 
 /**
  * 모든 Activity의 기본 클래스
@@ -102,22 +100,8 @@ import com.jayys.stashmap.feature.main.DarkModeManager
  */
 abstract class BaseActivity : ComponentActivity() {
 
-    private val _isDarkMode = mutableStateOf(DarkModeManager.isDarkMode)
-    val isDarkMode: MutableState<Boolean> get() = _isDarkMode
-
-    /**
-     * 다크 모드를 설정하고 즉시 적용합니다.
-     * AppCompatDelegate를 사용하여 전체 앱의 테마를 변경합니다.
-     */
-    fun setDarkMode(enabled: Boolean) {
-        // 싱글톤에 저장
-        DarkModeManager.isDarkMode = enabled
-        _isDarkMode.value = enabled
-
-        // AppCompatDelegate를 사용하여 테마 변경
-        AppCompatDelegate.setDefaultNightMode(
-            if (enabled) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
-        )
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LanguageHelper.applyLanguage(newBase))
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -142,13 +126,13 @@ abstract class BaseActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         // 싱글톤에서 저장된 값 복원 및 초기 테마 설정
-        _isDarkMode.value = DarkModeManager.isDarkMode
+        /*_isDarkMode.value = DarkModeManager.isDarkMode
         AppCompatDelegate.setDefaultNightMode(
             if (_isDarkMode.value) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
-        )
+        )*/
 
         setContent {
-            StashMapTheme(darkTheme = _isDarkMode.value) {
+            StashMapTheme {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
