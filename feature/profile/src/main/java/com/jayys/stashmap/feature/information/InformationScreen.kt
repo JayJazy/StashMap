@@ -2,15 +2,15 @@ package com.jayys.stashmap.feature.information
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.jayys.stashmap.component.SMTopBar
 import com.jayys.stashmap.core.designsystem.R
+import com.jayys.stashmap.core.designsystem.theme.stashColors
 
 @Composable
 fun InformationScreen(
@@ -24,7 +24,7 @@ fun InformationScreen(
                 onClick = onBack,
             )
         },
-        containerColor = colorResource(id = R.color.bg_color)
+        containerColor = MaterialTheme.stashColors.bgColor
     ) { paddingValues ->
         Column(
             modifier = modifier

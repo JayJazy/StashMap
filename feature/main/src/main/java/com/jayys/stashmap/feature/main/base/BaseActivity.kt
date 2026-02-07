@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -106,23 +107,17 @@ abstract class BaseActivity : ComponentActivity() {
 
     /**
      * 다크 모드를 설정하고 즉시 적용합니다.
-     * Deprecated이지만 가장 안정적으로 작동하는 방법입니다.
+     * AppCompatDelegate를 사용하여 전체 앱의 테마를 변경합니다.
      */
     fun setDarkMode(enabled: Boolean) {
         // 싱글톤에 저장
         DarkModeManager.isDarkMode = enabled
         _isDarkMode.value = enabled
 
-        // Configuration 변경 (Deprecated이지만 안정적)
-        val newConfig = Configuration(resources.configuration)
-        newConfig.uiMode = if (enabled) {
-            (newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK.inv()) or Configuration.UI_MODE_NIGHT_YES
-        } else {
-            (newConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK.inv()) or Configuration.UI_MODE_NIGHT_NO
-        }
-
-        @Suppress("DEPRECATION")
-        resources.updateConfiguration(newConfig, resources.displayMetrics)
+        // AppCompatDelegate를 사용하여 테마 변경
+        AppCompatDelegate.setDefaultNightMode(
+            if (enabled) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+        )
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -146,21 +141,14 @@ abstract class BaseActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // 싱글톤에서 저장된 값 복원
+        // 싱글톤에서 저장된 값 복원 및 초기 테마 설정
         _isDarkMode.value = DarkModeManager.isDarkMode
-
-        // 초기 Configuration 설정
-        val initialConfig = Configuration(resources.configuration)
-        initialConfig.uiMode = if (_isDarkMode.value) {
-            (initialConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK.inv()) or Configuration.UI_MODE_NIGHT_YES
-        } else {
-            (initialConfig.uiMode and Configuration.UI_MODE_NIGHT_MASK.inv()) or Configuration.UI_MODE_NIGHT_NO
-        }
-        @Suppress("DEPRECATION")
-        resources.updateConfiguration(initialConfig, resources.displayMetrics)
+        AppCompatDelegate.setDefaultNightMode(
+            if (_isDarkMode.value) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+        )
 
         setContent {
-            StashMapTheme {
+            StashMapTheme(darkTheme = _isDarkMode.value) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()

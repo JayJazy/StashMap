@@ -7,11 +7,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -19,6 +19,7 @@ import com.jayys.stashmap.compose.SpacerWidth
 import com.jayys.stashmap.compose.clickableNoRipple
 import com.jayys.stashmap.core.designsystem.R
 import com.jayys.stashmap.core.designsystem.theme.TextStyleEnum
+import com.jayys.stashmap.core.designsystem.theme.stashColors
 import com.jayys.stashmap.core.designsystem.theme.typography
 
 @Composable
@@ -29,7 +30,7 @@ fun SMTopBar(
 ) {
     Row(
         modifier = modifier
-            .background(color = colorResource(id = R.color.bg_color))
+            .background(color = MaterialTheme.stashColors.bgColor)
             .fillMaxWidth()
             .height(64.dp)
             .padding(start = 20.dp),
@@ -39,7 +40,7 @@ fun SMTopBar(
         Icon(
             painter = painterResource(id = R.drawable.ico_arrow_back),
             contentDescription = "",
-            tint = colorResource(id = R.color.base_color),
+            tint = MaterialTheme.stashColors.baseColor,
             modifier = Modifier.clickableNoRipple { onClick() }
         )
 

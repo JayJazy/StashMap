@@ -8,11 +8,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,12 +21,11 @@ import com.jayys.stashmap.component.HDivider
 import com.jayys.stashmap.component.SMSettingItem
 import com.jayys.stashmap.core.designsystem.R
 import com.jayys.stashmap.core.designsystem.theme.TextStyleEnum
+import com.jayys.stashmap.core.designsystem.theme.stashColors
 import com.jayys.stashmap.core.designsystem.theme.typography
 
 @Composable
 fun PreferenceItem(
-    isDarkMode: Boolean,
-    onDarkModeChange: (Boolean) -> Unit,
     onLanguageClick: () -> Unit,
     onThemeClick: () -> Unit,
     onInformationClick: () -> Unit,
@@ -37,11 +36,11 @@ fun PreferenceItem(
         modifier = modifier
             .border(
                 width = 1.dp,
-                color = colorResource(id = R.color.gray2),
+                color = MaterialTheme.stashColors.grayLight2,
                 shape = RoundedCornerShape(16.dp)
             )
             .background(
-                color = colorResource(id = R.color.bg_color),
+                color = MaterialTheme.stashColors.bgColor,
                 shape = RoundedCornerShape(16.dp)
             )
             .fillMaxWidth()
@@ -49,6 +48,7 @@ fun PreferenceItem(
         SMSettingItem(
             title = stringResource(id = R.string.language),
             icon = painterResource(id = R.drawable.ico_globe),
+            iconTint = MaterialTheme.stashColors.greenDark1,
             onClick = onLanguageClick,
             trailing = {
                 Row(
@@ -59,14 +59,14 @@ fun PreferenceItem(
                     Text(
                         text = "English(US)",
                         style = typography(TextStyleEnum.Body3).copy(
-                            colorResource(id = R.color.gray3)
+                            color = MaterialTheme.stashColors.grayLight2
                         )
                     )
 
                     Icon(
                         painter = painterResource(id = R.drawable.ico_arrow_right),
                         contentDescription = "",
-                        tint = colorResource(id = R.color.gray2)
+                        tint = MaterialTheme.stashColors.grayDark1
                     )
                 }
             }
@@ -77,12 +77,13 @@ fun PreferenceItem(
         SMSettingItem(
             title = stringResource(id = R.string.system_theme),
             icon = painterResource(id = R.drawable.ico_moon),
+            iconTint = MaterialTheme.stashColors.yellowLight2,
             onClick = onThemeClick,
             trailing = {
                 Icon(
                     painter = painterResource(id = R.drawable.ico_arrow_right),
                     contentDescription = "",
-                    tint = colorResource(id = R.color.gray2)
+                    tint = MaterialTheme.stashColors.grayDark1
                 )
             }
         )
@@ -92,12 +93,13 @@ fun PreferenceItem(
         SMSettingItem(
             title = stringResource(id = R.string.informateion),
             icon = painterResource(id = R.drawable.ico_information),
+            iconTint = MaterialTheme.stashColors.grayDark1,
             onClick = onInformationClick,
             trailing = {
                 Icon(
                     painter = painterResource(id = R.drawable.ico_arrow_right),
                     contentDescription = "",
-                    tint = colorResource(id = R.color.gray2)
+                    tint = MaterialTheme.stashColors.grayDark1
                 )
             }
         )
@@ -107,12 +109,13 @@ fun PreferenceItem(
         SMSettingItem(
             title = stringResource(id = R.string.contact),
             icon = painterResource(id = R.drawable.ico_help),
+            iconTint = MaterialTheme.stashColors.grayDark1,
             onClick = onContactClick,
             trailing = {
                 Icon(
                     painter = painterResource(id = R.drawable.ico_arrow_right),
                     contentDescription = "",
-                    tint = colorResource(id = R.color.gray2)
+                    tint = MaterialTheme.stashColors.grayDark1
                 )
             }
         )
@@ -123,8 +126,6 @@ fun PreferenceItem(
 @Composable
 private fun PreviewPreferenceItem() {
     PreferenceItem(
-        isDarkMode = false,
-        onDarkModeChange = {},
         onLanguageClick = {},
         onThemeClick = {},
         onInformationClick = {},

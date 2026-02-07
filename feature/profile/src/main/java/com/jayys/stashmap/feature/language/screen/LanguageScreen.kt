@@ -4,15 +4,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jayys.stashmap.component.SMTopBar
 import com.jayys.stashmap.core.designsystem.R
+import com.jayys.stashmap.core.designsystem.theme.stashColors
 import com.jayys.stashmap.feature.language.ui.LanguageSearchBar
 import com.jayys.stashmap.feature.language.ui.LanguageSelectionItem
 
@@ -28,7 +29,7 @@ fun LanguageScreen(
                 onClick = onBack,
             )
         },
-        containerColor = colorResource(id = R.color.bg_color)
+        containerColor = MaterialTheme.stashColors.bgColor
     ) { paddingValues ->
         Column(
             modifier = modifier

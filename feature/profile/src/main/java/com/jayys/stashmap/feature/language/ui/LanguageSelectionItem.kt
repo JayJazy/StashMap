@@ -7,15 +7,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jayys.stashmap.component.HDivider
 import com.jayys.stashmap.component.SMSettingItem
 import com.jayys.stashmap.core.designsystem.R
+import com.jayys.stashmap.core.designsystem.theme.stashColors
 
 @Composable
 fun LanguageSelectionItem(
@@ -25,11 +26,11 @@ fun LanguageSelectionItem(
         modifier = modifier
             .border(
                 width = 1.dp,
-                color = colorResource(id = R.color.gray2),
+                color = MaterialTheme.stashColors.grayLight2,
                 shape = RoundedCornerShape(16.dp)
             )
             .background(
-                color = colorResource(id = R.color.bg_color),
+                color = MaterialTheme.stashColors.bgColor,
                 shape = RoundedCornerShape(16.dp)
             )
             .fillMaxWidth()
@@ -38,6 +39,7 @@ fun LanguageSelectionItem(
             SMSettingItem(
                 title = "$item $index",
                 icon = painterResource(id = R.drawable.ico_globe),
+                iconTint = MaterialTheme.stashColors.greenDark1,
                 onClick = { },
                 trailing = {
                     Checkbox(
