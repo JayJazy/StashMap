@@ -7,7 +7,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SharedPreferDataSourceImpl @Inject constructor(
+class SharedPreferenceStorageImpl @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) : SharedPreferenceStorage {
 
@@ -19,24 +19,24 @@ class SharedPreferDataSourceImpl @Inject constructor(
         sharedPreferences.edit { putString(key, value) }
     }
 
-    override fun getInt(key: String): Int {
-        return sharedPreferences.getInt(key, -1)
+    override fun getInt(key: String): Int? {
+        return if (sharedPreferences.contains(key)) sharedPreferences.getInt(key, -1) else null
     }
 
     override fun putInt(key: String, value: Int) {
         sharedPreferences.edit { putInt(key, value) }
     }
 
-    override fun getBoolean(key: String): Boolean {
-        return sharedPreferences.getBoolean(key, false)
+    override fun getBoolean(key: String): Boolean? {
+        return if (sharedPreferences.contains(key)) sharedPreferences.getBoolean(key, false) else null
     }
 
     override fun putBoolean(key: String, value: Boolean) {
         sharedPreferences.edit { putBoolean(key, value) }
     }
 
-    override fun getLong(key: String): Long {
-        return sharedPreferences.getLong(key, -1L)
+    override fun getLong(key: String): Long? {
+        return if (sharedPreferences.contains(key)) sharedPreferences.getLong(key, -1L) else null
     }
 
     override fun putLong(key: String, value: Long) {

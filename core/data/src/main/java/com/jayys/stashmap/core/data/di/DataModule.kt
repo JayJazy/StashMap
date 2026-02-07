@@ -1,6 +1,6 @@
 package com.jayys.stashmap.core.data.di
 
-import com.jayys.stashmap.core.data.sharedpreferences.SharedPreferDataSourceImpl
+import com.jayys.stashmap.core.data.sharedpreferences.SharedPreferenceStorageImpl
 import com.jayys.stashmap.core.domain.sharedpreferences.SharedPreferenceStorage
 import dagger.Binds
 import dagger.Module
@@ -15,6 +15,6 @@ abstract class DataModule {
     @Binds
     @Singleton
     abstract fun bindPreferenceStorage(
-        sharedPreferDataSource: SharedPreferDataSourceImpl
+        sharedPreferDataSource: SharedPreferenceStorageImpl
     ): SharedPreferenceStorage
 }
