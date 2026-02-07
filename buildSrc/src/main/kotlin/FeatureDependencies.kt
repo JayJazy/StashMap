@@ -29,7 +29,14 @@ private object FeatureLibraries {
         "androidx.compose.material3",
         "androidx.navigation3.runtime",
         "androidx.navigation3.ui",
-        "kotlinx.serialization.core"
+        "kotlinx.serialization.core",
+        "hilt.android",
+        "hilt.navigation.compose"
+    )
+
+    // KSP/Kapt dependencies
+    val kspLibraries = listOf(
+        "hilt.compiler"
     )
 
     // Test dependencies
@@ -76,6 +83,11 @@ fun Project.applyFeatureDependencies() {
         // Regular library dependencies
         FeatureLibraries.libraries.forEach { libraryKey ->
             add("implementation", libs.findLibrary(libraryKey).get())
+        }
+
+        // KSP/Kapt dependencies
+        FeatureLibraries.kspLibraries.forEach { libraryKey ->
+            add("ksp", libs.findLibrary(libraryKey).get())
         }
 
         // Test dependencies

@@ -19,7 +19,13 @@ private object AndroidComposeCoreLibraries {
         "androidx.compose.ui",
         "androidx.compose.ui.graphics",
         "androidx.compose.ui.tooling.preview",
-        "androidx.compose.material3"
+        "androidx.compose.material3",
+        "hilt.android"
+    )
+
+    // KSP/Kapt dependencies
+    val kspLibraries = listOf(
+        "hilt.compiler"
     )
 
     // Test dependencies
@@ -55,6 +61,11 @@ fun Project.applyAndroidComposeCoreDependencies() {
         // Regular library dependencies
         AndroidComposeCoreLibraries.libraries.forEach { libraryKey ->
             add("implementation", libs.findLibrary(libraryKey).get())
+        }
+
+        // KSP/Kapt dependencies
+        AndroidComposeCoreLibraries.kspLibraries.forEach { libraryKey ->
+            add("ksp", libs.findLibrary(libraryKey).get())
         }
 
         // Test dependencies
