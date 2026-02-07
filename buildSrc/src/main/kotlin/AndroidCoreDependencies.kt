@@ -10,7 +10,13 @@ import org.gradle.kotlin.dsl.getByType
 private object AndroidCoreLibraries {
     // Implementation dependencies
     val libraries = listOf(
-        "androidx.core.ktx"
+        "androidx.core.ktx",
+        "hilt.android"
+    )
+
+    // KSP/Kapt dependencies
+    val kspLibraries = listOf(
+        "hilt.compiler"
     )
 
     // Test dependencies
@@ -36,6 +42,11 @@ fun Project.applyAndroidCoreDependencies() {
         // Regular library dependencies
         AndroidCoreLibraries.libraries.forEach { libraryKey ->
             add("implementation", libs.findLibrary(libraryKey).get())
+        }
+
+        // KSP/Kapt dependencies
+        AndroidCoreLibraries.kspLibraries.forEach { libraryKey ->
+            add("ksp", libs.findLibrary(libraryKey).get())
         }
 
         // Test dependencies

@@ -9,6 +9,8 @@ class AndroidLibraryPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         project.pluginManager.apply("com.android.library")
         project.pluginManager.apply("org.jetbrains.kotlin.android")
+        project.pluginManager.apply("com.google.devtools.ksp")
+        project.pluginManager.apply("com.google.dagger.hilt.android")
 
         project.extensions.configure(LibraryExtension::class.java) {
             compileSdk = StashMapConfig.compileSdk
