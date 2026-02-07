@@ -1,5 +1,7 @@
 package com.jayys.stashmap.component
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,13 +12,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.jayys.stashmap.compose.SpacerHeight
 import com.jayys.stashmap.core.designsystem.R
 import com.jayys.stashmap.core.designsystem.theme.TextStyleEnum
+import com.jayys.stashmap.core.designsystem.theme.stashColors
 import com.jayys.stashmap.core.designsystem.theme.typography
 
 @Composable
@@ -36,18 +39,25 @@ fun SMBaseCard(
     modifier: Modifier = Modifier,
     height: Dp = 78.dp,
     elevation: Dp = 4.dp,
-    cardColor: Color = colorResource(id = R.color.bg_color)
+    cardColor: Color = MaterialTheme.stashColors.bgColor
 ) {
+    val isDarkMode = isSystemInDarkTheme()
+
     Card(
         modifier = modifier
             .height(height),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = cardColor
+            containerColor = cardColor,
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = elevation
-        )
+        ),
+        border = if (isDarkMode) {
+            BorderStroke(1.dp, MaterialTheme.stashColors.grayLight2.copy(alpha = 0.2f))
+        } else {
+            null
+        }
     ) {
         Column(
             modifier = Modifier
@@ -96,6 +106,6 @@ private fun PreviewSMBaseCard() {
         title = "Favorites",
         content = "9999",
         icon = painterResource(id = R.drawable.ico_favorite),
-        iconTint = colorResource(id = R.color.red3)
+        iconTint = MaterialTheme.stashColors.redDark1
     )
 }

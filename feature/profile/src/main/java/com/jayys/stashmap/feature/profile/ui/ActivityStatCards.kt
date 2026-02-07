@@ -4,16 +4,17 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jayys.stashmap.component.SMBaseCard
 import com.jayys.stashmap.core.designsystem.R
+import com.jayys.stashmap.core.designsystem.theme.stashColors
 
 @Composable
 fun ActivityStatCards(
@@ -34,7 +35,7 @@ fun ActivityStatCards(
                 title = stringResource(id = R.string.preferred_category),
                 content = topCategory,
                 icon = painterResource(id = R.drawable.ico_restaurant),
-                iconTint = colorResource(id = R.color.orange3),
+                iconTint = MaterialTheme.stashColors.orangeLight2,
                 height = 78.dp,
                 modifier = Modifier.weight(1f)
             )
@@ -43,7 +44,7 @@ fun ActivityStatCards(
                 title = stringResource(id = R.string.restaurants_this_month),
                 content = addedThisMonth,
                 icon = painterResource(id = R.drawable.ico_calendar),
-                iconTint = colorResource(id = R.color.green4),
+                iconTint = MaterialTheme.stashColors.greenLight2,
                 height = 78.dp,
                 modifier = Modifier.weight(1f)
             )

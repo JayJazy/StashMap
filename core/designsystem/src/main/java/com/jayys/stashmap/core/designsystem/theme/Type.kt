@@ -1,5 +1,6 @@
 package com.jayys.stashmap.core.designsystem.theme
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
@@ -39,7 +40,7 @@ val Int.nonScaledSp
 
 @Composable
 fun typography(textStyle: TextStyleEnum): TextStyle {
-    val baseColor = colorResource(R.color.base_color)
+    val baseColor = MaterialTheme.stashColors.baseColor
 
     return when (textStyle) {
         TextStyleEnum.Title1 -> TextStyle(

@@ -17,12 +17,10 @@ fun EntryProviderScope<NavKey>.profileEntries(
 ) {
     entry<ProfileRoute> { _ ->
         ProfileScreen(
-            isDarkMode = isDarkMode,
-            onDarkModeChange = onDarkModeChange,
             onLanguageClick = { backStack.add(LanguageRoute) },
             onThemeClick = { backStack.add(ThemeRoute) },
             onInformationClick = { backStack.add(InformationRoute) },
-            onContactClick = {  }
+            onContactClick = { }
         )
     }
 
@@ -35,6 +33,10 @@ fun EntryProviderScope<NavKey>.profileEntries(
     }
 
     entry<ThemeRoute> { _ ->
-        ThemeScreen(onBack = onBack)
+        ThemeScreen(
+            onBack = onBack,
+            isDarkMode = isDarkMode.value,
+            onDarkModeChange = onDarkModeChange
+        )
     }
 }
