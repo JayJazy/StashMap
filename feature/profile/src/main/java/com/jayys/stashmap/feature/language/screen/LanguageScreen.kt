@@ -22,6 +22,7 @@ import com.jayys.stashmap.component.SMTopBar
 import com.jayys.stashmap.core.designsystem.R
 import com.jayys.stashmap.core.designsystem.theme.stashColors
 import com.jayys.stashmap.core.model.StashMapLanguage
+import com.jayys.stashmap.feature.language.model.LanguageUiState
 import com.jayys.stashmap.feature.language.ui.LanguageSearchBar
 import com.jayys.stashmap.feature.language.ui.LanguageSelectionItem
 import com.jayys.stashmap.feature.language.viewmodel.LanguageViewModel
@@ -32,8 +33,27 @@ fun LanguageScreen(
     modifier: Modifier = Modifier,
     viewModel: LanguageViewModel = hiltViewModel()
 ) {
-    val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LanguageContent(
+        uiState = uiState,
+        onSearchQueryChange = viewModel::onSearchQueryChange,
+        onLanguageSelect = viewModel::selectLanguage,
+        onBack = onBack,
+        modifier = modifier
+    )
+
+}
+
+@Composable
+fun LanguageContent(
+    uiState: LanguageUiState,
+    onSearchQueryChange: (String) -> Unit,
+    onLanguageSelect: (StashMapLanguage) -> Unit,
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
@@ -55,7 +75,7 @@ fun LanguageScreen(
         ) {
             LanguageSearchBar(
                 searchQuery = uiState.searchQuery,
-                onSearchQueryChange = viewModel::onSearchQueryChange
+                onSearchQueryChange = onSearchQueryChange
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -65,7 +85,7 @@ fun LanguageScreen(
                 selectedLanguage = uiState.selectedLanguage,
                 onLanguageSelect = { language ->
                     if (language != uiState.selectedLanguage) {
-                        viewModel.selectLanguage(language)
+                        onLanguageSelect(language)
                         (context as? Activity)?.recreate()
                     }
                 }
@@ -76,6 +96,15 @@ fun LanguageScreen(
 
 @Preview(showBackground = true)
 @Composable
-private fun PreviewLanguageScreen() {
-    LanguageScreen(onBack = {})
+private fun PreviewLanguageContent() {
+    LanguageContent(
+        uiState = LanguageUiState(
+            searchQuery = "",
+            selectedLanguage = StashMapLanguage.KOREAN,
+            availableLanguages = StashMapLanguage.entries
+        ),
+        onBack = {},
+        onSearchQueryChange = {},
+        onLanguageSelect = {},
+    )
 }

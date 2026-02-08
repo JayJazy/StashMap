@@ -1,7 +1,6 @@
-package com.jayys.stashmap.core.ui.base
+package com.jayys.stashmap.base
 
 import android.content.Context
-import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,12 +12,10 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jayys.stashmap.core.common.local.LocalManager
-import com.jayys.stashmap.core.designsystem.theme.LocalIsDarkMode
 import com.jayys.stashmap.core.designsystem.theme.StashMapTheme
 
 /**
@@ -108,11 +105,6 @@ abstract class BaseActivity : ComponentActivity() {
         super.attachBaseContext(LocalManager.applyLanguage(newBase))
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        // Configuration 변경 시 Compose가 자동으로 recompose
-    }
-
     /**
      * 패딩을 적용할 WindowInsets를 반환
      *
@@ -130,6 +122,7 @@ abstract class BaseActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         LocalManager.initTheme(this)
+        LocalManager.initLanguage(this)
 
         setContent {
             val isDarkMode by LocalManager.isDarkMode.collectAsStateWithLifecycle()

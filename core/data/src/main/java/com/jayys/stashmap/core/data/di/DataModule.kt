@@ -2,9 +2,7 @@ package com.jayys.stashmap.core.data.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.jayys.stashmap.core.data.language.LanguageRepositoryImpl
 import com.jayys.stashmap.core.data.sharedpreferences.SharedPreferenceStorageImpl
-import com.jayys.stashmap.core.domain.language.LanguageRepository
 import com.jayys.stashmap.core.domain.sharedpreferences.SharedPreferenceStorage
 import dagger.Module
 import dagger.Provides
@@ -33,13 +31,5 @@ object DataModule {
         sharedPreferences: SharedPreferences
     ): SharedPreferenceStorage {
         return SharedPreferenceStorageImpl(sharedPreferences)
-    }
-
-    @Provides
-    @Singleton
-    fun provideLanguageRepository(
-        sharedPreferenceStorage: SharedPreferenceStorage
-    ): LanguageRepository {
-        return LanguageRepositoryImpl(sharedPreferenceStorage)
     }
 }

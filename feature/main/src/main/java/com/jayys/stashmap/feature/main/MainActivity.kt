@@ -1,7 +1,7 @@
 package com.jayys.stashmap.feature.main
 
 import androidx.compose.runtime.Composable
-import com.jayys.stashmap.core.ui.base.BaseActivity
+import com.jayys.stashmap.base.BaseActivity
 import com.jayys.stashmap.feature.main.screen.MainScreen
 import dagger.hilt.android.AndroidEntryPoint
 

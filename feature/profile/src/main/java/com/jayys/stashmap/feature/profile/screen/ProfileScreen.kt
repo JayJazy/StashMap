@@ -7,18 +7,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.jayys.stashmap.compose.SpacerHeight
 import com.jayys.stashmap.core.designsystem.R
 import com.jayys.stashmap.core.designsystem.theme.TextStyleEnum
 import com.jayys.stashmap.core.designsystem.theme.stashColors
 import com.jayys.stashmap.core.designsystem.theme.typography
+import com.jayys.stashmap.core.model.StashMapLanguage
 import com.jayys.stashmap.feature.profile.ui.ActivityStatCards
 import com.jayys.stashmap.feature.profile.ui.PreferenceItem
+import com.jayys.stashmap.feature.profile.viewmodel.ProfileViewModel
 
 @Composable
 fun ProfileScreen(
@@ -26,10 +31,13 @@ fun ProfileScreen(
     onThemeClick: () -> Unit,
     onInformationClick: () -> Unit,
     onContactClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: ProfileViewModel = viewModel()
 ) {
+    val selectedLanguage by viewModel.selectedLanguage.collectAsStateWithLifecycle()
     ProfileContent(
         modifier = modifier,
+        selectedLanguage = selectedLanguage,
         onLanguageClick = onLanguageClick,
         onThemeClick = onThemeClick,
         onInformationClick = onInformationClick,
@@ -39,6 +47,7 @@ fun ProfileScreen(
 
 @Composable
 private fun ProfileContent(
+    selectedLanguage: StashMapLanguage,
     onLanguageClick: () -> Unit,
     onThemeClick: () -> Unit,
     onInformationClick: () -> Unit,
@@ -76,6 +85,7 @@ private fun ProfileContent(
         SpacerHeight(12.dp)
 
         PreferenceItem(
+            selectedLanguage = selectedLanguage,
             onLanguageClick = onLanguageClick,
             onThemeClick = onThemeClick,
             onInformationClick = onInformationClick,
@@ -98,6 +108,7 @@ private fun ProfileContent(
 @Composable
 private fun PreviewProfileContent() {
     ProfileContent(
+        selectedLanguage = StashMapLanguage.KOREAN,
         onLanguageClick = {},
         onThemeClick = {},
         onInformationClick = {},

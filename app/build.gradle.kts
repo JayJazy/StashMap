@@ -10,6 +10,7 @@ applyFeatureDependencies()
 
 dependencies {
     implementation(project(":feature:main"))
+    implementation(project(":core:data"))
 
     // App specific dependencies
     implementation(libs.androidx.lifecycle.runtime.ktx)

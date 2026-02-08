@@ -1,4 +1,4 @@
-package com.jayys.stashmap.core.ui.base
+package com.jayys.stashmap.base
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlin.coroutines.CoroutineContext
 
-abstract class BaseViewModel : ViewModel(),  CoroutineScope {
+abstract class BaseViewModel : ViewModel(), CoroutineScope {
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         Log.e("jayjazy", "Error : $throwable")
     }
