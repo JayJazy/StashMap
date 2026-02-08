@@ -14,23 +14,31 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jayys.stashmap.component.SMTopBar
+import com.jayys.stashmap.compose.clickableNoRipple
 import com.jayys.stashmap.core.designsystem.R
 import com.jayys.stashmap.core.designsystem.theme.TextStyleEnum
 import com.jayys.stashmap.core.designsystem.theme.stashColors
 import com.jayys.stashmap.core.designsystem.theme.typography
+import com.jayys.stashmap.feature.theme.viewmodel.ThemeViewModel
 
 @Composable
 fun ThemeScreen(
     onBack: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: ThemeViewModel = hiltViewModel()
 ) {
+    val isDarkMode by viewModel.isDarkMode.collectAsStateWithLifecycle()
+
     Scaffold(
         topBar = {
             SMTopBar(
@@ -53,6 +61,9 @@ fun ThemeScreen(
         ) {
             Column(
                 modifier = Modifier
+                    .clickableNoRipple {
+                        viewModel.selectTheme(false)
+                    }
                     .fillMaxWidth()
                     .weight(1f),
                 verticalArrangement = Arrangement.Center,
@@ -75,8 +86,10 @@ fun ThemeScreen(
                     )
                 ) {
                     RadioButton(
-                        selected = false,
-                        onClick = { },
+                        selected = !isDarkMode,
+                        onClick = {
+                            viewModel.selectTheme(false)
+                        },
                         modifier = Modifier.size(30.dp)
                     )
 
@@ -89,6 +102,9 @@ fun ThemeScreen(
 
             Column(
                 modifier = Modifier
+                    .clickableNoRipple {
+                        viewModel.selectTheme(true)
+                    }
                     .fillMaxWidth()
                     .weight(1f),
                 verticalArrangement = Arrangement.Center,
@@ -99,7 +115,7 @@ fun ThemeScreen(
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.img_dark_mode),
-                        contentDescription = "Light Mode"
+                        contentDescription = "Dark Mode"
                     )
                 }
 
@@ -111,8 +127,10 @@ fun ThemeScreen(
                     )
                 ) {
                     RadioButton(
-                        selected = false,
-                        onClick = { },
+                        selected = isDarkMode,
+                        onClick = {
+                            viewModel.selectTheme(true)
+                        },
                         modifier = Modifier.size(30.dp)
                     )
 

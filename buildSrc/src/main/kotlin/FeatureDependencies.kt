@@ -10,10 +10,11 @@ import org.gradle.kotlin.dsl.getByType
 private object FeatureLibraries {
     // Core modules
     val coreModules = listOf(
+        ":core:common",
         ":core:designsystem",
-        ":core:ui",
         ":core:domain",
-        ":core:model"
+        ":core:model",
+        ":core:ui"
     )
 
     // Platform dependencies (BOM)

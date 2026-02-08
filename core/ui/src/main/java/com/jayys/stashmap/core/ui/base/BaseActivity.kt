@@ -13,8 +13,12 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import com.jayys.stashmap.core.common.language.LanguageHelper
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.jayys.stashmap.core.common.local.LocalManager
+import com.jayys.stashmap.core.designsystem.theme.LocalIsDarkMode
 import com.jayys.stashmap.core.designsystem.theme.StashMapTheme
 
 /**
@@ -101,7 +105,7 @@ import com.jayys.stashmap.core.designsystem.theme.StashMapTheme
 abstract class BaseActivity : ComponentActivity() {
 
     override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(LanguageHelper.applyLanguage(newBase))
+        super.attachBaseContext(LocalManager.applyLanguage(newBase))
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -125,14 +129,12 @@ abstract class BaseActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // 싱글톤에서 저장된 값 복원 및 초기 테마 설정
-        /*_isDarkMode.value = DarkModeManager.isDarkMode
-        AppCompatDelegate.setDefaultNightMode(
-            if (_isDarkMode.value) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
-        )*/
+        LocalManager.initTheme(this)
 
         setContent {
-            StashMapTheme {
+            val isDarkMode by LocalManager.isDarkMode.collectAsStateWithLifecycle()
+
+            StashMapTheme(isDarkMode = isDarkMode) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()

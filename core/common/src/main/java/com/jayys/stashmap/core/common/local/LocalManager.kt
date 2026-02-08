@@ -1,14 +1,28 @@
-package com.jayys.stashmap.core.common.language
+package com.jayys.stashmap.core.common.local
 
 import android.content.Context
 import android.content.res.Configuration
 import com.jayys.stashmap.core.domain.sharedpreferences.SharedPreferenceKeys
 import com.jayys.stashmap.core.model.StashMapLanguage
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import java.util.Locale
 
-object LanguageHelper {
+object LocalManager {
 
-    private const val PREFERENCE_NAME = "STASH_MAP_PREFERENCE_APP_KEY"
+    private const val PREFERENCE_APP_KEY: String = "STASH_MAP_PREFERENCE_APP_KEY"
+
+    private val _isDarkMode = MutableStateFlow(false)
+    val isDarkMode = _isDarkMode.asStateFlow()
+
+    fun initTheme(context: Context) {
+        val sharedPreferences = context.getSharedPreferences(PREFERENCE_APP_KEY, Context.MODE_PRIVATE)
+        _isDarkMode.value = sharedPreferences.getBoolean(SharedPreferenceKeys.KEY_THEME_MODE, false)
+    }
+
+    fun applyTheme(isDark: Boolean) {
+        _isDarkMode.value = isDark
+    }
 
     fun applyLanguage(context: Context): Context {
         val language = getSavedLanguage(context)
@@ -16,7 +30,7 @@ object LanguageHelper {
     }
 
     fun getSavedLanguage(context: Context): StashMapLanguage {
-        val sharedPreferences = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
+        val sharedPreferences = context.getSharedPreferences(PREFERENCE_APP_KEY, Context.MODE_PRIVATE)
         val languageCode = sharedPreferences.getString(SharedPreferenceKeys.KEY_LANGUAGE, null)
 
         return if (languageCode != null) {

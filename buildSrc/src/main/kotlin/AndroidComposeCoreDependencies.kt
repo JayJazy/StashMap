@@ -8,6 +8,14 @@ import org.gradle.kotlin.dsl.getByType
  * :core:ui, :core:designsystem
  */
 private object AndroidComposeCoreLibraries {
+
+    val moduleDependencies = listOf(
+        ":core:common",
+        ":core:data",
+        ":core:model",
+        ":core:domain"
+    )
+
     // Platform dependencies (BOM)
     val platforms = listOf(
         "androidx.compose.bom"
@@ -53,6 +61,10 @@ fun Project.applyAndroidComposeCoreDependencies() {
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
     dependencies {
+        AndroidComposeCoreLibraries.moduleDependencies.forEach {
+            add("implementation", project(it))
+        }
+
         // Platform dependencies (BOM)
         AndroidComposeCoreLibraries.platforms.forEach { platformKey ->
             add("implementation", platform(libs.findLibrary(platformKey).get()))
