@@ -3,14 +3,13 @@ package com.jayys.stashmap.core.common.local
 import android.content.Context
 import android.content.res.Configuration
 import com.jayys.stashmap.core.domain.sharedpreferences.SharedPreferenceKeys
+import com.jayys.stashmap.core.domain.sharedpreferences.SharedPreferenceKeys.PREFERENCE_APP_KEY
 import com.jayys.stashmap.core.model.StashMapLanguage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.util.Locale
 
 object LocalManager {
-
-    private const val PREFERENCE_APP_KEY: String = "STASH_MAP_PREFERENCE_APP_KEY"
 
     // 테마 관리
     private val _isDarkMode = MutableStateFlow(false)
@@ -26,14 +25,7 @@ object LocalManager {
     }
 
     fun initLanguage(context: Context) {
-        val sharedPreferences = context.getSharedPreferences(PREFERENCE_APP_KEY, Context.MODE_PRIVATE)
-        val languageCode = sharedPreferences.getString(SharedPreferenceKeys.KEY_LANGUAGE, null)
-
-        _stashLanguage.value = if (languageCode != null && languageCode.isNotEmpty()) {
-            StashMapLanguage.fromCode(languageCode) ?: getSystemLanguage()
-        } else {
-            getSystemLanguage()
-        }
+        _stashLanguage.value = getLanguageFromPreference(context)
     }
 
     fun applyTheme(isDark: Boolean) {
@@ -41,16 +33,19 @@ object LocalManager {
     }
 
     fun applyLanguage(context: Context): Context {
+        val language = getLanguageFromPreference(context)
+        return updateLocale(context, language)
+    }
+
+    private fun getLanguageFromPreference(context: Context): StashMapLanguage {
         val sharedPreferences = context.getSharedPreferences(PREFERENCE_APP_KEY, Context.MODE_PRIVATE)
         val languageCode = sharedPreferences.getString(SharedPreferenceKeys.KEY_LANGUAGE, null)
 
-        val language = if (languageCode != null && languageCode.isNotEmpty()) {
+        return if (languageCode != null && languageCode.isNotEmpty()) {
             StashMapLanguage.fromCode(languageCode) ?: getSystemLanguage()
         } else {
             getSystemLanguage()
         }
-
-        return updateLocale(context, language)
     }
 
     fun setLanguage(language: StashMapLanguage) {

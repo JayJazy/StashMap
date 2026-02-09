@@ -3,6 +3,7 @@ package com.jayys.stashmap.core.data.di
 import android.content.Context
 import android.content.SharedPreferences
 import com.jayys.stashmap.core.data.sharedpreferences.SharedPreferenceStorageImpl
+import com.jayys.stashmap.core.domain.sharedpreferences.SharedPreferenceKeys.PREFERENCE_APP_KEY
 import com.jayys.stashmap.core.domain.sharedpreferences.SharedPreferenceStorage
 import dagger.Module
 import dagger.Provides
@@ -14,8 +15,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DataModule {
-
-    private const val PREFERENCE_APP_KEY: String = "STASH_MAP_PREFERENCE_APP_KEY"
 
     @Provides
     @Singleton

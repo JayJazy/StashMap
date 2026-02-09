@@ -74,7 +74,7 @@ fun ThemeScreen(
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.img_light_mode),
-                        contentDescription = "Light Mode"
+                        contentDescription = stringResource(id = R.string.light_mode)
                     )
                 }
 
@@ -115,7 +115,7 @@ fun ThemeScreen(
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.img_dark_mode),
-                        contentDescription = "Dark Mode"
+                        contentDescription = stringResource(id = R.string.dark_mode)
                     )
                 }
 

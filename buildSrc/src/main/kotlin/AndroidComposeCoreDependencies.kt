@@ -11,7 +11,6 @@ private object AndroidComposeCoreLibraries {
 
     val moduleDependencies = listOf(
         ":core:common",
-        /*":core:data",*/
         ":core:model",
         ":core:domain"
     )
