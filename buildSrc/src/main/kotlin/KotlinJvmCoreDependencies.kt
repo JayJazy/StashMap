@@ -8,6 +8,11 @@ import org.gradle.kotlin.dsl.getByType
  * :core:common, :core:model, :core:domain
  */
 private object KotlinJvmCoreLibraries {
+    // Implementation dependencies
+    val libraries = listOf(
+        "javax.inject"
+    )
+
     // Test dependencies
     val testLibraries = listOf(
         "junit"
@@ -22,6 +27,11 @@ fun Project.applyKotlinJvmCoreDependencies() {
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
     dependencies {
+        // Implementation dependencies
+        KotlinJvmCoreLibraries.libraries.forEach { libraryKey ->
+            add("implementation", libs.findLibrary(libraryKey).get())
+        }
+
         // Test dependencies
         KotlinJvmCoreLibraries.testLibraries.forEach { libraryKey ->
             add("testImplementation", libs.findLibrary(libraryKey).get())

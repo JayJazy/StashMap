@@ -4,9 +4,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.jayys.stashmap.core.domain.sharedpreferences.SharedPreferenceStorage
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class SharedPreferenceStorageImpl @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) : SharedPreferenceStorage {

@@ -10,7 +10,10 @@ import org.gradle.kotlin.dsl.getByType
 private object FeatureLibraries {
     // Core modules
     val coreModules = listOf(
+        ":core:common",
         ":core:designsystem",
+        ":core:domain",
+        ":core:model",
         ":core:ui"
     )
 

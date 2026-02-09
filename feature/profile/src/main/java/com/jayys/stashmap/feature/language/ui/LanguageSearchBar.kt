@@ -19,11 +19,13 @@ import com.jayys.stashmap.core.designsystem.theme.stashColors
 
 @Composable
 fun LanguageSearchBar(
+    searchQuery: String,
+    onSearchQueryChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     OutlinedTextField(
-        value = "",
-        onValueChange = {},
+        value = searchQuery,
+        onValueChange = onSearchQueryChange,
         placeholder = {
             Text(
                 text = "Search language",
@@ -55,5 +57,8 @@ fun LanguageSearchBar(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewLanguageSearchBar() {
-    LanguageSearchBar()
+    LanguageSearchBar(
+        searchQuery = "",
+        onSearchQueryChange = {}
+    )
 }

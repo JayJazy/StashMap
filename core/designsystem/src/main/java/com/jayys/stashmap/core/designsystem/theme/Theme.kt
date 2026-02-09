@@ -1,11 +1,14 @@
 package com.jayys.stashmap.core.designsystem.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.compositionLocalOf
+
+/**
+ * 다크 모드 상태를 전역으로 관리하는 CompositionLocal
+ */
+val LocalIsDarkMode = compositionLocalOf { false }
 
 /**
  * StashMap 커스텀 색상에 접근하기 위한 확장 프로퍼티
@@ -21,15 +24,18 @@ import androidx.compose.ui.graphics.Color
 val MaterialTheme.stashColors: StashMapColors
     @Composable
     get() = LocalStashMapColors.current
+
 @Composable
 fun StashMapTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    isDarkMode: Boolean,
     content: @Composable () -> Unit
 ) {
-    // 커스텀 색상 팔레트 선택
-    val customColors = if (darkTheme) DarkColors else LightColors
+    val customColors = if (isDarkMode) DarkColors else LightColors
 
-    CompositionLocalProvider(LocalStashMapColors provides customColors) {
+    CompositionLocalProvider(
+        LocalIsDarkMode provides (isDarkMode),
+        LocalStashMapColors provides customColors
+    ) {
         MaterialTheme(content = content)
     }
 }

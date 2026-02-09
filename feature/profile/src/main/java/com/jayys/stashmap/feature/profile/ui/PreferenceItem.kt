@@ -23,9 +23,11 @@ import com.jayys.stashmap.core.designsystem.R
 import com.jayys.stashmap.core.designsystem.theme.TextStyleEnum
 import com.jayys.stashmap.core.designsystem.theme.stashColors
 import com.jayys.stashmap.core.designsystem.theme.typography
+import com.jayys.stashmap.core.model.StashMapLanguage
 
 @Composable
 fun PreferenceItem(
+    selectedLanguage: StashMapLanguage,
     onLanguageClick: () -> Unit,
     onThemeClick: () -> Unit,
     onInformationClick: () -> Unit,
@@ -57,7 +59,7 @@ fun PreferenceItem(
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
                     Text(
-                        text = "English(US)",
+                        text = selectedLanguage.displayName,
                         style = typography(TextStyleEnum.Body3).copy(
                             color = MaterialTheme.stashColors.grayLight2
                         )
@@ -126,6 +128,7 @@ fun PreferenceItem(
 @Composable
 private fun PreviewPreferenceItem() {
     PreferenceItem(
+        selectedLanguage = StashMapLanguage.KOREAN,
         onLanguageClick = {},
         onThemeClick = {},
         onInformationClick = {},

@@ -10,8 +10,9 @@ applyAndroidComposeCoreDependencies()
 
 dependencies {
     implementation(project(":core:designsystem"))
-    implementation(project(":core:model"))
 
     // UI specific dependency
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.appcompat)
 }

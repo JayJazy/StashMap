@@ -1,6 +1,5 @@
 package com.jayys.stashmap.feature.profile.navigation
 
-import androidx.compose.runtime.MutableState
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
@@ -10,8 +9,6 @@ import com.jayys.stashmap.feature.profile.screen.ProfileScreen
 import com.jayys.stashmap.feature.theme.ThemeScreen
 
 fun EntryProviderScope<NavKey>.profileEntries(
-    isDarkMode: MutableState<Boolean>,
-    onDarkModeChange: (Boolean) -> Unit,
     onBack: () -> Unit,
     backStack: NavBackStack<NavKey>
 ) {
@@ -33,10 +30,6 @@ fun EntryProviderScope<NavKey>.profileEntries(
     }
 
     entry<ThemeRoute> { _ ->
-        ThemeScreen(
-            onBack = onBack,
-            isDarkMode = isDarkMode.value,
-            onDarkModeChange = onDarkModeChange
-        )
+        ThemeScreen(onBack = onBack)
     }
 }
