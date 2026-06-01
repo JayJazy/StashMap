@@ -15,8 +15,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.jayys.stashmap.core.common.local.LocalManager
+import com.jayys.stashmap.core.common.local.AppSettingsManager
+import com.jayys.stashmap.core.common.local.LocaleHelper
 import com.jayys.stashmap.core.designsystem.theme.StashMapTheme
+import com.jayys.stashmap.core.domain.settings.SettingsRepository
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Inject
 
 /**
  * 모든 Activity의 기본 클래스
@@ -101,8 +108,21 @@ import com.jayys.stashmap.core.designsystem.theme.StashMapTheme
  */
 abstract class BaseActivity : ComponentActivity() {
 
+    @Inject
+    lateinit var appSettingsManager: AppSettingsManager
+
+    /**
+     * `attachBaseContext`는 `onCreate`보다 먼저 호출되어 Hilt 필드 주입이 아직 준비되지 않았다.
+     * 따라서 [EntryPointAccessors]로 Application의 Hilt 컴포넌트에서 직접 [SettingsRepository]를 얻어
+     * 저장된 언어를 추상화를 경유해 읽은 뒤 Locale을 적용한다.
+     */
     override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(LocalManager.applyLanguage(newBase))
+        val entryPoint = EntryPointAccessors.fromApplication(
+            newBase.applicationContext,
+            BaseActivityEntryPoint::class.java
+        )
+        val language = entryPoint.settingsRepository().getLanguage()
+        super.attachBaseContext(LocaleHelper.wrap(newBase, language))
     }
 
     /**
@@ -121,11 +141,8 @@ abstract class BaseActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        LocalManager.initTheme(this)
-        LocalManager.initLanguage(this)
-
         setContent {
-            val isDarkMode by LocalManager.isDarkMode.collectAsStateWithLifecycle()
+            val isDarkMode by appSettingsManager.isDarkMode.collectAsStateWithLifecycle()
 
             StashMapTheme(isDarkMode = isDarkMode) {
                 Box(
@@ -144,6 +161,16 @@ abstract class BaseActivity : ComponentActivity() {
             modifier.windowInsetsPadding(inset)
         }
     }
+
     @Composable
     abstract fun Screen()
+}
+
+/**
+ * `attachBaseContext`(Hilt 필드 주입 이전 시점)에서 Application 컴포넌트의 싱글톤에 접근하기 위한 EntryPoint.
+ */
+@EntryPoint
+@InstallIn(SingletonComponent::class)
+interface BaseActivityEntryPoint {
+    fun settingsRepository(): SettingsRepository
 }

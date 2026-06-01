@@ -2,9 +2,7 @@ package com.jayys.stashmap.feature.language.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.jayys.stashmap.base.BaseViewModel
-import com.jayys.stashmap.core.common.local.LocalManager
-import com.jayys.stashmap.core.domain.sharedpreferences.SharedPreferenceKeys
-import com.jayys.stashmap.core.domain.sharedpreferences.SharedPreferenceStorage
+import com.jayys.stashmap.core.common.local.AppSettingsManager
 import com.jayys.stashmap.core.model.StashMapLanguage
 import com.jayys.stashmap.feature.language.model.LanguageUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,11 +15,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LanguageViewModel @Inject constructor(
-    private val sharedPreferenceStorage: SharedPreferenceStorage
+    private val appSettingsManager: AppSettingsManager
 ): BaseViewModel() {
 
     private val _searchQuery = MutableStateFlow("")
-    val selectedLanguage = LocalManager.stashLanguage
+    val selectedLanguage = appSettingsManager.stashLanguage
 
     val uiState: StateFlow<LanguageUiState> = combine(
         _searchQuery,
@@ -57,7 +55,6 @@ class LanguageViewModel @Inject constructor(
     }
 
     fun selectLanguage(language: StashMapLanguage) {
-        sharedPreferenceStorage.putString(SharedPreferenceKeys.KEY_LANGUAGE, language.code)
-        LocalManager.setLanguage(language)
+        appSettingsManager.setLanguage(language)
     }
 }

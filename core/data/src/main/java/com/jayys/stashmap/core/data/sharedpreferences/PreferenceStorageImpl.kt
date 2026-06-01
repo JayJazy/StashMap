@@ -2,12 +2,15 @@ package com.jayys.stashmap.core.data.sharedpreferences
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.jayys.stashmap.core.domain.sharedpreferences.SharedPreferenceStorage
+import com.jayys.stashmap.core.domain.sharedpreferences.PreferenceStorage
 import javax.inject.Inject
 
-class SharedPreferenceStorageImpl @Inject constructor(
+/**
+ * [PreferenceStorage]의 SharedPreferences 기반 구현.
+ */
+class PreferenceStorageImpl @Inject constructor(
     private val sharedPreferences: SharedPreferences
-) : SharedPreferenceStorage {
+) : PreferenceStorage {
 
     override fun getString(key: String): String {
         return sharedPreferences.getString(key, "") ?: ""

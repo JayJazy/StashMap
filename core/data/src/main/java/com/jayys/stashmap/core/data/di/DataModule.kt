@@ -2,9 +2,11 @@ package com.jayys.stashmap.core.data.di
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.jayys.stashmap.core.data.sharedpreferences.SharedPreferenceStorageImpl
+import com.jayys.stashmap.core.data.settings.SettingsRepositoryImpl
+import com.jayys.stashmap.core.data.sharedpreferences.PreferenceStorageImpl
+import com.jayys.stashmap.core.domain.settings.SettingsRepository
 import com.jayys.stashmap.core.domain.sharedpreferences.SharedPreferenceKeys.PREFERENCE_APP_KEY
-import com.jayys.stashmap.core.domain.sharedpreferences.SharedPreferenceStorage
+import com.jayys.stashmap.core.domain.sharedpreferences.PreferenceStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,9 +28,17 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideSharedPreferenceStorage(
+    fun providePreferenceStorage(
         sharedPreferences: SharedPreferences
-    ): SharedPreferenceStorage {
-        return SharedPreferenceStorageImpl(sharedPreferences)
+    ): PreferenceStorage {
+        return PreferenceStorageImpl(sharedPreferences)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSettingsRepository(
+        preferenceStorage: PreferenceStorage
+    ): SettingsRepository {
+        return SettingsRepositoryImpl(preferenceStorage)
     }
 }
