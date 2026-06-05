@@ -17,11 +17,10 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jayys.stashmap.compose.clickableNoRipple
+import com.jayys.stashmap.core.designsystem.modifier.clickableNoRipple
 import com.jayys.stashmap.core.designsystem.R
-import com.jayys.stashmap.core.designsystem.theme.TextStyleEnum
-import com.jayys.stashmap.core.designsystem.theme.stashColors
-import com.jayys.stashmap.core.designsystem.theme.typography
+import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
+import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
 
 @Composable
 fun SMSettingItem(
@@ -49,7 +48,8 @@ fun SMSettingItem(
 
         Text(
             text = title,
-            style = typography(TextStyleEnum.Body3),
+            color = MaterialTheme.stashColorTokens.fg,
+            style = MaterialTheme.stashTypography.caption,
             modifier = Modifier.weight(1f)
         )
 
@@ -64,7 +64,7 @@ private fun PreviewSMSettingItem() {
     SMSettingItem(
         title = "contact",
         icon = painterResource(id = R.drawable.ico_help),
-        iconTint = MaterialTheme.stashColors.orangeLight2,
+        iconTint = MaterialTheme.stashColorTokens.warning,
         trailing = {}
     )
 }

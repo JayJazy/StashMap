@@ -14,10 +14,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jayys.stashmap.compose.clickableNoRipple
-import com.jayys.stashmap.core.designsystem.theme.TextStyleEnum
-import com.jayys.stashmap.core.designsystem.theme.stashColors
-import com.jayys.stashmap.core.designsystem.theme.typography
+import com.jayys.stashmap.core.designsystem.modifier.clickableNoRipple
+import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
+import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
 import com.jayys.stashmap.core.model.StashMapLanguage
 
 @Composable
@@ -37,12 +36,14 @@ fun LanguageItem(
     ) {
         Text(
             text = language.flag,
-            style = typography(TextStyleEnum.Body2)
+            color = MaterialTheme.stashColorTokens.fg,
+            style = MaterialTheme.stashTypography.body
         )
 
         Text(
             text = language.displayName,
-            style = typography(TextStyleEnum.Body2),
+            color = MaterialTheme.stashColorTokens.fg,
+            style = MaterialTheme.stashTypography.body,
             modifier = Modifier.weight(1f)
         )
 
@@ -51,8 +52,8 @@ fun LanguageItem(
             onCheckedChange = { onLanguageSelect(language) },
             modifier = Modifier.size(20.dp),
             colors = CheckboxDefaults.colors(
-                checkedColor = MaterialTheme.stashColors.greenDark1,
-                checkmarkColor = MaterialTheme.stashColors.bgColor
+                checkedColor = MaterialTheme.stashColorTokens.success,
+                checkmarkColor = MaterialTheme.stashColorTokens.fgOnAccent
             )
         )
     }

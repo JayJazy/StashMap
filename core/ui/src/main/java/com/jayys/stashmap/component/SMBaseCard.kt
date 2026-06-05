@@ -1,14 +1,12 @@
 package com.jayys.stashmap.component
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -26,9 +24,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.jayys.stashmap.compose.SpacerHeight
 import com.jayys.stashmap.core.designsystem.R
-import com.jayys.stashmap.core.designsystem.theme.TextStyleEnum
-import com.jayys.stashmap.core.designsystem.theme.stashColors
-import com.jayys.stashmap.core.designsystem.theme.typography
+import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
+import com.jayys.stashmap.core.designsystem.theme.stash.isStashDarkTheme
+import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
+import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
 
 @Composable
 fun SMBaseCard(
@@ -39,14 +38,14 @@ fun SMBaseCard(
     modifier: Modifier = Modifier,
     height: Dp = 78.dp,
     elevation: Dp = 4.dp,
-    cardColor: Color = MaterialTheme.stashColors.bgColor
+    cardColor: Color = MaterialTheme.stashColorTokens.surface
 ) {
-    val isDarkMode = isSystemInDarkTheme()
+    val isDarkMode = MaterialTheme.isStashDarkTheme
 
     Card(
         modifier = modifier
             .height(height),
-        shape = RoundedCornerShape(12.dp),
+        shape = StashRadius.md,
         colors = CardDefaults.cardColors(
             containerColor = cardColor,
         ),
@@ -54,7 +53,7 @@ fun SMBaseCard(
             defaultElevation = elevation
         ),
         border = if (isDarkMode) {
-            BorderStroke(1.dp, MaterialTheme.stashColors.grayLight2.copy(alpha = 0.2f))
+            BorderStroke(1.dp, MaterialTheme.stashColorTokens.border.copy(alpha = 0.2f))
         } else {
             null
         }
@@ -82,7 +81,8 @@ fun SMBaseCard(
 
                 Text(
                     text = title,
-                    style = typography(TextStyleEnum.Body2)
+                    color = MaterialTheme.stashColorTokens.fg,
+                    style = MaterialTheme.stashTypography.body
                 )
             }
 
@@ -90,7 +90,8 @@ fun SMBaseCard(
 
             Text(
                 text = content,
-                style = typography(TextStyleEnum.Title2),
+                color = MaterialTheme.stashColorTokens.fg,
+                style = MaterialTheme.stashTypography.h3,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.padding(start = 2.dp)
@@ -106,6 +107,6 @@ private fun PreviewSMBaseCard() {
         title = "Favorites",
         content = "9999",
         icon = painterResource(id = R.drawable.ico_favorite),
-        iconTint = MaterialTheme.stashColors.redDark1
+        iconTint = MaterialTheme.stashColorTokens.error
     )
 }

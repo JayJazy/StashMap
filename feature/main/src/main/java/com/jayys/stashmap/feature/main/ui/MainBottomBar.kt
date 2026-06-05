@@ -1,7 +1,6 @@
 package com.jayys.stashmap.feature.main.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,10 +13,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import com.jayys.stashmap.core.designsystem.R
+import com.jayys.stashmap.core.designsystem.modifier.clickableNoRipple
+import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
+import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
 import com.jayys.stashmap.feature.main.nav.STASH_MAIN_NAV_ITEMS
 
 @Composable
@@ -28,7 +31,7 @@ fun MainBottomBar(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surface)
+            .background(MaterialTheme.stashColorTokens.surface)
             .padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
@@ -38,7 +41,7 @@ fun MainBottomBar(
 
             Column(
                 modifier = Modifier
-                    .clickable {
+                    .clickableNoRipple(role = Role.Tab) {
                         if (backStack.lastOrNull() != item.route) {
                             backStack.clear()
                             backStack.add(item.route)
@@ -52,19 +55,19 @@ fun MainBottomBar(
                     painter = painterResource(id = R.drawable.ico_home),
                     contentDescription = item.label,
                     tint = if (selected) {
-                        MaterialTheme.colorScheme.primary
+                        MaterialTheme.stashColorTokens.accent
                     } else {
-                        MaterialTheme.colorScheme.onSurfaceVariant
+                        MaterialTheme.stashColorTokens.fgMuted
                     }
                 )
 
                 Text(
                     text = item.label,
-                    style = MaterialTheme.typography.labelSmall,
+                    style = MaterialTheme.stashTypography.caption,
                     color = if (selected) {
-                        MaterialTheme.colorScheme.primary
+                        MaterialTheme.stashColorTokens.accent
                     } else {
-                        MaterialTheme.colorScheme.onSurfaceVariant
+                        MaterialTheme.stashColorTokens.fgMuted
                     }
                 )
             }

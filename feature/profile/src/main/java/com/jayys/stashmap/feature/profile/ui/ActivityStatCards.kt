@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jayys.stashmap.component.SMBaseCard
 import com.jayys.stashmap.core.designsystem.R
-import com.jayys.stashmap.core.designsystem.theme.stashColors
+import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 
 @Composable
 fun ActivityStatCards(
@@ -35,7 +35,7 @@ fun ActivityStatCards(
                 title = stringResource(id = R.string.preferred_category),
                 content = topCategory,
                 icon = painterResource(id = R.drawable.ico_restaurant),
-                iconTint = MaterialTheme.stashColors.orangeLight2,
+                iconTint = MaterialTheme.stashColorTokens.warning,
                 height = 78.dp,
                 modifier = Modifier.weight(1f)
             )
@@ -44,7 +44,7 @@ fun ActivityStatCards(
                 title = stringResource(id = R.string.restaurants_this_month),
                 content = addedThisMonth,
                 icon = painterResource(id = R.drawable.ico_calendar),
-                iconTint = MaterialTheme.stashColors.greenLight2,
+                iconTint = MaterialTheme.stashColorTokens.success,
                 height = 78.dp,
                 modifier = Modifier.weight(1f)
             )

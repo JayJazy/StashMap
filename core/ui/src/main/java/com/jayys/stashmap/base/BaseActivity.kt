@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jayys.stashmap.core.common.local.AppSettingsManager
 import com.jayys.stashmap.core.common.local.LocaleHelper
-import com.jayys.stashmap.core.designsystem.theme.StashMapTheme
+import com.jayys.stashmap.core.designsystem.theme.stash.StashTheme
 import com.jayys.stashmap.core.domain.settings.SettingsRepository
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -144,7 +144,7 @@ abstract class BaseActivity : ComponentActivity() {
         setContent {
             val isDarkMode by appSettingsManager.isDarkMode.collectAsStateWithLifecycle()
 
-            StashMapTheme(isDarkMode = isDarkMode) {
+            StashTheme(darkTheme = isDarkMode) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()

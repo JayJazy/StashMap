@@ -10,7 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.jayys.stashmap.component.SMTopBar
 import com.jayys.stashmap.core.designsystem.R
-import com.jayys.stashmap.core.designsystem.theme.stashColors
+import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 
 @Composable
 fun InformationScreen(
@@ -24,7 +24,7 @@ fun InformationScreen(
                 onClick = onBack,
             )
         },
-        containerColor = MaterialTheme.stashColors.bgColor
+        containerColor = MaterialTheme.stashColorTokens.bg
     ) { paddingValues ->
         Column(
             modifier = modifier

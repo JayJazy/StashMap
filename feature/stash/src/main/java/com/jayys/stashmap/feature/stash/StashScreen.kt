@@ -8,16 +8,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.jayys.stashmap.core.designsystem.theme.stashColors
+import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 
 @Composable
 fun StashScreen(modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
-            .background(color = MaterialTheme.stashColors.bgColor)
+            .background(color = MaterialTheme.stashColorTokens.bg)
             .fillMaxSize()
     ) {
-        Text(text = "Stash")
+        Text(text = "Stash", color = MaterialTheme.stashColorTokens.fg)
     }
 }
