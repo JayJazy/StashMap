@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -20,9 +19,9 @@ import androidx.compose.ui.unit.dp
 import com.jayys.stashmap.component.HDivider
 import com.jayys.stashmap.component.SMSettingItem
 import com.jayys.stashmap.core.designsystem.R
-import com.jayys.stashmap.core.designsystem.theme.TextStyleEnum
-import com.jayys.stashmap.core.designsystem.theme.stashColors
-import com.jayys.stashmap.core.designsystem.theme.typography
+import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
+import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
+import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
 import com.jayys.stashmap.core.model.StashMapLanguage
 
 @Composable
@@ -38,19 +37,19 @@ fun PreferenceItem(
         modifier = modifier
             .border(
                 width = 1.dp,
-                color = MaterialTheme.stashColors.grayLight2,
-                shape = RoundedCornerShape(16.dp)
+                color = MaterialTheme.stashColorTokens.border,
+                shape = StashRadius.lg
             )
             .background(
-                color = MaterialTheme.stashColors.bgColor,
-                shape = RoundedCornerShape(16.dp)
+                color = MaterialTheme.stashColorTokens.surface,
+                shape = StashRadius.lg
             )
             .fillMaxWidth()
     ) {
         SMSettingItem(
             title = stringResource(id = R.string.language),
             icon = painterResource(id = R.drawable.ico_globe),
-            iconTint = MaterialTheme.stashColors.greenDark1,
+            iconTint = MaterialTheme.stashColorTokens.success,
             onClick = onLanguageClick,
             trailing = {
                 Row(
@@ -60,15 +59,15 @@ fun PreferenceItem(
                 ) {
                     Text(
                         text = selectedLanguage.displayName,
-                        style = typography(TextStyleEnum.Body3).copy(
-                            color = MaterialTheme.stashColors.grayLight2
+                        style = MaterialTheme.stashTypography.caption.copy(
+                            color = MaterialTheme.stashColorTokens.fgMuted
                         )
                     )
 
                     Icon(
                         painter = painterResource(id = R.drawable.ico_arrow_right),
                         contentDescription = "",
-                        tint = MaterialTheme.stashColors.grayDark1
+                        tint = MaterialTheme.stashColorTokens.fgMuted
                     )
                 }
             }
@@ -79,13 +78,13 @@ fun PreferenceItem(
         SMSettingItem(
             title = stringResource(id = R.string.system_theme),
             icon = painterResource(id = R.drawable.ico_moon),
-            iconTint = MaterialTheme.stashColors.yellowLight2,
+            iconTint = MaterialTheme.stashColorTokens.warning,
             onClick = onThemeClick,
             trailing = {
                 Icon(
                     painter = painterResource(id = R.drawable.ico_arrow_right),
                     contentDescription = "",
-                    tint = MaterialTheme.stashColors.grayDark1
+                    tint = MaterialTheme.stashColorTokens.fgMuted
                 )
             }
         )
@@ -95,13 +94,13 @@ fun PreferenceItem(
         SMSettingItem(
             title = stringResource(id = R.string.informateion),
             icon = painterResource(id = R.drawable.ico_information),
-            iconTint = MaterialTheme.stashColors.grayDark1,
+            iconTint = MaterialTheme.stashColorTokens.fgMuted,
             onClick = onInformationClick,
             trailing = {
                 Icon(
                     painter = painterResource(id = R.drawable.ico_arrow_right),
                     contentDescription = "",
-                    tint = MaterialTheme.stashColors.grayDark1
+                    tint = MaterialTheme.stashColorTokens.fgMuted
                 )
             }
         )
@@ -111,13 +110,13 @@ fun PreferenceItem(
         SMSettingItem(
             title = stringResource(id = R.string.contact),
             icon = painterResource(id = R.drawable.ico_help),
-            iconTint = MaterialTheme.stashColors.grayDark1,
+            iconTint = MaterialTheme.stashColorTokens.fgMuted,
             onClick = onContactClick,
             trailing = {
                 Icon(
                     painter = painterResource(id = R.drawable.ico_arrow_right),
                     contentDescription = "",
-                    tint = MaterialTheme.stashColors.grayDark1
+                    tint = MaterialTheme.stashColorTokens.fgMuted
                 )
             }
         )

@@ -20,7 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jayys.stashmap.component.SMTopBar
 import com.jayys.stashmap.core.designsystem.R
-import com.jayys.stashmap.core.designsystem.theme.stashColors
+import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 import com.jayys.stashmap.core.model.StashMapLanguage
 import com.jayys.stashmap.feature.language.model.LanguageUiState
 import com.jayys.stashmap.feature.language.ui.LanguageSearchBar
@@ -62,7 +62,7 @@ fun LanguageContent(
                 onClick = onBack,
             )
         },
-        containerColor = MaterialTheme.stashColors.bgColor
+        containerColor = MaterialTheme.stashColorTokens.bg
     ) { paddingValues ->
         Column(
             modifier = modifier

@@ -16,11 +16,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jayys.stashmap.compose.SpacerWidth
-import com.jayys.stashmap.compose.clickableNoRipple
+import com.jayys.stashmap.core.designsystem.modifier.clickableNoRipple
 import com.jayys.stashmap.core.designsystem.R
-import com.jayys.stashmap.core.designsystem.theme.TextStyleEnum
-import com.jayys.stashmap.core.designsystem.theme.stashColors
-import com.jayys.stashmap.core.designsystem.theme.typography
+import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
+import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
 
 @Composable
 fun SMTopBar(
@@ -30,7 +29,7 @@ fun SMTopBar(
 ) {
     Row(
         modifier = modifier
-            .background(color = MaterialTheme.stashColors.bgColor)
+            .background(color = MaterialTheme.stashColorTokens.bg)
             .fillMaxWidth()
             .height(64.dp)
             .padding(start = 20.dp),
@@ -40,7 +39,7 @@ fun SMTopBar(
         Icon(
             painter = painterResource(id = R.drawable.ico_arrow_back),
             contentDescription = "",
-            tint = MaterialTheme.stashColors.baseColor,
+            tint = MaterialTheme.stashColorTokens.fg,
             modifier = Modifier.clickableNoRipple { onClick() }
         )
 
@@ -48,7 +47,8 @@ fun SMTopBar(
 
         Text(
             text = topBarTitle,
-            style = typography(TextStyleEnum.Title2)
+            color = MaterialTheme.stashColorTokens.fg,
+            style = MaterialTheme.stashTypography.h3
         )
     }
 }

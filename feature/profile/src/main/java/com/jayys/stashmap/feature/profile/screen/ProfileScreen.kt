@@ -17,9 +17,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.jayys.stashmap.compose.SpacerHeight
 import com.jayys.stashmap.core.designsystem.R
-import com.jayys.stashmap.core.designsystem.theme.TextStyleEnum
-import com.jayys.stashmap.core.designsystem.theme.stashColors
-import com.jayys.stashmap.core.designsystem.theme.typography
+import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
+import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
 import com.jayys.stashmap.core.model.StashMapLanguage
 import com.jayys.stashmap.feature.profile.ui.ActivityStatCards
 import com.jayys.stashmap.feature.profile.ui.PreferenceItem
@@ -56,14 +55,15 @@ private fun ProfileContent(
 ) {
     Column(
         modifier = modifier
-            .background(color = MaterialTheme.stashColors.bgColor)
+            .background(color = MaterialTheme.stashColorTokens.bg)
             .fillMaxSize()
             .padding(20.dp)
             .padding(top = 20.dp)
     ) {
         Text(
             text = stringResource(id = R.string.activity_stats),
-            style = typography(TextStyleEnum.Title2),
+            color = MaterialTheme.stashColorTokens.fg,
+            style = MaterialTheme.stashTypography.h3,
             modifier = Modifier.padding(start = 4.dp)
         )
 
@@ -78,7 +78,8 @@ private fun ProfileContent(
 
         Text(
             text = stringResource(id = R.string.preferences),
-            style = typography(TextStyleEnum.Title2),
+            color = MaterialTheme.stashColorTokens.fg,
+            style = MaterialTheme.stashTypography.h3,
             modifier = Modifier.padding(start = 4.dp)
         )
 
@@ -96,8 +97,8 @@ private fun ProfileContent(
 
         Text(
             text = stringResource(id = R.string.version, "1.0.0"),
-            style = typography(TextStyleEnum.OverLine).copy(
-                color = MaterialTheme.stashColors.grayLight2
+            style = MaterialTheme.stashTypography.caption.copy(
+                color = MaterialTheme.stashColorTokens.fgMuted
             ),
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )

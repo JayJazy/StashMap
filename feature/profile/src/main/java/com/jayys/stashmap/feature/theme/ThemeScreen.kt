@@ -24,11 +24,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jayys.stashmap.component.SMTopBar
-import com.jayys.stashmap.compose.clickableNoRipple
+import com.jayys.stashmap.core.designsystem.modifier.clickableNoRipple
 import com.jayys.stashmap.core.designsystem.R
-import com.jayys.stashmap.core.designsystem.theme.TextStyleEnum
-import com.jayys.stashmap.core.designsystem.theme.stashColors
-import com.jayys.stashmap.core.designsystem.theme.typography
+import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
+import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
 import com.jayys.stashmap.feature.theme.viewmodel.ThemeViewModel
 
 @Composable
@@ -46,7 +45,7 @@ fun ThemeScreen(
                 onClick = onBack,
             )
         },
-        containerColor = MaterialTheme.stashColors.bgColor
+        containerColor = MaterialTheme.stashColorTokens.bg
     ) { paddingValues ->
         Row(
             modifier = modifier
@@ -95,7 +94,8 @@ fun ThemeScreen(
 
                     Text(
                         text = stringResource(id = R.string.light_mode),
-                        style = typography(TextStyleEnum.Body2)
+                        color = MaterialTheme.stashColorTokens.fg,
+                        style = MaterialTheme.stashTypography.body
                     )
                 }
             }
@@ -136,7 +136,8 @@ fun ThemeScreen(
 
                     Text(
                         text = stringResource(id = R.string.dark_mode),
-                        style = typography(TextStyleEnum.Body2)
+                        color = MaterialTheme.stashColorTokens.fg,
+                        style = MaterialTheme.stashTypography.body
                     )
                 }
             }
