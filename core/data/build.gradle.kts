@@ -1,12 +1,10 @@
 plugins {
-    id("AndroidLibraryPlugin")
+    id("stashmap.android.library")
 }
 
 android {
     namespace = "com.jayys.stashmap.core.data"
 }
-
-applyAndroidCoreDependencies()
 
 dependencies {
     implementation(project(":core:common"))

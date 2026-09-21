@@ -1,20 +1,20 @@
+package com.jayys.stashmap.convention
+
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 
 /**
- * Feature 모듈에 공통으로 사용되는 라이브러리 목록
- * libs.versions.toml의 [libraries] 섹션에 정의된 키를 사용
+ * Android Compose Core 모듈에 공통으로 사용되는 라이브러리 목록
+ * :core:ui, :core:designsystem
  */
-private object FeatureLibraries {
-    // Core modules
-    val coreModules = listOf(
+private object AndroidComposeCoreLibraries {
+
+    val moduleDependencies = listOf(
         ":core:common",
-        ":core:designsystem",
-        ":core:domain",
         ":core:model",
-        ":core:ui"
+        ":core:domain"
     )
 
     // Platform dependencies (BOM)
@@ -25,16 +25,11 @@ private object FeatureLibraries {
     // Implementation dependencies
     val libraries = listOf(
         "androidx.core.ktx",
-        "androidx.appcompat",
         "androidx.compose.ui",
         "androidx.compose.ui.graphics",
         "androidx.compose.ui.tooling.preview",
         "androidx.compose.material3",
-        "androidx.navigation3.runtime",
-        "androidx.navigation3.ui",
-        "kotlinx.serialization.core",
-        "hilt.android",
-        "hilt.navigation.compose"
+        "hilt.android"
     )
 
     // KSP/Kapt dependencies
@@ -50,66 +45,54 @@ private object FeatureLibraries {
     // Android test dependencies
     val androidTestLibraries = listOf(
         "androidx.junit",
-        "androidx.espresso.core",
-        "androidx.compose.ui.test.junit4"
-    )
-
-    // Android test platforms
-    val androidTestPlatforms = listOf(
-        "androidx.compose.bom"
+        "androidx.espresso.core"
     )
 
     // Debug implementation dependencies
     val debugLibraries = listOf(
-        "androidx.compose.ui.tooling",
-        "androidx.compose.ui.test.manifest"
+        "androidx.compose.ui.tooling"
     )
 }
 
 /**
- * Feature 모듈에 공통 dependencies 적용
+ * Android Compose Core 모듈에 공통 dependencies 적용
+ * :core:ui, :core:designsystem
  */
-fun Project.applyFeatureDependencies() {
+internal fun Project.applyAndroidComposeCoreDependencies() {
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
     dependencies {
-        // Core module dependencies
-        FeatureLibraries.coreModules.forEach { module ->
-            add("implementation", project(module))
+        AndroidComposeCoreLibraries.moduleDependencies.forEach {
+            add("implementation", project(it))
         }
 
         // Platform dependencies (BOM)
-        FeatureLibraries.platforms.forEach { platformKey ->
+        AndroidComposeCoreLibraries.platforms.forEach { platformKey ->
             add("implementation", platform(libs.findLibrary(platformKey).get()))
         }
 
         // Regular library dependencies
-        FeatureLibraries.libraries.forEach { libraryKey ->
+        AndroidComposeCoreLibraries.libraries.forEach { libraryKey ->
             add("implementation", libs.findLibrary(libraryKey).get())
         }
 
         // KSP/Kapt dependencies
-        FeatureLibraries.kspLibraries.forEach { libraryKey ->
+        AndroidComposeCoreLibraries.kspLibraries.forEach { libraryKey ->
             add("ksp", libs.findLibrary(libraryKey).get())
         }
 
         // Test dependencies
-        FeatureLibraries.testLibraries.forEach { libraryKey ->
+        AndroidComposeCoreLibraries.testLibraries.forEach { libraryKey ->
             add("testImplementation", libs.findLibrary(libraryKey).get())
         }
 
-        // Android test platform dependencies
-        FeatureLibraries.androidTestPlatforms.forEach { platformKey ->
-            add("androidTestImplementation", platform(libs.findLibrary(platformKey).get()))
-        }
-
         // Android test library dependencies
-        FeatureLibraries.androidTestLibraries.forEach { libraryKey ->
+        AndroidComposeCoreLibraries.androidTestLibraries.forEach { libraryKey ->
             add("androidTestImplementation", libs.findLibrary(libraryKey).get())
         }
 
         // Debug library dependencies
-        FeatureLibraries.debugLibraries.forEach { libraryKey ->
+        AndroidComposeCoreLibraries.debugLibraries.forEach { libraryKey ->
             add("debugImplementation", libs.findLibrary(libraryKey).get())
         }
     }

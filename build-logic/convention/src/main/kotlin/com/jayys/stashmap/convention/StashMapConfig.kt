@@ -1,7 +1,9 @@
+package com.jayys.stashmap.convention
+
 /**
  * StashMap 프로젝트 전체 공통 설정
  */
-object StashMapConfig {
+internal object StashMapConfig {
     const val applicationId = "com.jayys.stashmap"
 
     const val compileSdk = 36

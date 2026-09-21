@@ -1,12 +1,10 @@
 plugins {
-    id("AndroidLibraryComposePlugin")
+    id("stashmap.android.feature")
 }
 
 android {
     namespace = "com.jayys.stashmap.feature.main"
 }
-
-applyFeatureDependencies()
 
 dependencies {
     implementation(project(":feature:home"))

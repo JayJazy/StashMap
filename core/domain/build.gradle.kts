@@ -1,8 +1,6 @@
 plugins {
-    id("KotlinJvmPlugin")
+    id("stashmap.jvm.library")
 }
-
-applyKotlinJvmCoreDependencies()
 
 dependencies {
     implementation(project(":core:model"))

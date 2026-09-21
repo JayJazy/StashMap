@@ -1,12 +1,10 @@
 plugins {
-    id("AndroidLibraryComposePlugin")
+    id("stashmap.android.library.compose")
 }
 
 android {
     namespace = "com.jayys.stashmap.core.ui"
 }
-
-applyAndroidComposeCoreDependencies()
 
 dependencies {
     implementation(project(":core:designsystem"))
