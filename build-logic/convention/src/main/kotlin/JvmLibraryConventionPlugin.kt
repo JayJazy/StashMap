@@ -5,9 +5,6 @@ import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.kotlin.dsl.configure
 
-/**
- * :core:model, :core:domain
- */
 class JvmLibraryConventionPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         with(project) {

@@ -6,9 +6,6 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 
-/**
- * :core:ui, :core:designsystem
- */
 class AndroidLibraryComposeConventionPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         with(project) {

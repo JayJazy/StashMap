@@ -5,10 +5,6 @@ import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 
-/**
- * Kotlin/JVM Core 모듈에 공통으로 사용되는 라이브러리 목록
- * :core:model, :core:domain
- */
 private object KotlinJvmCoreLibraries {
     // Implementation dependencies
     val libraries = listOf(
