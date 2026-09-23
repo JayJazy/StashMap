@@ -1,9 +1,7 @@
 plugins {
-    id("AndroidLibraryComposePlugin")
+    id("stashmap.android.feature")
 }
 
 android {
     namespace = "com.jayys.stashmap.feature.profile"
 }
-
-applyFeatureDependencies()

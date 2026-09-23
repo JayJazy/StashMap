@@ -1,12 +1,10 @@
+package com.jayys.stashmap.convention
+
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 
-/**
- * Feature 모듈에 공통으로 사용되는 라이브러리 목록
- * libs.versions.toml의 [libraries] 섹션에 정의된 키를 사용
- */
 private object FeatureLibraries {
     // Core modules
     val coreModules = listOf(
@@ -66,10 +64,7 @@ private object FeatureLibraries {
     )
 }
 
-/**
- * Feature 모듈에 공통 dependencies 적용
- */
-fun Project.applyFeatureDependencies() {
+internal fun Project.applyFeatureDependencies() {
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
     dependencies {

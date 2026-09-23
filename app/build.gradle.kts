@@ -1,12 +1,10 @@
 plugins {
-    id("AndroidAppPlugin")
+    id("stashmap.android.application")
 }
 
 android {
     namespace = "com.jayys.stashmap"
 }
-
-applyFeatureDependencies()
 
 dependencies {
     implementation(project(":feature:main"))

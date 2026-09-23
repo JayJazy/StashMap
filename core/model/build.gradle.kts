@@ -1,5 +1,3 @@
 plugins {
-    id("KotlinJvmPlugin")
+    id("stashmap.jvm.library")
 }
-
-applyKotlinJvmCoreDependencies()

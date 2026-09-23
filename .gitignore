@@ -8,6 +8,6 @@
 .externalNativeBuild
 .cxx
 local.properties
-buildSrc/build/
 **/build/
 .kotlin/
+.claude/.harness-verified
