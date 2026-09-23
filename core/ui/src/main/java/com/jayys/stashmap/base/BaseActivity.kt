@@ -15,8 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.jayys.stashmap.core.common.local.AppSettingsManager
-import com.jayys.stashmap.core.common.local.LocaleHelper
 import com.jayys.stashmap.core.designsystem.theme.stash.StashTheme
 import com.jayys.stashmap.core.domain.settings.SettingsRepository
 import dagger.hilt.EntryPoint
@@ -109,19 +107,19 @@ import javax.inject.Inject
 abstract class BaseActivity : ComponentActivity() {
 
     @Inject
-    lateinit var appSettingsManager: AppSettingsManager
+    lateinit var settingsRepository: SettingsRepository
 
     /**
      * `attachBaseContext`는 `onCreate`보다 먼저 호출되어 Hilt 필드 주입이 아직 준비되지 않았다.
      * 따라서 [EntryPointAccessors]로 Application의 Hilt 컴포넌트에서 직접 [SettingsRepository]를 얻어
-     * 저장된 언어를 추상화를 경유해 읽은 뒤 Locale을 적용한다.
+     * 현재 언어 스냅샷을 읽은 뒤 Locale을 적용한다.
      */
     override fun attachBaseContext(newBase: Context) {
         val entryPoint = EntryPointAccessors.fromApplication(
             newBase.applicationContext,
             BaseActivityEntryPoint::class.java
         )
-        val language = entryPoint.settingsRepository().getLanguage()
+        val language = entryPoint.settingsRepository().language.value
         super.attachBaseContext(LocaleHelper.wrap(newBase, language))
     }
 
@@ -142,7 +140,7 @@ abstract class BaseActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            val isDarkMode by appSettingsManager.isDarkMode.collectAsStateWithLifecycle()
+            val isDarkMode by settingsRepository.darkMode.collectAsStateWithLifecycle()
 
             StashTheme(darkTheme = isDarkMode) {
                 Box(

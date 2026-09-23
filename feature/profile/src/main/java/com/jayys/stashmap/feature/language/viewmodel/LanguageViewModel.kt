@@ -2,7 +2,7 @@ package com.jayys.stashmap.feature.language.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.jayys.stashmap.base.BaseViewModel
-import com.jayys.stashmap.core.common.local.AppSettingsManager
+import com.jayys.stashmap.core.domain.settings.SettingsRepository
 import com.jayys.stashmap.core.model.StashMapLanguage
 import com.jayys.stashmap.feature.language.model.LanguageUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,15 +11,16 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LanguageViewModel @Inject constructor(
-    private val appSettingsManager: AppSettingsManager
+    private val settingsRepository: SettingsRepository
 ): BaseViewModel() {
 
     private val _searchQuery = MutableStateFlow("")
-    val selectedLanguage = appSettingsManager.stashLanguage
+    val selectedLanguage = settingsRepository.language
 
     val uiState: StateFlow<LanguageUiState> = combine(
         _searchQuery,
@@ -55,6 +56,6 @@ class LanguageViewModel @Inject constructor(
     }
 
     fun selectLanguage(language: StashMapLanguage) {
-        appSettingsManager.setLanguage(language)
+        launch { settingsRepository.setLanguage(language) }
     }
 }

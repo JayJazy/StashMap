@@ -1,16 +1,22 @@
 package com.jayys.stashmap.core.domain.settings
 
 import com.jayys.stashmap.core.model.StashMapLanguage
+import kotlinx.coroutines.flow.StateFlow
 
 /**
- * 앱 설정(테마/언어) 영속화 추상화.
+ * 앱 설정(테마/언어) 추상화.
  *
- * 도메인 타입으로 설정을 다루며, 구체적인 저장 기술은 구현체가 캡슐화한다.
- * 단순 영속화이므로 별도 UseCase 없이 호출부에서 직접 사용해도 무방하다.
+ * 현재 값을 [StateFlow]로 노출해 관찰과 스냅샷 조회를 모두 지원한다.
+ * `Activity.attachBaseContext`처럼 코루틴을 사용할 수 없는 프레임워크 진입점에서
+ * 저장된 언어를 즉시 읽어야 하므로, 콜드 Flow가 아니라 상태를 보유하는 Flow가 요구사항이다.
+ *
+ * 쓰기는 I/O를 수반하므로 suspend로 선언한다. 호출부가 동기 실행을 가정하지 않으므로
+ * 구현 기술(SharedPreferences, DataStore 등)을 교체해도 이 인터페이스는 바뀌지 않는다.
  */
 interface SettingsRepository {
-    fun getDarkMode(): Boolean
-    fun setDarkMode(isDark: Boolean)
-    fun getLanguage(): StashMapLanguage
-    fun setLanguage(language: StashMapLanguage)
+    val darkMode: StateFlow<Boolean>
+    val language: StateFlow<StashMapLanguage>
+
+    suspend fun setDarkMode(isDark: Boolean)
+    suspend fun setLanguage(language: StashMapLanguage)
 }

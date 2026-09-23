@@ -1,14 +1,14 @@
 package com.jayys.stashmap.feature.profile.viewmodel
 
 import com.jayys.stashmap.base.BaseViewModel
-import com.jayys.stashmap.core.common.local.AppSettingsManager
+import com.jayys.stashmap.core.domain.settings.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    appSettingsManager: AppSettingsManager
+    settingsRepository: SettingsRepository
 ): BaseViewModel() {
 
-    val selectedLanguage = appSettingsManager.stashLanguage
+    val selectedLanguage = settingsRepository.language
 }

@@ -8,7 +8,6 @@ import org.gradle.kotlin.dsl.getByType
 private object AndroidComposeCoreLibraries {
 
     val moduleDependencies = listOf(
-        ":core:common",
         ":core:model",
         ":core:domain"
     )

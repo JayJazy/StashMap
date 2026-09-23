@@ -8,7 +8,8 @@ import org.gradle.kotlin.dsl.getByType
 private object KotlinJvmCoreLibraries {
     // Implementation dependencies
     val libraries = listOf(
-        "javax.inject"
+        "javax.inject",
+        "kotlinx.coroutines.core"
     )
 
     // Test dependencies
