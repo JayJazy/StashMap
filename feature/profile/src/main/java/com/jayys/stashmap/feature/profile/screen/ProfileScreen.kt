@@ -16,10 +16,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.jayys.stashmap.compose.SpacerHeight
-import com.jayys.stashmap.core.designsystem.R
 import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
 import com.jayys.stashmap.core.model.StashMapLanguage
+import com.jayys.stashmap.feature.profile.R
 import com.jayys.stashmap.feature.profile.ui.ActivityStatCards
 import com.jayys.stashmap.feature.profile.ui.PreferenceItem
 import com.jayys.stashmap.feature.profile.viewmodel.ProfileViewModel

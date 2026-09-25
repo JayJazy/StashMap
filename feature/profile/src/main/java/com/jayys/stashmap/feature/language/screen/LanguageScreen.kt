@@ -17,13 +17,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jayys.stashmap.component.SMTopBar
-import com.jayys.stashmap.core.designsystem.R
 import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 import com.jayys.stashmap.core.model.StashMapLanguage
 import com.jayys.stashmap.feature.language.model.LanguageUiState
 import com.jayys.stashmap.feature.language.ui.LanguageSearchBar
 import com.jayys.stashmap.feature.language.ui.LanguageSelectionItem
 import com.jayys.stashmap.feature.language.viewmodel.LanguageViewModel
+import com.jayys.stashmap.feature.profile.R
 
 @Composable
 fun LanguageScreen(
