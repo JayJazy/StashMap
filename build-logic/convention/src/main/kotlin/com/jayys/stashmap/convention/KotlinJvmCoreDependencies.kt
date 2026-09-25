@@ -14,7 +14,8 @@ private object KotlinJvmCoreLibraries {
 
     // Test dependencies
     val testLibraries = listOf(
-        "junit"
+        "junit",
+        "kotlinx.coroutines.test"
     )
 }
 

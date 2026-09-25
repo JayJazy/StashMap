@@ -34,7 +34,8 @@ private object AndroidComposeCoreLibraries {
 
     // Test dependencies
     val testLibraries = listOf(
-        "junit"
+        "junit",
+        "kotlinx.coroutines.test"
     )
 
     // Android test dependencies

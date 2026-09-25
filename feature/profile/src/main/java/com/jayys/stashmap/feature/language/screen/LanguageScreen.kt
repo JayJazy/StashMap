@@ -1,6 +1,5 @@
 package com.jayys.stashmap.feature.language.screen
 
-import android.app.Activity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -12,7 +11,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -53,8 +51,6 @@ fun LanguageContent(
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
-
     Scaffold(
         topBar = {
             SMTopBar(
@@ -83,10 +79,11 @@ fun LanguageContent(
             LanguageSelectionItem(
                 languages = uiState.availableLanguages,
                 selectedLanguage = uiState.selectedLanguage,
+                // 언어 저장은 비동기이므로 여기서 recreate()를 호출하지 않는다.
+                // 저장이 끝나 설정 상태가 실제로 바뀌면 BaseActivity가 스스로 재생성한다.
                 onLanguageSelect = { language ->
                     if (language != uiState.selectedLanguage) {
                         onLanguageSelect(language)
-                        (context as? Activity)?.recreate()
                     }
                 }
             )
