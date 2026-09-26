@@ -24,10 +24,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jayys.stashmap.component.SMTopBar
+import com.jayys.stashmap.core.designsystem.R as DesignSystemR
 import com.jayys.stashmap.core.designsystem.modifier.clickableNoRipple
-import com.jayys.stashmap.core.designsystem.R
 import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
+import com.jayys.stashmap.feature.profile.R
 import com.jayys.stashmap.feature.theme.viewmodel.ThemeViewModel
 
 @Composable
@@ -72,7 +73,7 @@ fun ThemeScreen(
                     modifier = Modifier
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.img_light_mode),
+                        painter = painterResource(id = DesignSystemR.drawable.img_light_mode),
                         contentDescription = stringResource(id = R.string.light_mode)
                     )
                 }
@@ -114,7 +115,7 @@ fun ThemeScreen(
                     modifier = Modifier
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.img_dark_mode),
+                        painter = painterResource(id = DesignSystemR.drawable.img_dark_mode),
                         contentDescription = stringResource(id = R.string.dark_mode)
                     )
                 }

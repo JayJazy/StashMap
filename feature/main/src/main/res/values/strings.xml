@@ -1,0 +1,8 @@
+<resources>
+
+    <!-- Bottom Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_stash">Restaurants</string>
+    <string name="nav_profile">Profile</string>
+
+</resources>

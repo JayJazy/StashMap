@@ -1,0 +1,8 @@
+<resources>
+
+    <!-- Bottom Navigation -->
+    <string name="nav_home">홈</string>
+    <string name="nav_stash">맛집</string>
+    <string name="nav_profile">프로필</string>
+
+</resources>

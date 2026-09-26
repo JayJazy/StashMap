@@ -1,17 +1,18 @@
 package com.jayys.stashmap.feature.theme.viewmodel
 
 import com.jayys.stashmap.base.BaseViewModel
-import com.jayys.stashmap.core.common.local.AppSettingsManager
+import com.jayys.stashmap.core.domain.settings.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ThemeViewModel @Inject constructor(
-    private val appSettingsManager: AppSettingsManager
+    private val settingsRepository: SettingsRepository
 ) : BaseViewModel() {
-    val isDarkMode = appSettingsManager.isDarkMode
+    val isDarkMode = settingsRepository.darkMode
 
     fun selectTheme(isDark: Boolean) {
-        appSettingsManager.setDarkMode(isDark)
+        launch { settingsRepository.setDarkMode(isDark) }
     }
 }

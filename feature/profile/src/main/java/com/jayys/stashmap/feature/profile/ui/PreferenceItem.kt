@@ -18,11 +18,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jayys.stashmap.component.HDivider
 import com.jayys.stashmap.component.SMSettingItem
-import com.jayys.stashmap.core.designsystem.R
+import com.jayys.stashmap.core.designsystem.R as DesignSystemR
 import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
 import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
 import com.jayys.stashmap.core.model.StashMapLanguage
+import com.jayys.stashmap.feature.profile.R
 
 @Composable
 fun PreferenceItem(
@@ -48,7 +49,7 @@ fun PreferenceItem(
     ) {
         SMSettingItem(
             title = stringResource(id = R.string.language),
-            icon = painterResource(id = R.drawable.ico_globe),
+            icon = painterResource(id = DesignSystemR.drawable.ico_globe),
             iconTint = MaterialTheme.stashColorTokens.success,
             onClick = onLanguageClick,
             trailing = {
@@ -65,7 +66,7 @@ fun PreferenceItem(
                     )
 
                     Icon(
-                        painter = painterResource(id = R.drawable.ico_arrow_right),
+                        painter = painterResource(id = DesignSystemR.drawable.ico_arrow_right),
                         contentDescription = "",
                         tint = MaterialTheme.stashColorTokens.fgMuted
                     )
@@ -77,12 +78,12 @@ fun PreferenceItem(
 
         SMSettingItem(
             title = stringResource(id = R.string.system_theme),
-            icon = painterResource(id = R.drawable.ico_moon),
+            icon = painterResource(id = DesignSystemR.drawable.ico_moon),
             iconTint = MaterialTheme.stashColorTokens.warning,
             onClick = onThemeClick,
             trailing = {
                 Icon(
-                    painter = painterResource(id = R.drawable.ico_arrow_right),
+                    painter = painterResource(id = DesignSystemR.drawable.ico_arrow_right),
                     contentDescription = "",
                     tint = MaterialTheme.stashColorTokens.fgMuted
                 )
@@ -93,12 +94,12 @@ fun PreferenceItem(
 
         SMSettingItem(
             title = stringResource(id = R.string.informateion),
-            icon = painterResource(id = R.drawable.ico_information),
+            icon = painterResource(id = DesignSystemR.drawable.ico_information),
             iconTint = MaterialTheme.stashColorTokens.fgMuted,
             onClick = onInformationClick,
             trailing = {
                 Icon(
-                    painter = painterResource(id = R.drawable.ico_arrow_right),
+                    painter = painterResource(id = DesignSystemR.drawable.ico_arrow_right),
                     contentDescription = "",
                     tint = MaterialTheme.stashColorTokens.fgMuted
                 )
@@ -109,12 +110,12 @@ fun PreferenceItem(
 
         SMSettingItem(
             title = stringResource(id = R.string.contact),
-            icon = painterResource(id = R.drawable.ico_help),
+            icon = painterResource(id = DesignSystemR.drawable.ico_help),
             iconTint = MaterialTheme.stashColorTokens.fgMuted,
             onClick = onContactClick,
             trailing = {
                 Icon(
-                    painter = painterResource(id = R.drawable.ico_arrow_right),
+                    painter = painterResource(id = DesignSystemR.drawable.ico_arrow_right),
                     contentDescription = "",
                     tint = MaterialTheme.stashColorTokens.fgMuted
                 )

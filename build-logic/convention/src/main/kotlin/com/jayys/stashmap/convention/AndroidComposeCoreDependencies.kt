@@ -8,7 +8,6 @@ import org.gradle.kotlin.dsl.getByType
 private object AndroidComposeCoreLibraries {
 
     val moduleDependencies = listOf(
-        ":core:common",
         ":core:model",
         ":core:domain"
     )
@@ -35,7 +34,8 @@ private object AndroidComposeCoreLibraries {
 
     // Test dependencies
     val testLibraries = listOf(
-        "junit"
+        "junit",
+        "kotlinx.coroutines.test"
     )
 
     // Android test dependencies
