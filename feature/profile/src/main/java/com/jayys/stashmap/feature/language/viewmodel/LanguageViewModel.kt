@@ -1,7 +1,7 @@
 package com.jayys.stashmap.feature.language.viewmodel
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jayys.stashmap.base.BaseViewModel
 import com.jayys.stashmap.core.domain.settings.SettingsRepository
 import com.jayys.stashmap.core.model.StashMapLanguage
 import com.jayys.stashmap.feature.language.model.LanguageUiState
@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LanguageViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository
-): BaseViewModel() {
+): ViewModel() {
 
     private val _searchQuery = MutableStateFlow("")
     val selectedLanguage = settingsRepository.language
@@ -56,6 +56,6 @@ class LanguageViewModel @Inject constructor(
     }
 
     fun selectLanguage(language: StashMapLanguage) {
-        launch { settingsRepository.setLanguage(language) }
+        viewModelScope.launch { settingsRepository.setLanguage(language) }
     }
 }
