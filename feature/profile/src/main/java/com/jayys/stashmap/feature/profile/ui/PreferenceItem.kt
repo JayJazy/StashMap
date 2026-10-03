@@ -16,8 +16,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jayys.stashmap.component.HDivider
-import com.jayys.stashmap.component.SMSettingItem
+import com.jayys.stashmap.core.designsystem.component.legacy.HDivider
+import com.jayys.stashmap.core.designsystem.component.legacy.SMSettingItem
 import com.jayys.stashmap.core.designsystem.R as DesignSystemR
 import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
 import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens

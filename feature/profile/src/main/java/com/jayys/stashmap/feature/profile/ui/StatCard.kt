@@ -1,4 +1,4 @@
-package com.jayys.stashmap.component
+package com.jayys.stashmap.feature.profile.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -22,7 +22,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.jayys.stashmap.compose.SpacerHeight
+import com.jayys.stashmap.core.designsystem.layout.SpacerHeight
 import com.jayys.stashmap.core.designsystem.R
 import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
 import com.jayys.stashmap.core.designsystem.theme.stash.isStashDarkTheme
@@ -30,15 +30,13 @@ import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
 
 @Composable
-fun SMBaseCard(
+fun StatCard(
     title: String,
     content: String,
     icon: Painter,
     iconTint: Color,
     modifier: Modifier = Modifier,
-    height: Dp = 78.dp,
-    elevation: Dp = 4.dp,
-    cardColor: Color = MaterialTheme.stashColorTokens.surface
+    height: Dp = 78.dp
 ) {
     val isDarkMode = MaterialTheme.isStashDarkTheme
 
@@ -47,10 +45,10 @@ fun SMBaseCard(
             .height(height),
         shape = StashRadius.md,
         colors = CardDefaults.cardColors(
-            containerColor = cardColor,
+            containerColor = MaterialTheme.stashColorTokens.surface,
         ),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = elevation
+            defaultElevation = 4.dp
         ),
         border = if (isDarkMode) {
             BorderStroke(1.dp, MaterialTheme.stashColorTokens.border.copy(alpha = 0.2f))
@@ -102,8 +100,8 @@ fun SMBaseCard(
 
 @Preview(showBackground = true)
 @Composable
-private fun PreviewSMBaseCard() {
-    SMBaseCard(
+private fun PreviewStatCard() {
+    StatCard(
         title = "Favorites",
         content = "9999",
         icon = painterResource(id = R.drawable.ico_favorite),

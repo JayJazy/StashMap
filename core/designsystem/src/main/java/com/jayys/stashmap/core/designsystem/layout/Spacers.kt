@@ -1,4 +1,4 @@
-package com.jayys.stashmap.compose
+package com.jayys.stashmap.core.designsystem.layout
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
