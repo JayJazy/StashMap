@@ -1,4 +1,4 @@
-package com.jayys.stashmap.base
+package com.jayys.stashmap
 
 import android.content.Context
 import android.os.Bundle
@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
@@ -21,98 +20,19 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.jayys.stashmap.core.designsystem.theme.stash.StashTheme
 import com.jayys.stashmap.core.domain.settings.SettingsRepository
 import com.jayys.stashmap.core.model.StashMapLanguage
+import com.jayys.stashmap.feature.main.screen.MainScreen
+import com.jayys.stashmap.locale.LocaleHelper
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
+import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-/**
- * 모든 Activity의 기본 클래스
- *
- * Edge-to-Edge를 지원하며 시스템 바(상태바, 네비게이션바) 패딩을 자동으로 적용
- *
- * ## 기본 사용법
- * ```kotlin
- * class MainActivity : BaseActivity() {
- *     @Composable
- *     override fun Screen() {
- *         MainScreen()
- *     }
- * }
- * ```
- *
- * ## WindowInsets 커스터마이징
- * 특정 Activity에서 시스템 바 패딩을 다르게 적용하고 싶다면 [getWindowInsets] 메서드 오버라이드
- *
- * ### 예시 1: 상태바만 패딩 적용 (네비게이션바는 겹치게)
- * ```kotlin
- * class FullscreenVideoActivity : BaseActivity() {
- *     @Composable
- *     override fun getWindowInsets(): List<WindowInsets> {
- *         return listOf(WindowInsets.statusBars)
- *     }
- *
- *     @Composable
- *     override fun Screen() {
- *         VideoPlayerScreen()
- *     }
- * }
- * ```
- *
- * ### 예시 2: 완전한 전체화면 (모든 패딩 제거)
- * ```kotlin
- * class ImmersiveActivity : BaseActivity() {
- *     @Composable
- *     override fun getWindowInsets(): List<WindowInsets> {
- *         return emptyList()
- *     }
- *
- *     @Composable
- *     override fun Screen() {
- *         ImmersiveGameScreen()
- *     }
- * }
- * ```
- *
- * ### 예시 3: 네비게이션바만 패딩
- * ```kotlin
- * class BottomSheetActivity : BaseActivity() {
- *     @Composable
- *     override fun getWindowInsets(): List<WindowInsets> {
- *         return listOf(WindowInsets.navigationBars)
- *     }
- *
- *     @Composable
- *     override fun Screen() {
- *         BottomSheetScreen()
- *     }
- * }
- * ```
- *
- * ### 예시 4: 키보드까지 포함한 커스텀 조합
- * ```kotlin
- * class ChatActivity : BaseActivity() {
- *     @Composable
- *     override fun getWindowInsets(): List<WindowInsets> {
- *         return listOf(
- *             WindowInsets.statusBars,
- *             WindowInsets.ime  // 키보드
- *         )
- *     }
- *
- *     @Composable
- *     override fun Screen() {
- *         ChatScreen()
- *     }
- * }
- * ```
- */
-abstract class BaseActivity : ComponentActivity() {
+@AndroidEntryPoint
+class MainActivity : ComponentActivity() {
 
-    @Inject
-    lateinit var settingsRepository: SettingsRepository
+    private lateinit var settingsRepository: SettingsRepository
 
     /**
      * 이 Activity 인스턴스가 Locale 적용에 사용한 언어.
@@ -139,34 +59,25 @@ abstract class BaseActivity : ComponentActivity() {
      * 따라서 [EntryPointAccessors]로 Application의 Hilt 컴포넌트에서 직접 [SettingsRepository]를 얻어
      * 현재 언어 스냅샷을 읽은 뒤 Locale을 적용한다.
      *
+     * 이때 얻은 저장소는 [settingsRepository]에 보관해 이후 단계에서 재사용한다.
+     * 이 시점에는 `applicationContext`가 아직 준비되지 않아 `newBase.applicationContext`를 써야 하므로,
+     * 지연 초기화(`by lazy`)로는 같은 접근을 표현할 수 없다.
+     *
      * 읽어온 언어를 [appliedLanguage]에 기록해 두면, [onCreate]의 관찰자가
      * "지금 화면에 적용된 언어"와 "저장소의 최신 언어"를 정확히 비교할 수 있다.
      */
-    final override fun attachBaseContext(newBase: Context) {
+    override fun attachBaseContext(newBase: Context) {
         val entryPoint = EntryPointAccessors.fromApplication(
             newBase.applicationContext,
-            BaseActivityEntryPoint::class.java
+            MainActivityEntryPoint::class.java
         )
-        val language = entryPoint.settingsRepository().language.value
+        settingsRepository = entryPoint.settingsRepository()
+        val language = settingsRepository.language.value
         appliedLanguage = language
         super.attachBaseContext(LocaleHelper.wrap(newBase, language))
     }
 
-    /**
-     * 패딩을 적용할 WindowInsets를 반환
-     *
-     * 기본값: 상태바 + 네비게이션바 모두 적용
-     *
-     * 특정 Activity에서 다른 패딩 설정이 필요한 경우 오버라이드
-     */
-    @Composable
-    protected open fun getWindowInsets(): List<WindowInsets> {
-        return listOf(WindowInsets.statusBars, WindowInsets.navigationBars)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Hilt 필드 주입은 super.onCreate()에서 일어나므로
-        // settingsRepository를 사용하는 코드는 반드시 이 호출 이후에 와야 한다.
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         observeLanguageChange()
@@ -174,13 +85,16 @@ abstract class BaseActivity : ComponentActivity() {
         setContent {
             val isDarkMode by settingsRepository.darkMode.collectAsStateWithLifecycle()
 
-            StashTheme(darkTheme = isDarkMode) {
+            StashTheme(
+                darkTheme = isDarkMode
+            ) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .applyWindowInsets(getWindowInsets())
+                        .windowInsetsPadding(WindowInsets.statusBars)
+                        .windowInsetsPadding(WindowInsets.navigationBars)
                 ) {
-                    Screen()
+                    MainScreen()
                 }
             }
         }
@@ -239,15 +153,6 @@ abstract class BaseActivity : ComponentActivity() {
         // 다시 RESUMED가 됐을 때 언어가 여전히 어긋나 있으면 재시도할 수 있다.
         isRecreating = false
     }
-
-    private fun Modifier.applyWindowInsets(insets: List<WindowInsets>): Modifier {
-        return insets.fold(this) { modifier, inset ->
-            modifier.windowInsetsPadding(inset)
-        }
-    }
-
-    @Composable
-    abstract fun Screen()
 }
 
 /**
@@ -255,6 +160,6 @@ abstract class BaseActivity : ComponentActivity() {
  */
 @EntryPoint
 @InstallIn(SingletonComponent::class)
-interface BaseActivityEntryPoint {
+interface MainActivityEntryPoint {
     fun settingsRepository(): SettingsRepository
 }

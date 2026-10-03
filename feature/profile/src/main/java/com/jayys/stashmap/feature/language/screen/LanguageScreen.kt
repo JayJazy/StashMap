@@ -80,7 +80,7 @@ fun LanguageContent(
                 languages = uiState.availableLanguages,
                 selectedLanguage = uiState.selectedLanguage,
                 // 언어 저장은 비동기이므로 여기서 recreate()를 호출하지 않는다.
-                // 저장이 끝나 설정 상태가 실제로 바뀌면 BaseActivity가 스스로 재생성한다.
+                // 저장이 끝나 설정 상태가 실제로 바뀌면 MainActivity가 스스로 재생성한다.
                 onLanguageSelect = { language ->
                     if (language != uiState.selectedLanguage) {
                         onLanguageSelect(language)

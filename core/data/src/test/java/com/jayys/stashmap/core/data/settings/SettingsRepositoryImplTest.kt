@@ -22,7 +22,7 @@ import java.util.Locale
  * 이 저장소는 "저장(PreferenceStorage) + 상태(StateFlow)"를 **한 번의 호출로 둘 다** 수행하는
  * 단일 진실 공급원이다. 둘 중 하나라도 빠지면 다음 회귀가 재발한다.
  *
- * - 저장만 되고 상태가 안 바뀌면 → 구독 중인 `BaseActivity`가 recreate 되지 않아 화면이 안 바뀐다
+ * - 저장만 되고 상태가 안 바뀌면 → 구독 중인 `MainActivity`가 recreate 되지 않아 화면이 안 바뀐다
  * - 상태만 바뀌고 저장이 안 되면 → 앱을 재시작하거나 `attachBaseContext`가 옛 값을 읽는다
  *
  * 따라서 모든 쓰기 테스트는 **저장과 상태를 함께** 단언한다.
@@ -168,7 +168,7 @@ class SettingsRepositoryImplTest {
         repository.setLanguage(StashMapLanguage.ENGLISH)
         advanceUntilIdle()
 
-        // BaseActivity는 이 통지를 받아 recreate()를 호출한다.
+        // MainActivity는 이 통지를 받아 recreate()를 호출한다.
         assertEquals(listOf(StashMapLanguage.KOREAN, StashMapLanguage.ENGLISH), emitted)
     }
 

@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
  * 저장된 언어를 즉시 읽어야 하므로, 콜드 Flow가 아니라 상태를 보유하는 Flow가 요구사항이다.
  *
  * **구현 제약**: [darkMode]와 [language]는 구독자가 없어도 현재 값을 돌려주는
- * 상태 보유 Flow여야 한다. `BaseActivity.attachBaseContext`가 구독 없이 `.value`로
+ * 상태 보유 Flow여야 한다. 앱 셸 Activity의 `attachBaseContext`가 구독 없이 `.value`로
  * 현재 언어를 읽기 때문이다. [darkMode]도 마찬가지로, 첫 컴포지션이 `initialValue`로 그려지면
  * 테마가 한 번 깜빡인다.
  *

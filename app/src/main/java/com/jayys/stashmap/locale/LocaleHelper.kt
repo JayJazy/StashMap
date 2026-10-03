@@ -1,4 +1,4 @@
-package com.jayys.stashmap.base
+package com.jayys.stashmap.locale
 
 import android.content.Context
 import android.content.res.Configuration
