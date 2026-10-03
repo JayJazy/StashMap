@@ -75,7 +75,7 @@ private fun StashColors.toMaterialColorScheme(darkTheme: Boolean): ColorScheme {
 }
 
 /**
- * 현재 Stash 테마가 다크 모드인지 여부. core/ui 등 다른 모듈이 [LocalStashIsDarkTheme]
+ * 현재 Stash 테마가 다크 모드인지 여부. 다른 모듈이 [LocalStashIsDarkTheme]
  * (internal) 대신 사용한다.
  */
 val MaterialTheme.isStashDarkTheme: Boolean

@@ -10,8 +10,7 @@ private object FeatureLibraries {
     val coreModules = listOf(
         ":core:designsystem",
         ":core:domain",
-        ":core:model",
-        ":core:ui"
+        ":core:model"
     )
 
     // Platform dependencies (BOM)
