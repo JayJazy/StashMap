@@ -6,10 +6,16 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 
 private object KotlinJvmCoreLibraries {
+    // Api dependencies
+    // Repository 인터페이스가 Flow / StateFlow 를 공개 시그니처로 노출하므로
+    // 소비자가 별도 선언 없이 해당 타입을 쓸 수 있도록 api 로 전파한다.
+    val apiLibraries = listOf(
+        "kotlinx.coroutines.core"
+    )
+
     // Implementation dependencies
     val libraries = listOf(
-        "javax.inject",
-        "kotlinx.coroutines.core"
+        "javax.inject"
     )
 
     // Test dependencies
@@ -27,6 +33,11 @@ internal fun Project.applyKotlinJvmCoreDependencies() {
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
     dependencies {
+        // Api dependencies
+        KotlinJvmCoreLibraries.apiLibraries.forEach { libraryKey ->
+            add("api", libs.findLibrary(libraryKey).get())
+        }
+
         // Implementation dependencies
         KotlinJvmCoreLibraries.libraries.forEach { libraryKey ->
             add("implementation", libs.findLibrary(libraryKey).get())
