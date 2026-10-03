@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -33,6 +34,9 @@ fun MainBottomBar(
         modifier = modifier
             .fillMaxWidth()
             .background(MaterialTheme.stashColorTokens.surface)
+            // background 뒤에 적용해야 배경은 네비게이션 바 뒤까지 이어지고 콘텐츠만 그 위로 올라온다.
+            // Material3 Scaffold 는 bottomBar 에 인셋 패딩을 적용하지 않으므로 여기서 직접 처리한다.
+            .navigationBarsPadding()
             .padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically

@@ -5,14 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBars
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -88,14 +81,11 @@ class MainActivity : ComponentActivity() {
             StashTheme(
                 darkTheme = isDarkMode
             ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .windowInsetsPadding(WindowInsets.statusBars)
-                        .windowInsetsPadding(WindowInsets.navigationBars)
-                ) {
-                    MainScreen()
-                }
+                // 셸은 인셋을 소비하지 않는다.
+                // 루트에서 windowInsetsPadding 을 적용하면 인셋이 소비되어 하위 Scaffold 가
+                // 시스템 바 인셋을 0 으로 보게 되고, bottomBar 가 네비게이션 바 뒤까지
+                // 배경을 확장할 수 없다. 인셋은 Scaffold 와 각 화면이 직접 처리한다.
+                MainScreen()
             }
         }
     }
