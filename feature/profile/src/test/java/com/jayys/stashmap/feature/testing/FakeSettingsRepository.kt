@@ -31,6 +31,14 @@ class FakeSettingsRepository(
     var lastSetLanguage: StashMapLanguage? = null
         private set
 
+    /** `setDarkMode` 호출 횟수 */
+    var setDarkModeCallCount: Int = 0
+        private set
+
+    /** 마지막으로 전달된 다크 모드 값 — 미호출이면 null */
+    var lastSetDarkMode: Boolean? = null
+        private set
+
     override suspend fun setLanguage(language: StashMapLanguage) {
         setLanguageCallCount++
         lastSetLanguage = language
@@ -38,6 +46,8 @@ class FakeSettingsRepository(
     }
 
     override suspend fun setDarkMode(isDark: Boolean) {
+        setDarkModeCallCount++
+        lastSetDarkMode = isDark
         _darkMode.value = isDark
     }
 }
