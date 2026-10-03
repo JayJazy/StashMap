@@ -27,38 +27,14 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var settingsRepository: SettingsRepository
 
-    /**
-     * 이 Activity 인스턴스가 Locale 적용에 사용한 언어.
-     *
-     * [attachBaseContext]에서 Locale을 적용하는 시점에 기록되며,
-     * 이후 [SettingsRepository]의 최신 언어와 비교해 재생성이 필요한지 판단하는 기준이 된다.
-     */
+    /** Locale에 실제로 적용한 언어 — 저장소 최신 값과 비교할 기준 */
     private var appliedLanguage: StashMapLanguage? = null
 
-    /**
-     * 현재 RESUMED 구간에서 이미 재생성을 요청했는지 여부.
-     *
-     * [recreate]는 요청만 남기고 즉시 반환하므로, 재생성이 실제로 일어나기 전에
-     * 언어가 또 바뀌면 같은 인스턴스가 [recreate]를 중복 호출할 수 있다. 그것을 막는다.
-     *
-     * [onPause]에서 해제한다. 관찰자가 사는 `RESUMED` 구간과 경계를 정확히 맞추면,
-     * 다이얼로그나 분할화면처럼 `onStop` 없이 PAUSED에서 되돌아오는 경우에도 재시도가 가능하다. 인스턴스 수명 내내 잠가 두면 [recreate]가 반영되지 않았을 때
-     * 그 인스턴스가 옛 언어로 영구히 고착되어 복구 수단이 사라지기 때문이다.
-     */
+    /** recreate()는 요청만 큐잉 → 중복 호출 방지. onPause에서 해제 — 계속 잠가두면 옛 언어로 고착 */
     private var isRecreating = false
 
-    /**
-     * `attachBaseContext`는 `onCreate`보다 먼저 호출되어 Hilt 필드 주입이 아직 준비되지 않았다.
-     * 따라서 [EntryPointAccessors]로 Application의 Hilt 컴포넌트에서 직접 [SettingsRepository]를 얻어
-     * 현재 언어 스냅샷을 읽은 뒤 Locale을 적용한다.
-     *
-     * 이때 얻은 저장소는 [settingsRepository]에 보관해 이후 단계에서 재사용한다.
-     * 이 시점에는 `applicationContext`가 아직 준비되지 않아 `newBase.applicationContext`를 써야 하므로,
-     * 지연 초기화(`by lazy`)로는 같은 접근을 표현할 수 없다.
-     *
-     * 읽어온 언어를 [appliedLanguage]에 기록해 두면, [onCreate]의 관찰자가
-     * "지금 화면에 적용된 언어"와 "저장소의 최신 언어"를 정확히 비교할 수 있다.
-     */
+    // onCreate보다 먼저 호출 → Hilt 필드 주입 불가, EntryPoint로 직접 획득
+    // 이 시점엔 applicationContext 없음 → newBase 사용, by lazy로는 표현 불가
     override fun attachBaseContext(newBase: Context) {
         val entryPoint = EntryPointAccessors.fromApplication(
             newBase.applicationContext,
@@ -81,46 +57,18 @@ class MainActivity : ComponentActivity() {
             StashTheme(
                 darkTheme = isDarkMode
             ) {
-                // 셸은 인셋을 소비하지 않는다.
-                // 루트에서 windowInsetsPadding 을 적용하면 인셋이 소비되어 하위 Scaffold 가
-                // 시스템 바 인셋을 0 으로 보게 되고, bottomBar 가 네비게이션 바 뒤까지
-                // 배경을 확장할 수 없다. 인셋은 Scaffold 와 각 화면이 직접 처리한다.
+                // 셸에서 인셋 소비 금지 — 소비 시 MainBottomBar의 navigationBarsPadding()이 0이 돼
+                // 바텀바가 네비게이션바 뒤로 배경을 확장할 수 없음
                 MainScreen()
             }
         }
     }
 
-    /**
-     * 언어 설정 변경을 관찰해 Activity를 재생성한다.
-     *
-     * 언어는 테마와 달리 Compose 상태가 아니라 `Context`의 `Configuration`에 묶여 있어,
-     * 이미 만들어진 리소스에 새 Locale을 적용하려면 Activity 재생성이 필요하다.
-     *
-     * 재생성 시점을 **호출부가 직접 결정하지 않는 이유**:
-     * `SettingsRepository.setLanguage`는 suspend 함수라 저장 완료 시점이 비동기다.
-     * 화면에서 저장 요청 직후 `recreate()`를 호출하면 저장이 끝나기 전에 새 Activity가 만들어져
-     * `attachBaseContext`가 **이전 언어**를 읽는 경쟁 조건이 발생한다.
-     * 따라서 "저장이 끝나 상태가 실제로 바뀐 것"을 신호로 삼아 여기서만 재생성한다.
-     *
-     * 무한 루프가 생기지 않는 이유:
-     * 재생성된 새 인스턴스의 [attachBaseContext]가 최신 언어를 [appliedLanguage]에 기록하므로,
-     * 새 인스턴스의 관찰자가 같은 값을 받아도 조건이 더 이상 성립하지 않는다.
-     * 이는 [SettingsRepository]가 **구독자 없이도 현재 값을 돌려주는** 상태 보유 Flow라는 전제에 기댄다.
-     * 해당 제약은 [SettingsRepository] 문서에 명시되어 있다.
-     *
-     * `drop(1)` 대신 [appliedLanguage] 비교를 쓰는 이유:
-     * 방출 횟수가 아니라 "실제로 적용된 값"을 기준으로 판단하므로,
-     * 저장(I/O)이 끝나기 전에 앱이 백그라운드로 내려가 상태 변경이 RESUMED 밖에서 일어나도,
-     * 포그라운드로 돌아온 시점에 정확히 재생성된다.
-     * `drop(1)`이었다면 관찰이 재개될 때 들어오는 현재 값을 첫 방출로 여겨 흘려보낸다.
-     *
-     * `STARTED`가 아니라 `RESUMED`를 쓰는 이유:
-     * 다른 화면이 위에 떠 있어 보이기만 하는 상태에서 재생성하면 사용자에게 깜빡임이 보인다.
-     * 포그라운드에 완전히 올라온 뒤로 재생성을 미룬다.
-     * (`RESUMED`로 올려도 [lifecycleScope]가 `Main.immediate`인 이상 [recreate]는 여전히
-     * 생명주기 콜백 처리 도중 동기 호출된다. 상태 등급은 호출 시점을 옮길 뿐 그것을 없애지 못한다.
-     * [recreate]는 요청만 큐잉하고 즉시 반환하므로 이 동기 호출 자체는 문제가 되지 않는다.)
-     */
+    // 언어는 Configuration에 묶임 → Activity 재생성 필요
+    // setLanguage는 suspend → 화면에서 직접 recreate() 시 attachBaseContext가 이전 언어 읽음
+    // 저장 완료 후의 상태 변경을 재생성 신호로 사용
+    // drop(1) 대신 appliedLanguage 비교 — 백그라운드 변경 누락 방지
+    // RESUMED 사용 — STARTED면 다른 화면이 위에 있을 때 재생성돼 깜빡임 발생
     private fun observeLanguageChange() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
@@ -138,16 +86,11 @@ class MainActivity : ComponentActivity() {
 
     override fun onPause() {
         super.onPause()
-        // 재생성 요청은 현재 RESUMED 구간에서만 유효하다.
-        // 관찰자도 이 시점에 취소되므로 해제로 인한 재진입은 없고,
-        // 다시 RESUMED가 됐을 때 언어가 여전히 어긋나 있으면 재시도할 수 있다.
         isRecreating = false
     }
 }
 
-/**
- * `attachBaseContext`(Hilt 필드 주입 이전 시점)에서 Application 컴포넌트의 싱글톤에 접근하기 위한 EntryPoint.
- */
+/** attachBaseContext는 Hilt 주입 전 → Application 컴포넌트에서 직접 획득 */
 @EntryPoint
 @InstallIn(SingletonComponent::class)
 interface MainActivityEntryPoint {

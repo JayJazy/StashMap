@@ -3,9 +3,7 @@ package com.jayys.stashmap.core.designsystem.theme.stash
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-/**
- * Stash Design System 의 간격(spacing) 스케일. 4dp 그리드 기반.
- */
+/** Stash Design System 의 간격(spacing) 스케일 — 4dp 그리드 기반 */
 object StashSpacing {
     val s0: Dp = 0.dp
     val s1: Dp = 4.dp

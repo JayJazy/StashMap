@@ -3,10 +3,9 @@ package com.jayys.stashmap.core.designsystem.theme.stash
 import androidx.compose.ui.graphics.Color
 
 /**
- * Stash Design System 의 원시(primitive) 색상 팔레트.
+ * Stash Design System 의 원시(primitive) 색상 팔레트
  *
- * 이 값들은 디자인 시스템 내부 구현 세부사항이며, 외부에서는 직접 사용하지 않고
- * [StashColors] 의 시맨틱 별칭(semantic alias)을 통해 접근한다.
+ * DS 내부 구현 세부사항 — 외부에서 직접 사용 금지, [StashColors] 의 시맨틱 별칭으로 접근
  */
 internal object StashPrimitives {
 

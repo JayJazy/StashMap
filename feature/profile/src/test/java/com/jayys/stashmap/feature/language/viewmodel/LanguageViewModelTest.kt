@@ -16,12 +16,12 @@ import org.junit.Rule
 import org.junit.Test
 
 /**
- * [LanguageViewModel] 단위 테스트.
+ * [LanguageViewModel] 단위 테스트
  *
  * 검증 포인트 두 가지:
- * 1. `selectLanguage()`는 `launch { }` 기반이므로 **코루틴이 완료된 뒤에야** 상태가 반영된다.
- *    (완료 전에 읽는 것이 이번 언어 전환 회귀의 본질이었다)
- * 2. `uiState`는 `SharingStarted.WhileSubscribed`라서 **구독자가 있어야** 갱신된다.
+ * 1. `selectLanguage()` 는 `launch { }` 기반 → 코루틴 완료 뒤에야 상태 반영
+ *    (완료 전에 읽는 것이 언어 전환 회귀의 본질)
+ * 2. `uiState` 는 `SharingStarted.WhileSubscribed` → 구독자가 있어야 갱신
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 class LanguageViewModelTest {
@@ -39,8 +39,8 @@ class LanguageViewModelTest {
     }
 
     /**
-     * `uiState`는 `WhileSubscribed`이므로 구독자가 없으면 upstream이 돌지 않는다.
-     * 테스트 종료 시 자동 취소되는 [TestScope.backgroundScope]에서 수집을 시작해 둔다.
+     * `uiState` 는 `WhileSubscribed` → 구독자가 없으면 upstream 미동작
+     * 테스트 종료 시 자동 취소되는 [TestScope.backgroundScope] 에서 수집 시작
      */
     private fun TestScope.startCollectingUiState() {
         backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
@@ -59,8 +59,8 @@ class LanguageViewModelTest {
 
             viewModel.selectLanguage(StashMapLanguage.ENGLISH)
 
-            // launch { }가 아직 실행되지 않은 시점 — 이때 읽으면 옛 값이 보인다.
-            // (저장 직후 동기로 recreate()를 호출해 언어가 안 바뀌던 회귀의 원인)
+            // launch { } 미실행 시점 — 이때 읽으면 옛 값
+            // (저장 직후 동기로 recreate() 를 호출해 언어가 안 바뀌던 회귀의 원인)
             assertEquals(StashMapLanguage.KOREAN, viewModel.selectedLanguage.value)
 
             advanceUntilIdle()
@@ -93,7 +93,7 @@ class LanguageViewModelTest {
     @Test
     fun `selectedLanguage는 저장소의 언어 상태를 그대로 노출한다`() =
         runTest(mainDispatcherRule.testDispatcher) {
-            // ViewModel이 별도 사본을 들지 않고 저장소(단일 진실 공급원)를 그대로 본다.
+            // ViewModel 이 별도 사본 없이 저장소(단일 진실 공급원)를 그대로 참조
             assertEquals(settingsRepository.language.value, viewModel.selectedLanguage.value)
 
             settingsRepository.setLanguage(StashMapLanguage.ENGLISH)
@@ -118,7 +118,7 @@ class LanguageViewModelTest {
     @Test
     fun `구독자가 없으면 uiState는 갱신되지 않는다`() =
         runTest(mainDispatcherRule.testDispatcher) {
-            // WhileSubscribed 특성상 수집을 시작하지 않으면 초기값에 머무른다.
+            // WhileSubscribed 특성 — 수집을 시작하지 않으면 초기값에 머무름
             viewModel.onSearchQueryChange("한국")
             advanceUntilIdle()
 

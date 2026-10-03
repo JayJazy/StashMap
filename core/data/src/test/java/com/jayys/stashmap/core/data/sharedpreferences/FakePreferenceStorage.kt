@@ -4,14 +4,13 @@ import com.jayys.stashmap.core.domain.sharedpreferences.PreferenceStorage
 import java.util.concurrent.ConcurrentHashMap
 
 /**
- * 테스트용 인메모리 [PreferenceStorage] 구현.
+ * 테스트용 인메모리 [PreferenceStorage] 구현
  *
- * [PreferenceStorageImpl]의 계약을 그대로 흉내 낸다.
- * - `getString`은 값이 없으면 빈 문자열을 반환한다 (null 아님)
- * - 나머지 getter는 값이 없으면 null을 반환한다
+ * [PreferenceStorageImpl] 의 계약을 그대로 모사:
+ * - `getString` 은 값이 없으면 빈 문자열 반환 (null 아님)
+ * - 나머지 getter 는 값이 없으면 null 반환
  *
- * 쓰기는 `Dispatchers.IO`에서, 읽기는 테스트 스레드에서 일어나므로
- * 스레드 간 가시성을 보장하기 위해 [ConcurrentHashMap]을 사용한다.
+ * 쓰기는 `Dispatchers.IO`, 읽기는 테스트 스레드 → 스레드 간 가시성 위해 [ConcurrentHashMap] 사용
  */
 class FakePreferenceStorage(
     initialValues: Map<String, Any> = emptyMap()
@@ -19,7 +18,7 @@ class FakePreferenceStorage(
 
     private val values = ConcurrentHashMap<String, Any>(initialValues)
 
-    /** 테스트에서 "실제로 저장됐는지"를 단언하기 위한 스냅샷. */
+    /** 테스트에서 "실제로 저장됐는지" 단언용 스냅샷 */
     val savedValues: Map<String, Any> get() = values.toMap()
 
     override fun getString(key: String): String = values[key] as? String ?: ""

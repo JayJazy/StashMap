@@ -13,13 +13,12 @@ import java.util.Locale
 import javax.inject.Inject
 
 /**
- * [SettingsRepository]의 구현.
+ * [SettingsRepository] 구현
  *
- * 저장된 값을 메모리 상태로 보유하는 **단일 진실 공급원(Single Source of Truth)**이며,
- * 영속화는 [PreferenceStorage]에, 키/타입 매핑은 이 클래스가 담당한다.
- * 저장과 상태 갱신을 한 곳에서만 수행하므로 이중 쓰기(split-brain)가 발생하지 않는다.
- *
- * 싱글톤으로 주입되어야 상태가 앱 전역에서 공유된다.
+ * - 저장된 값을 메모리 상태로 보유하는 단일 진실 공급원
+ * - 영속화는 [PreferenceStorage], 키/타입 매핑은 이 클래스
+ * - 저장과 상태 갱신을 한 곳에서만 수행 → 이중 쓰기(split-brain) 없음
+ * - 싱글톤 주입 필수 — 아니면 상태가 앱 전역에서 공유되지 않음
  */
 class SettingsRepositoryImpl @Inject constructor(
     private val storage: PreferenceStorage

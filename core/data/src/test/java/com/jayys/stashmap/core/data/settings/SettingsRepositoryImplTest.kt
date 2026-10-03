@@ -17,15 +17,15 @@ import org.junit.Test
 import java.util.Locale
 
 /**
- * [SettingsRepositoryImpl] 단위 테스트.
+ * [SettingsRepositoryImpl] 단위 테스트
  *
- * 이 저장소는 "저장(PreferenceStorage) + 상태(StateFlow)"를 **한 번의 호출로 둘 다** 수행하는
- * 단일 진실 공급원이다. 둘 중 하나라도 빠지면 다음 회귀가 재발한다.
+ * 이 저장소는 "저장(PreferenceStorage) + 상태(StateFlow)" 를 한 번의 호출로 둘 다 수행하는 단일 진실 공급원
+ * 둘 중 하나라도 빠지면 회귀 재발:
  *
- * - 저장만 되고 상태가 안 바뀌면 → 구독 중인 `MainActivity`가 recreate 되지 않아 화면이 안 바뀐다
- * - 상태만 바뀌고 저장이 안 되면 → 앱을 재시작하거나 `attachBaseContext`가 옛 값을 읽는다
+ * - 저장만 되고 상태가 안 바뀜 → 구독 중인 `MainActivity` 가 recreate 되지 않아 화면 그대로
+ * - 상태만 바뀌고 저장이 안 됨 → 앱 재시작 시 `attachBaseContext` 가 옛 값을 읽음
  *
- * 따라서 모든 쓰기 테스트는 **저장과 상태를 함께** 단언한다.
+ * 따라서 모든 쓰기 테스트는 저장과 상태를 함께 단언
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 class SettingsRepositoryImplTest {
@@ -34,7 +34,7 @@ class SettingsRepositoryImplTest {
 
     @Before
     fun setUp() {
-        // systemDefault()가 Locale.getDefault()에 의존하므로 테스트를 결정적으로 만든다.
+        // systemDefault() 가 Locale.getDefault() 에 의존 → 테스트를 결정적으로 고정
         originalLocale = Locale.getDefault()
         Locale.setDefault(Locale.KOREAN)
     }
@@ -63,7 +63,7 @@ class SettingsRepositoryImplTest {
     fun `저장된 언어 코드가 없으면 초기 language는 시스템 기본 언어다`() {
         val repository = SettingsRepositoryImpl(FakePreferenceStorage())
 
-        // setUp에서 시스템 로케일을 ko로 고정했다.
+        // setUp 에서 시스템 로케일을 ko 로 고정
         assertEquals(StashMapLanguage.KOREAN, repository.language.value)
     }
 
@@ -106,7 +106,7 @@ class SettingsRepositoryImplTest {
             FakePreferenceStorage(mapOf(SharedPreferenceKeys.KEY_LANGUAGE to StashMapLanguage.KOREAN.code))
         )
 
-        // setLanguage 내부의 withContext(Dispatchers.IO)가 끝날 때까지 실제로 대기한다.
+        // setLanguage 내부 withContext(Dispatchers.IO) 완료까지 실제 대기
         repository.setLanguage(StashMapLanguage.ENGLISH)
 
         assertEquals(StashMapLanguage.ENGLISH, repository.language.value)
@@ -131,7 +131,7 @@ class SettingsRepositoryImplTest {
 
         repository.setLanguage(StashMapLanguage.ENGLISH)
 
-        // 둘 중 하나만 통과하면 언어 전환 회귀가 재발하므로 반드시 함께 단언한다.
+        // 하나만 통과하면 언어 전환 회귀 재발 → 반드시 함께 단언
         assertEquals(
             "영속화가 누락되면 attachBaseContext가 옛 언어를 읽는다",
             StashMapLanguage.ENGLISH.code,
@@ -149,7 +149,7 @@ class SettingsRepositoryImplTest {
         val storage = FakePreferenceStorage()
         SettingsRepositoryImpl(storage).setLanguage(StashMapLanguage.ENGLISH)
 
-        // Activity recreate / 앱 재시작 시나리오: 저장소를 새로 만들어도 값이 살아 있어야 한다.
+        // Activity recreate / 앱 재시작 시나리오 — 저장소를 새로 만들어도 값이 살아 있어야 함
         val recreated = SettingsRepositoryImpl(storage)
 
         assertEquals(StashMapLanguage.ENGLISH, recreated.language.value)
@@ -168,7 +168,7 @@ class SettingsRepositoryImplTest {
         repository.setLanguage(StashMapLanguage.ENGLISH)
         advanceUntilIdle()
 
-        // MainActivity는 이 통지를 받아 recreate()를 호출한다.
+        // MainActivity 는 이 통지를 받아 recreate() 호출
         assertEquals(listOf(StashMapLanguage.KOREAN, StashMapLanguage.ENGLISH), emitted)
     }
 
@@ -185,7 +185,7 @@ class SettingsRepositoryImplTest {
         repository.setLanguage(StashMapLanguage.KOREAN)
         advanceUntilIdle()
 
-        // 같은 값이면 StateFlow가 통지하지 않으므로 불필요한 recreate 루프가 생기지 않는다.
+        // 같은 값이면 StateFlow 가 통지하지 않음 → 불필요한 recreate 루프 없음
         assertEquals(listOf(StashMapLanguage.KOREAN), emitted)
     }
 

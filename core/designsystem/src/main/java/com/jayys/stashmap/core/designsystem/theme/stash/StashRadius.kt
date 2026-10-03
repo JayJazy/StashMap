@@ -5,10 +5,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 /**
- * Stash Design System 의 코너 반경(radius) 토큰.
+ * Stash Design System 의 코너 반경(radius) 토큰
  *
- * 각 토큰은 [Dp] 원시값(`*Dp`)과 바로 쓸 수 있는 [RoundedCornerShape] 를 모두 제공한다.
- * `full` 은 완전한 알약/원형 형태를 위해 [RoundedCornerShape]`(percent = 50)` 으로 노출한다.
+ * - 토큰마다 [Dp] 원시값(`*Dp`) + [RoundedCornerShape] 둘 다 제공
+ * - `full` 은 알약/원형용으로 [RoundedCornerShape]`(percent = 50)`
  */
 object StashRadius {
     val xsDp: Dp = 6.dp

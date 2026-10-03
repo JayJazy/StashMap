@@ -34,8 +34,7 @@ fun MainBottomBar(
         modifier = modifier
             .fillMaxWidth()
             .background(MaterialTheme.stashColorTokens.surface)
-            // background 뒤에 적용해야 배경은 네비게이션 바 뒤까지 이어지고 콘텐츠만 그 위로 올라온다.
-            // Material3 Scaffold 는 bottomBar 에 인셋 패딩을 적용하지 않으므로 여기서 직접 처리한다.
+            // Scaffold 는 bottomBar 에 인셋 미적용 — background 뒤에 둬야 배경만 네비바 뒤로 이어짐
             .navigationBarsPadding()
             .padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
@@ -58,7 +57,7 @@ fun MainBottomBar(
             ) {
                 Icon(
                     painter = painterResource(id = DesignSystemR.drawable.ico_home),
-                    // 라벨 Text 가 같은 의미를 전달하므로 아이콘은 장식으로 둔다 (중복 낭독 방지)
+                    // 라벨 Text 가 같은 의미 전달 → 아이콘은 장식 (중복 낭독 방지)
                     contentDescription = null,
                     tint = if (selected) {
                         MaterialTheme.stashColorTokens.accent

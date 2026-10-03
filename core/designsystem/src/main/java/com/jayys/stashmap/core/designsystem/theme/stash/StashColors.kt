@@ -6,10 +6,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.lerp
 
 /**
- * Stash Design System 의 시맨틱 색상 토큰.
+ * Stash Design System 의 시맨틱 색상 토큰
  *
- * 원시 색상([StashPrimitives])을 역할(role) 기반 별칭으로 노출한다.
- * 라이트/다크 두 가지 인스턴스가 존재하며, [StashTheme] 를 통해 [LocalStashColors] 로 제공된다.
+ * - 원시 색상([StashPrimitives])을 역할(role) 기반 별칭으로 노출
+ * - 라이트/다크 두 인스턴스, [StashTheme] 가 [LocalStashColors] 로 제공
  *
  * 사용 예시:
  * ```kotlin
@@ -71,9 +71,7 @@ data class StashColors(
     val gold500: Color,
 )
 
-/**
- * 라이트 테마 시맨틱 색상.
- */
+/** 라이트 테마 시맨틱 색상 */
 val LightStashColors: StashColors = StashColors(
     bg = StashPrimitives.Slate50,
     surface = StashPrimitives.Slate0,
@@ -119,10 +117,10 @@ val LightStashColors: StashColors = StashColors(
 )
 
 /**
- * 다크 테마 시맨틱 색상.
+ * 다크 테마 시맨틱 색상
  *
- * CSS 의 `color-mix(in srgb, A p%, B)` 는 `A` 를 `p%`, `B` 를 `(1-p)%` 섞는 것이므로
- * Compose 의 [lerp]`(start = B, stop = A, fraction = p/100)` 로 환산해 사전 계산한다.
+ * CSS `color-mix(in srgb, A p%, B)` = A 를 p%, B 를 (1-p)%
+ * → Compose [lerp]`(start = B, stop = A, fraction = p/100)` 로 환산해 사전 계산
  */
 val DarkStashColors: StashColors = StashColors(
     bg = StashPrimitives.Slate950,
@@ -168,7 +166,5 @@ val DarkStashColors: StashColors = StashColors(
     gold500 = StashPrimitives.Gold500,
 )
 
-/**
- * 현재 컴포지션의 Stash 색상 토큰. 기본값은 [LightStashColors].
- */
+/** 현재 컴포지션의 Stash 색상 토큰 — 기본값 [LightStashColors] */
 val LocalStashColors = staticCompositionLocalOf { LightStashColors }

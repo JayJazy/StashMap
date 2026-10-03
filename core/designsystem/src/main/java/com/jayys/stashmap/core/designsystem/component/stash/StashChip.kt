@@ -28,10 +28,10 @@ import com.jayys.stashmap.core.designsystem.theme.stash.StashTheme
 import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 
 /**
- * Stash Design System 칩.
+ * Stash Design System 칩
  *
- * 기본은 chipBg/chipFg, 선택 시 accentSubtle/accentSubtleFg 를 사용한다.
- * full 반경의 알약 형태이며 [onClick] 이 있을 때만 클릭 가능하다.
+ * - 기본 chipBg/chipFg, 선택 시 accentSubtle/accentSubtleFg
+ * - full 반경 알약 형태, [onClick] 이 있을 때만 클릭 가능
  *
  * @param label 칩 라벨
  * @param selected 선택 상태

@@ -29,10 +29,10 @@ import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
 
 /**
- * Stash Design System 텍스트 필드.
+ * Stash Design System 텍스트 필드
  *
- * Material3 스타일을 피하기 위해 [BasicTextField] 위에 토큰 기반 데코레이션을 직접 구성한다.
- * 포커스 시 accent 보더 + accentRing, 에러 시 error 보더 + errorSubtleFg 보조 텍스트를 적용한다.
+ * - Material3 스타일 회피 → [BasicTextField] 위에 토큰 기반 데코레이션 직접 구성
+ * - 포커스 시 accent 보더 + accentRing / 에러 시 error 보더 + errorSubtleFg 보조 텍스트
  *
  * @param value 현재 입력값
  * @param onValueChange 입력 변경 콜백
@@ -87,7 +87,7 @@ fun StashTextField(
             modifier = Modifier
                 .clip(StashRadius.md)
                 .background(if (enabled) colors.fieldBg else colors.surface2)
-                // 포커스 링: 바깥쪽 옅은 보더로 표현
+                // 포커스 링 — 바깥쪽 옅은 보더로 표현
                 .border(width = if (focused && !isError) 3.dp else 0.dp, color = ringColor, shape = StashRadius.md)
                 .border(width = borderWidth, color = borderColor, shape = StashRadius.md)
                 .defaultMinSize(minHeight = 44.dp),

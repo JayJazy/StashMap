@@ -24,9 +24,9 @@ import com.jayys.stashmap.core.designsystem.theme.stash.StashTheme
 import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 
 /**
- * Stash Design System 아바타.
+ * Stash Design System 아바타
  *
- * 원형 클립. [painter] 가 있으면 이미지를, 없으면 accentSubtle 배경 + accentSubtleFg 이니셜을 표시한다.
+ * 원형 클립 — [painter] 있으면 이미지, 없으면 accentSubtle 배경 + accentSubtleFg 이니셜
  *
  * @param painter 표시할 이미지 (선택)
  * @param initials 이미지가 없을 때 표시할 이니셜
