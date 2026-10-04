@@ -38,15 +38,23 @@ private object AndroidComposeCoreLibraries {
         "kotlinx.coroutines.test"
     )
 
+    // Android test platform (BOM) — Compose UI 테스트도 같은 BOM 을 따라야 버전이 어긋나지 않음
+    val androidTestPlatforms = listOf(
+        "androidx.compose.bom"
+    )
+
     // Android test dependencies
     val androidTestLibraries = listOf(
         "androidx.junit",
-        "androidx.espresso.core"
+        "androidx.espresso.core",
+        "androidx.compose.ui.test.junit4"
     )
 
     // Debug implementation dependencies
     val debugLibraries = listOf(
-        "androidx.compose.ui.tooling"
+        "androidx.compose.ui.tooling",
+        // createComposeRule 이 띄울 빈 Activity 를 디버그 매니페스트에 넣어줌
+        "androidx.compose.ui.test.manifest"
     )
 }
 
@@ -76,6 +84,11 @@ internal fun Project.applyAndroidComposeCoreDependencies() {
         // Test dependencies
         AndroidComposeCoreLibraries.testLibraries.forEach { libraryKey ->
             add("testImplementation", libs.findLibrary(libraryKey).get())
+        }
+
+        // Android test platform dependencies (BOM)
+        AndroidComposeCoreLibraries.androidTestPlatforms.forEach { platformKey ->
+            add("androidTestImplementation", platform(libs.findLibrary(platformKey).get()))
         }
 
         // Android test library dependencies
