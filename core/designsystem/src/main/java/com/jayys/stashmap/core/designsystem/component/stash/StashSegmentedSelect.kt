@@ -21,12 +21,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.foundation.selection.toggleable
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jayys.stashmap.core.designsystem.icon.StashIcons
+import com.jayys.stashmap.core.designsystem.modifier.toggleableNoRipple
 import com.jayys.stashmap.core.designsystem.theme.stash.StashIconSize
 import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
 import com.jayys.stashmap.core.designsystem.theme.stash.StashSpacing
@@ -98,11 +98,7 @@ private fun SegmentCell(
                 color = if (selected) colors.accent else colors.border,
                 shape = StashRadius.md,
             )
-            .toggleable(
-                value = selected,
-                role = Role.Checkbox,
-                onValueChange = { onClick() },
-            )
+            .toggleableNoRipple(value = selected, role = Role.Checkbox) { onClick() }
             .padding(horizontal = StashSpacing.s3, vertical = StashSpacing.s2),
         horizontalArrangement = Arrangement.spacedBy(StashSpacing.s2, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,

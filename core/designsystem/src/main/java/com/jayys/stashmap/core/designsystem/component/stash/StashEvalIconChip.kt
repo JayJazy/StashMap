@@ -49,7 +49,7 @@ enum class StashEvalChipSize(internal val box: Dp, internal val icon: Dp, intern
  *
  * @param state 표시할 평가 상태
  * @param size 칩 크기 단계
- * @param contentDescription 접근성 설명 — 옆에 같은 라벨을 따로 그리는 자리에서는 null 로 꺼서 중복 announce 를 막을 것
+ * @param contentDescription 접근성 설명 — 기본은 상태 라벨. 옆에 같은 라벨을 따로 그리는 자리에서는 null 을 명시해 중복 announce 를 막을 것
  * @param onClick 클릭 콜백 (null 이면 표시 전용)
  */
 @Composable
@@ -57,11 +57,10 @@ fun StashEvalIconChip(
     state: StashEvalState,
     modifier: Modifier = Modifier,
     size: StashEvalChipSize = StashEvalChipSize.Md,
-    contentDescription: String? = null,
+    contentDescription: String? = state.style.label,
     onClick: (() -> Unit)? = null,
 ) {
     val style = state.style
-    val description = contentDescription ?: style.label
 
     // 클릭 가능하면 칩 크기는 그대로 두고 터치 타깃만 48dp 로 넓힘
     val touchTarget = if (onClick == null) {
@@ -73,7 +72,7 @@ fun StashEvalIconChip(
     }
 
     Box(modifier = modifier.then(touchTarget), contentAlignment = Alignment.Center) {
-        EvalChipBox(style = style, size = size, contentDescription = description)
+        EvalChipBox(style = style, size = size, contentDescription = contentDescription)
     }
 }
 
@@ -98,7 +97,6 @@ private fun EvalChipBox(
         )
     }
 }
-
 
 @Composable
 private fun StashEvalIconChipShowcase() {

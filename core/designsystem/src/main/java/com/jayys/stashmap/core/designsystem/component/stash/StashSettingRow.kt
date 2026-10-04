@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jayys.stashmap.core.designsystem.icon.StashIcons
 import com.jayys.stashmap.core.designsystem.modifier.clickableNoRipple
+import com.jayys.stashmap.core.designsystem.modifier.toggleableNoRipple
 import com.jayys.stashmap.core.designsystem.theme.stash.StashIconSize
 import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
 import com.jayys.stashmap.core.designsystem.theme.stash.StashSpacing
@@ -39,8 +40,8 @@ import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 /**
  * 설정 목록의 한 줄 — 아이콘 타일 + 라벨 + 현재 값
  *
- * [trailing] 을 주면 값·화살표 대신 그 슬롯이 들어감 (스위치 등).
- * 스위치를 넣을 때는 행 전체 클릭과 스위치 클릭이 겹치지 않게 [onClick] 을 비우는 편이 낫다
+ * [trailing] 을 주면 값·화살표 대신 그 슬롯이 들어감.
+ * 스위치가 필요하면 [StashSwitchRow] 를 쓸 것 — 여기에 Switch 를 직접 넣으면 시맨틱이 어긋난다
  *
  * @param label 설정 이름
  * @param icon 라벨 앞 아이콘 (선택)
@@ -123,6 +124,37 @@ fun StashSettingRow(
     }
 }
 
+/**
+ * 스위치가 달린 설정 행
+ *
+ * 행 전체가 하나의 토글이라 스위치만 따로 누를 필요가 없고, TalkBack 도 "라벨, 스위치, 켜짐" 으로 한 번에 읽음
+ *
+ * @param label 설정 이름
+ * @param checked 켜짐 여부
+ * @param onCheckedChange 토글 콜백
+ * @param icon 라벨 앞 아이콘 (선택)
+ */
+@Composable
+fun StashSwitchRow(
+    label: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+    icon: ImageVector? = null,
+) {
+    StashSettingRow(
+        label = label,
+        modifier = modifier.toggleableNoRipple(
+            value = checked,
+            role = Role.Switch,
+            onValueChange = onCheckedChange,
+        ),
+        icon = icon,
+        // 토글 시맨틱은 행이 갖는다 — 스위치는 그림만
+        trailing = { Switch(checked = checked, onCheckedChange = null) },
+    )
+}
+
 private val SettingIconTileSize = 36.dp
 
 @Composable
@@ -139,10 +171,11 @@ private fun StashSettingRowShowcase() {
                 onClick = {},
             )
             HorizontalDivider(thickness = 1.dp, color = colors.divider)
-            StashSettingRow(
+            StashSwitchRow(
                 label = "다크 모드",
+                checked = dark,
+                onCheckedChange = { dark = it },
                 icon = StashIcons.Moon,
-                trailing = { Switch(checked = dark, onCheckedChange = { dark = it }) },
             )
         }
     }

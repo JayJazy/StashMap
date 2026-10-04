@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,11 +18,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.selected
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jayys.stashmap.core.designsystem.modifier.clickableNoRipple
+import com.jayys.stashmap.core.designsystem.modifier.selectableNoRipple
 import com.jayys.stashmap.core.designsystem.theme.stash.StashIconSize
 import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
 import com.jayys.stashmap.core.designsystem.theme.stash.StashSpacing
@@ -52,13 +51,13 @@ fun StashChip(
     val content = if (selected) colors.accent else colors.chipFg
 
     val base = modifier
+        .minimumInteractiveComponentSize()
         .defaultMinSize(minHeight = MinHeight)
         .clip(StashRadius.full)
         .background(if (selected) Color.Transparent else colors.chipBg)
         .let { if (selected) it.border(1.5.dp, colors.accent, StashRadius.full) else it }
-        .semantics { this.selected = selected }
     val withClick = if (onClick != null) {
-        base.clickableNoRipple(role = Role.Button, onClick = onClick)
+        base.selectableNoRipple(selected = selected, role = Role.Button, onClick = onClick)
     } else {
         base
     }
@@ -78,13 +77,13 @@ fun StashChip(
         }
         StashText(
             text = label,
-            role = if (selected) StashTextRole.LabelStrong else StashTextRole.Label,
+            role = StashTextRole.Label,
             color = content,
         )
     }
 }
 
-/** 칩은 작아도 누를 수 있어야 해서 최소 높이를 둔다 */
+/** 보이는 높이. 터치 타깃은 minimumInteractiveComponentSize 가 48dp 로 보장 */
 private val MinHeight = 40.dp
 
 @Composable

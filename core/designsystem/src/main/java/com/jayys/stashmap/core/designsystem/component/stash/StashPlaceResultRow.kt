@@ -16,13 +16,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.selected
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jayys.stashmap.core.designsystem.icon.StashIcons
-import com.jayys.stashmap.core.designsystem.modifier.clickableNoRipple
+import com.jayys.stashmap.core.designsystem.modifier.selectableNoRipple
 import com.jayys.stashmap.core.designsystem.theme.stash.StashIconSize
 import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
 import com.jayys.stashmap.core.designsystem.theme.stash.StashSpacing
@@ -59,8 +57,7 @@ fun StashPlaceResultRow(
             .fillMaxWidth()
             .defaultMinSize(minHeight = 64.dp)
             .background(if (selected) colors.accentSubtle else colors.surface)
-            .clickableNoRipple(role = Role.Button, onClick = onClick)
-            .semantics { this.selected = selected }
+            .selectableNoRipple(selected = selected, role = Role.RadioButton, onClick = onClick)
             .padding(horizontal = StashSpacing.s4, vertical = StashSpacing.s3),
         horizontalArrangement = Arrangement.spacedBy(StashSpacing.s3),
         verticalAlignment = Alignment.CenterVertically,

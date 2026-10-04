@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.jayys.stashmap.core.designsystem.icon.StashIcons
 import com.jayys.stashmap.core.designsystem.modifier.clickableNoRipple
 import com.jayys.stashmap.core.designsystem.theme.stash.StashIconSize
+import com.jayys.stashmap.core.designsystem.theme.stash.StashMinTouchTarget
 import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
 import com.jayys.stashmap.core.designsystem.theme.stash.StashSpacing
 import com.jayys.stashmap.core.designsystem.theme.stash.StashTextRole
@@ -53,7 +54,7 @@ fun StashTapRow(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .defaultMinSize(minHeight = 44.dp)
+            .defaultMinSize(minHeight = StashMinTouchTarget)
             .clip(StashRadius.md)
             .background(colors.fieldBg)
             .border(1.dp, colors.fieldBorder, StashRadius.md)

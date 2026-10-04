@@ -13,12 +13,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.selected
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jayys.stashmap.core.designsystem.modifier.clickableNoRipple
+import com.jayys.stashmap.core.designsystem.modifier.selectableNoRipple
 import com.jayys.stashmap.core.designsystem.theme.stash.StashEvalState
 import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
 import com.jayys.stashmap.core.designsystem.theme.stash.StashSpacing
@@ -97,8 +95,7 @@ private fun StatCell(
         )
     val withClick = if (onClick != null) {
         base
-            .clickableNoRipple(role = Role.Button, onClick = onClick)
-            .semantics { this.selected = selected }
+            .selectableNoRipple(selected = selected, role = Role.Button, onClick = onClick)
     } else {
         base
     }

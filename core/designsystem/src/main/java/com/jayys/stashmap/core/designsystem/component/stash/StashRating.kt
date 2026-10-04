@@ -120,7 +120,6 @@ fun StashRating(
     }
 }
 
-
 /** [canvasSize] 에 내접하는 5각 별 [Path] 생성 */
 private fun DrawScope.starPath(canvasSize: Size): Path {
     val cx = canvasSize.width / 2f

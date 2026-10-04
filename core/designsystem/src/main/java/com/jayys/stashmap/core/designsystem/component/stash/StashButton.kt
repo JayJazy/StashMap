@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -56,7 +57,7 @@ enum class StashButtonSize(
     internal val horizontalPadding: Dp,
     internal val iconSize: Dp,
 ) {
-    /** 카드 안 보조 액션 — 권장 터치 타깃 48dp 보다 작으니 조밀한 자리에만 */
+    /** 카드 안 보조 액션 — 보이는 높이만 작고 터치 타깃은 48dp 로 유지됨 */
     Sm(minHeight = 36.dp, horizontalPadding = StashSpacing.s3, iconSize = StashIconSize.xs),
 
     /** 기본 */
@@ -148,6 +149,7 @@ fun StashButton(
 
     Row(
         modifier = modifier
+            .minimumInteractiveComponentSize()
             .defaultMinSize(minHeight = size.minHeight)
             .clip(StashRadius.md)
             .background(container)
