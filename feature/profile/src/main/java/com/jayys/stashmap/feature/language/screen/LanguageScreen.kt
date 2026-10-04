@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.jayys.stashmap.component.SMTopBar
+import com.jayys.stashmap.core.designsystem.component.legacy.SMTopBar
 import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 import com.jayys.stashmap.core.model.StashMapLanguage
 import com.jayys.stashmap.feature.language.model.LanguageUiState
@@ -79,8 +79,8 @@ fun LanguageContent(
             LanguageSelectionItem(
                 languages = uiState.availableLanguages,
                 selectedLanguage = uiState.selectedLanguage,
-                // 언어 저장은 비동기이므로 여기서 recreate()를 호출하지 않는다.
-                // 저장이 끝나 설정 상태가 실제로 바뀌면 BaseActivity가 스스로 재생성한다.
+                // 언어 저장은 비동기 → 여기서 recreate() 호출 금지
+                // 저장 완료로 설정 상태가 바뀌면 MainActivity 가 스스로 재생성
                 onLanguageSelect = { language ->
                     if (language != uiState.selectedLanguage) {
                         onLanguageSelect(language)

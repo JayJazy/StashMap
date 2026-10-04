@@ -25,9 +25,7 @@ import com.jayys.stashmap.core.designsystem.theme.stash.StashTheme
 import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 import com.jayys.stashmap.core.designsystem.theme.stash.stashShadow
 
-/**
- * Stash 토스트 변형.
- */
+/** Stash 토스트 변형 */
 enum class StashToastVariant { Neutral, Success, Warning, Error, Info }
 
 private data class StashToastColors(
@@ -76,10 +74,11 @@ private fun StashToastVariant.colors(colors: StashColors): StashToastColors = wh
 }
 
 /**
- * Stash Design System 토스트.
+ * Stash Design System 토스트
  *
- * Neutral 은 surface/fg + border 를, 그 외 변형은 *Subtle 배경 + *SubtleFg 텍스트를 사용한다.
- * md 반경과 md 그림자를 적용하며, [actionLabel] 이 있으면 우측에 액션 텍스트를 노출한다.
+ * - Neutral 은 surface/fg + border, 그 외 변형은 *Subtle 배경 + *SubtleFg 텍스트
+ * - md 반경 + md 그림자
+ * - [actionLabel] 이 있으면 우측에 액션 텍스트 노출
  *
  * @param message 토스트 메시지
  * @param variant 시각 변형 (기본 [StashToastVariant.Neutral])

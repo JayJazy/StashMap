@@ -34,26 +34,22 @@ import com.jayys.stashmap.core.designsystem.theme.stash.StashTextRole
 import com.jayys.stashmap.core.designsystem.theme.stash.StashTheme
 import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 
-/**
- * Stash 버튼의 시각 변형(variant).
- */
+/** Stash 버튼의 시각 변형(variant) */
 enum class StashButtonVariant {
-    /** 강조 액션. accent 배경 + accentFg 텍스트. */
+    /** 강조 액션 — accent 배경 + accentFg 텍스트 */
     Primary,
 
-    /** 보조 액션. surface 배경 + border + fg 텍스트. */
+    /** 보조 액션 — surface 배경 + border + fg 텍스트 */
     Secondary,
 
-    /** 약한 액션. 투명 배경 + accent 텍스트. */
+    /** 약한 액션 — 투명 배경 + accent 텍스트 */
     Ghost,
 
-    /** 파괴적 액션. error 배경 + errorFg 텍스트. */
+    /** 파괴적 액션 — error 배경 + errorFg 텍스트 */
     Destructive,
 }
 
-/**
- * 버튼 변형에 따른 색상 묶음.
- */
+/** 버튼 변형별 색상 묶음 */
 private data class StashButtonColors(
     val container: Color,
     val containerPressed: Color,
@@ -104,14 +100,14 @@ private fun StashButtonVariant.colors(colors: StashColors, enabled: Boolean): St
 }
 
 /**
- * Stash Design System 버튼.
+ * Stash Design System 버튼
  *
  * @param text 버튼 라벨
  * @param onClick 클릭 콜백
  * @param variant 시각 변형 (기본 [StashButtonVariant.Primary])
  * @param enabled 활성화 여부
  * @param leadingIcon 텍스트 앞 아이콘 (선택)
- * @param loading 로딩 상태. true 면 라벨 대신 인디케이터 표시 및 클릭 비활성
+ * @param loading 로딩 상태 — true 면 라벨 대신 인디케이터 표시 + 클릭 비활성
  */
 @Composable
 fun StashButton(

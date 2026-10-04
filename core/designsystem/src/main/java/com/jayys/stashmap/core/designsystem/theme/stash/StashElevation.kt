@@ -9,9 +9,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-/**
- * Stash Design System 의 그림자 단계.
- */
+/** Stash Design System 의 그림자 단계 */
 enum class StashShadowLevel(val elevation: Dp) {
     Xs(1.dp),
     Sm(2.dp),
@@ -20,21 +18,19 @@ enum class StashShadowLevel(val elevation: Dp) {
     Sheet(16.dp),
 }
 
-/**
- * 그림자 색상 토큰. 라이트는 slate 계열 낮은 채도, 다크는 검정 기반으로 저대비를 유지한다.
- */
+/** 그림자 색상 토큰 — 라이트는 slate 계열 낮은 채도, 다크는 검정 기반 저대비 */
 object StashElevation {
-    /** 라이트 테마 ambient/spot 그림자 색상 (slate900 저알파). */
+    /** 라이트 테마 ambient/spot 그림자 색상 (slate900 저알파) */
     val lightShadowColor: Color = Color(0xFF0F172A)
 
-    /** 다크 테마 ambient/spot 그림자 색상 (검정). */
+    /** 다크 테마 ambient/spot 그림자 색상 (검정) */
     val darkShadowColor: Color = Color(0xFF000000)
 }
 
 /**
- * Stash 그림자를 적용하는 [Modifier].
+ * Stash 그림자를 적용하는 [Modifier]
  *
- * 그림자 색은 현재 [StashTheme] 의 다크 여부([LocalStashIsDarkTheme])에 따라 자동 선택된다.
+ * 그림자 색은 [StashTheme] 의 다크 여부([LocalStashIsDarkTheme])에 따라 자동 선택
  *
  * @param level 그림자 단계
  * @param shape 그림자/클립 형태

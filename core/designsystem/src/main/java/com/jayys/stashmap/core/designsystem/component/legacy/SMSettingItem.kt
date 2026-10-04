@@ -1,4 +1,4 @@
-package com.jayys.stashmap.component
+package com.jayys.stashmap.core.designsystem.component.legacy
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

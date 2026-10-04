@@ -31,7 +31,7 @@ import com.jayys.stashmap.core.designsystem.theme.stash.StashTheme
 import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 
 /**
- * 하단 네비게이션 항목.
+ * 하단 네비게이션 항목
  *
  * @param icon 항목 아이콘
  * @param label 항목 라벨
@@ -46,9 +46,9 @@ data class StashNavItem(
 )
 
 /**
- * Stash Design System 하단 네비게이션 바.
+ * Stash Design System 하단 네비게이션 바
  *
- * surface 배경 + 상단 divider 보더(1dp)를 가지며, 선택 항목은 accent, 비선택은 fgMuted 로 표시한다.
+ * surface 배경 + 상단 divider 보더(1dp) / 선택 accent, 비선택 fgMuted
  *
  * @param items 표시할 항목 목록
  */

@@ -28,7 +28,6 @@ include(":core:model")
 include(":core:domain")
 include(":core:data")
 include(":core:database")
-include(":core:ui")
 include(":core:designsystem")
 
 // Feature modules

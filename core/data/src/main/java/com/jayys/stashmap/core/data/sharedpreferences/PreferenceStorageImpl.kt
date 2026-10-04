@@ -5,9 +5,7 @@ import androidx.core.content.edit
 import com.jayys.stashmap.core.domain.sharedpreferences.PreferenceStorage
 import javax.inject.Inject
 
-/**
- * [PreferenceStorage]의 SharedPreferences 기반 구현.
- */
+/** [PreferenceStorage] 의 SharedPreferences 기반 구현 */
 class PreferenceStorageImpl @Inject constructor(
     private val sharedPreferences: SharedPreferences
 ) : PreferenceStorage {

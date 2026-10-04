@@ -20,15 +20,15 @@ import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
 
 /**
- * Stash Design System 의 기본 텍스트 컴포저블.
+ * Stash Design System 의 기본 텍스트 컴포저블
  *
- * 역할([role])에 해당하는 [TextStyle] 을 [stashTypography] 에서 가져오고,
- * [color] 가 [Color.Unspecified] 이면 역할의 기본 색상 토큰(fg / fgMuted)으로 해석한다.
- * `Overline` 역할은 텍스트를 대문자로 변환한다.
+ * - 역할([role])의 [TextStyle] 을 [stashTypography] 에서 가져옴
+ * - [color] 가 [Color.Unspecified] 이면 역할 기본 토큰(fg / fgMuted)으로 해석
+ * - `Overline` 역할은 대문자 변환
  *
  * @param text 표시할 문자열
  * @param role 텍스트 역할 (기본 [StashTextRole.Body])
- * @param color 명시 색상. [Color.Unspecified] 이면 역할 기본 토큰 사용
+ * @param color 명시 색상 — [Color.Unspecified] 이면 역할 기본 토큰 사용
  * @param maxLines 최대 줄 수
  * @param overflow 넘침 처리 방식
  * @param textAlign 텍스트 정렬
@@ -72,9 +72,7 @@ fun StashText(
     )
 }
 
-/**
- * 타입 역할(role) 스케일을 한눈에 보여주는 specimen 컬럼.
- */
+/** 타입 역할(role) 스케일 specimen 컬럼 */
 @Composable
 private fun StashTextSpecimen() {
     Column(

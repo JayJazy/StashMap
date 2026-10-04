@@ -10,8 +10,7 @@ private object FeatureLibraries {
     val coreModules = listOf(
         ":core:designsystem",
         ":core:domain",
-        ":core:model",
-        ":core:ui"
+        ":core:model"
     )
 
     // Platform dependencies (BOM)
@@ -23,6 +22,7 @@ private object FeatureLibraries {
     val libraries = listOf(
         "androidx.core.ktx",
         "androidx.appcompat",
+        "androidx.lifecycle.runtime.compose",
         "androidx.compose.ui",
         "androidx.compose.ui.graphics",
         "androidx.compose.ui.tooling.preview",

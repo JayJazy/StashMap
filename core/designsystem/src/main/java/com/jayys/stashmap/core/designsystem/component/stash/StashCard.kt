@@ -22,10 +22,10 @@ import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 import com.jayys.stashmap.core.designsystem.theme.stash.stashShadow
 
 /**
- * Stash Design System 카드 컨테이너.
+ * Stash Design System 카드 컨테이너
  *
- * surface 배경, 1dp 보더, lg 반경, 라이트 그림자(sm)를 적용한다.
- * [onClick] 이 지정된 경우에만 클릭 가능하다.
+ * - surface 배경 / 1dp 보더 / lg 반경 / 라이트 그림자(sm)
+ * - [onClick] 지정 시에만 클릭 가능
  *
  * @param onClick 클릭 콜백 (null 이면 비클릭)
  * @param content 카드 내부 콘텐츠
@@ -39,7 +39,7 @@ fun StashCard(
     val colors = MaterialTheme.stashColorTokens
 
     val base = modifier
-        // 카드 그림자 색은 테마(라이트/다크)에 맞춰 자동 선택된다.
+        // 카드 그림자 색은 테마(라이트/다크)에 맞춰 자동 선택
         .stashShadow(level = StashShadowLevel.Sm, shape = StashRadius.lg)
         .clip(StashRadius.lg)
         .background(colors.surface)

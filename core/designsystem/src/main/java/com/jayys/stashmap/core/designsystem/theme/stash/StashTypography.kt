@@ -10,11 +10,11 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 
 /**
- * Stash Design System 의 텍스트 역할(role).
+ * Stash Design System 의 텍스트 역할(role)
  *
- * 각 역할은 고정된 타이포그래피 메트릭을 가지며, 기본 색상 토큰은 [defaultUsesMuted]
- * 플래그로 결정된다(true → fgMuted, false → fg). 색상은 TextStyle 에 굽지 않고
- * `StashText` 컴포저블에서 테마 토큰을 참조해 해석한다.
+ * - 역할마다 고정된 타이포그래피 메트릭 보유
+ * - 기본 색상 토큰은 [defaultUsesMuted] 로 결정 (true → fgMuted, false → fg)
+ * - 색상은 TextStyle 에 굽지 않고 `StashText` 에서 테마 토큰 참조로 해석
  */
 enum class StashTextRole(internal val defaultUsesMuted: Boolean) {
     Display(false),
@@ -30,9 +30,7 @@ enum class StashTextRole(internal val defaultUsesMuted: Boolean) {
     Mono(false),
 }
 
-/**
- * 역할별 [TextStyle] 묶음. 색상은 [Color.Unspecified] 로 두어 `StashText` 에서 해석한다.
- */
+/** 역할별 [TextStyle] 묶음 — 색상은 [Color.Unspecified] 로 두고 `StashText` 에서 해석 */
 @Immutable
 data class StashTypography(
     val display: TextStyle,
@@ -47,7 +45,7 @@ data class StashTypography(
     val overline: TextStyle,
     val mono: TextStyle,
 ) {
-    /** 주어진 [role] 에 해당하는 [TextStyle] 을 반환한다. */
+    /** [role] 에 해당하는 [TextStyle] 반환 */
     operator fun get(role: StashTextRole): TextStyle = when (role) {
         StashTextRole.Display -> display
         StashTextRole.H1 -> h1
@@ -64,10 +62,10 @@ data class StashTypography(
 }
 
 /**
- * 픽셀 단위 사이즈와 line-height 배수로부터 [TextStyle] 을 생성한다.
+ * 픽셀 사이즈 + line-height 배수로 [TextStyle] 생성
  *
  * @param sizeSp 폰트 크기(sp 로 환산할 px 값)
- * @param weight 폰트 굵기 (Normal=400, Bold=700 만 사용 — faux-bold 금지)
+ * @param weight 폰트 굵기 (Normal=400, Bold=700 만 — faux-bold 금지)
  * @param lineHeightMultiplier line-height 배수 (lineHeight = size * multiplier)
  * @param trackingEm 자간(em)
  * @param fontFamily 폰트 패밀리 (기본 Pretendard, Mono 는 Monospace)
@@ -88,9 +86,9 @@ private fun stashStyle(
 )
 
 /**
- * 기본 Stash 타이포그래피를 생성한다.
+ * 기본 Stash 타이포그래피 생성
  *
- * 사이즈는 px→sp, weight 는 Normal/Bold 만, line-height 는 배수, tracking 은 em 으로 적용한다.
+ * 사이즈 px→sp / weight Normal·Bold 만 / line-height 배수 / tracking em
  */
 fun stashTypography(): StashTypography = StashTypography(
     display = stashStyle(sizeSp = 30, weight = FontWeight.Bold, lineHeightMultiplier = 1.2f, trackingEm = -0.02f),
@@ -112,7 +110,5 @@ fun stashTypography(): StashTypography = StashTypography(
     ),
 )
 
-/**
- * 현재 컴포지션의 Stash 타이포그래피. 기본값은 [stashTypography].
- */
+/** 현재 컴포지션의 Stash 타이포그래피 — 기본값 [stashTypography] */
 val LocalStashTypography = staticCompositionLocalOf { stashTypography() }

@@ -38,11 +38,12 @@ import kotlin.math.min
 import kotlin.math.sin
 
 /**
- * Stash Design System 별점 표시/입력.
+ * Stash Design System 별점 표시/입력
  *
- * 5각 별을 [Canvas]/[Path] 로 직접 그린다. 채워진 별은 gold500 외곽선 + gold400 채움,
- * 빈 별은 fgSubtle 외곽선을 사용하며, 소수 점수는 가로 클립으로 부분 채움을 표현한다.
- * [onRatingChange] 가 있으면 별 단위로 탭 입력을 받는다.
+ * - 5각 별을 [Canvas]/[Path] 로 직접 그림
+ * - 채워진 별 gold500 외곽선 + gold400 채움 / 빈 별 fgSubtle 외곽선
+ * - 소수 점수는 가로 클립으로 부분 채움
+ * - [onRatingChange] 가 있으면 별 단위 탭 입력
  *
  * @param rating 현재 점수 (0f..max)
  * @param max 최대 별 개수
@@ -99,7 +100,7 @@ fun StashRating(
             }
 
             if (interactive) {
-                // 시각 별은 starSize 를 유지하되, 터치 타깃은 최소 48dp 로 확장한다.
+                // 시각 별은 starSize 유지, 터치 타깃만 최소 48dp 로 확장
                 Box(
                     modifier = Modifier
                         .sizeIn(minWidth = MinTouchTarget, minHeight = MinTouchTarget)
@@ -118,12 +119,10 @@ fun StashRating(
     }
 }
 
-/** 인터랙티브 별점의 최소 터치 타깃(Material 접근성 권장치). */
+/** 인터랙티브 별점의 최소 터치 타깃 (Material 접근성 권장치) */
 private val MinTouchTarget: Dp = 48.dp
 
-/**
- * 주어진 [canvasSize] 에 내접하는 5각 별 [Path] 를 생성한다.
- */
+/** [canvasSize] 에 내접하는 5각 별 [Path] 생성 */
 private fun DrawScope.starPath(canvasSize: Size): Path {
     val cx = canvasSize.width / 2f
     val cy = canvasSize.height / 2f

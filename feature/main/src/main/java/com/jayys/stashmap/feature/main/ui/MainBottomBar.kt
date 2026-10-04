@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -33,6 +34,8 @@ fun MainBottomBar(
         modifier = modifier
             .fillMaxWidth()
             .background(MaterialTheme.stashColorTokens.surface)
+            // Scaffold 는 bottomBar 에 인셋 미적용 — background 뒤에 둬야 배경만 네비바 뒤로 이어짐
+            .navigationBarsPadding()
             .padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
@@ -54,7 +57,7 @@ fun MainBottomBar(
             ) {
                 Icon(
                     painter = painterResource(id = DesignSystemR.drawable.ico_home),
-                    // 라벨 Text 가 같은 의미를 전달하므로 아이콘은 장식으로 둔다 (중복 낭독 방지)
+                    // 라벨 Text 가 같은 의미 전달 → 아이콘은 장식 (중복 낭독 방지)
                     contentDescription = null,
                     tint = if (selected) {
                         MaterialTheme.stashColorTokens.accent

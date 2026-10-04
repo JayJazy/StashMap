@@ -1,4 +1,4 @@
-package com.jayys.stashmap.component
+package com.jayys.stashmap.core.designsystem.component.legacy
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jayys.stashmap.compose.SpacerWidth
+import com.jayys.stashmap.core.designsystem.layout.SpacerWidth
 import com.jayys.stashmap.core.designsystem.modifier.clickableNoRipple
 import com.jayys.stashmap.core.designsystem.R
 import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens

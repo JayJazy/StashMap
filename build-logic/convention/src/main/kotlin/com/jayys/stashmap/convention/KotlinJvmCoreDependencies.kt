@@ -6,10 +6,14 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 
 private object KotlinJvmCoreLibraries {
+    // Api dependencies — Repository 가 Flow/StateFlow 를 공개 시그니처로 노출
+    val apiLibraries = listOf(
+        "kotlinx.coroutines.core"
+    )
+
     // Implementation dependencies
     val libraries = listOf(
-        "javax.inject",
-        "kotlinx.coroutines.core"
+        "javax.inject"
     )
 
     // Test dependencies
@@ -27,6 +31,11 @@ internal fun Project.applyKotlinJvmCoreDependencies() {
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
     dependencies {
+        // Api dependencies
+        KotlinJvmCoreLibraries.apiLibraries.forEach { libraryKey ->
+            add("api", libs.findLibrary(libraryKey).get())
+        }
+
         // Implementation dependencies
         KotlinJvmCoreLibraries.libraries.forEach { libraryKey ->
             add("implementation", libs.findLibrary(libraryKey).get())

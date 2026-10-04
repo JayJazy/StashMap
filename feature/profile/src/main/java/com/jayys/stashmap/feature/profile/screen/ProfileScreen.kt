@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.jayys.stashmap.compose.SpacerHeight
+import com.jayys.stashmap.core.designsystem.layout.SpacerHeight
 import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
 import com.jayys.stashmap.core.model.StashMapLanguage

@@ -33,14 +33,12 @@ import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 import com.jayys.stashmap.core.designsystem.theme.stash.stashShadow
 
 /**
- * Stash Design System 바텀 시트.
+ * Stash Design System 바텀 시트
  *
- * 전체 화면 [Box] 안에 스크림 오버레이(탭 시 [onDismiss])와 하단 정렬 패널을 직접 구성한다.
- * 패널은 상단 xl 반경, sheet 그림자, 그랩 핸들을 가진다. 단일 [AnimatedVisibility] 로
- * 스크림은 페이드, 패널은 [Modifier.animateEnterExit] 의 slide 로 [StashMotion] 타이밍에 맞춰
- * 등장/퇴장한다. (열릴 때 슬라이드 인 + 페이드 인, 닫힐 때 슬라이드 아웃 + 페이드 아웃)
- *
- * 자체 포함 오버레이 방식이므로 현재 컴포지션 트리 안에 배치해야 한다.
+ * - 전체 화면 [Box] 안에 스크림 오버레이(탭 시 [onDismiss]) + 하단 정렬 패널
+ * - 패널은 상단 xl 반경 / sheet 그림자 / 그랩 핸들
+ * - 단일 [AnimatedVisibility] — 스크림은 페이드, 패널은 [Modifier.animateEnterExit] slide ([StashMotion] 타이밍)
+ * - 자체 포함 오버레이 → 현재 컴포지션 트리 안에 배치해야 함
  *
  * @param visible 표시 여부
  * @param onDismiss 스크림 탭 시 호출
@@ -71,7 +69,7 @@ fun StashBottomSheet(
                     .clickableNoRipple(onClickLabel = "닫기", onClick = onDismiss),
             )
 
-            // 하단 패널: 아래에서 위로 슬라이드 인, 닫힐 때 아래로 슬라이드 아웃.
+            // 하단 패널 — 열릴 때 아래→위 슬라이드 인, 닫힐 때 아래로 슬라이드 아웃
             val topShape = RoundedCornerShape(
                 topStart = StashRadius.xlDp,
                 topEnd = StashRadius.xlDp,
@@ -112,7 +110,7 @@ fun StashBottomSheet(
 
 @Composable
 private fun StashBottomSheetShowcase() {
-    // 전체 화면 오버레이 컴포저블이므로 bg 로 채운 Box 안에 배치한다.
+    // 전체 화면 오버레이 → bg 로 채운 Box 안에 배치
     Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.stashColorTokens.bg)) {
         StashBottomSheet(visible = true, onDismiss = {}) {
             StashText(text = "바텀 시트 제목", role = StashTextRole.H3)
