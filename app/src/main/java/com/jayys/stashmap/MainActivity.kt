@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
             StashTheme(
                 darkTheme = isDarkMode
             ) {
-                // 셸에서 인셋 소비 금지 — 소비 시 MainBottomBar의 navigationBarsPadding()이 0이 돼
+                // 셸에서 인셋 소비 금지 — 소비 시 StashBottomNavBar의 windowInsetsPadding()이 0이 돼
                 // 바텀바가 네비게이션바 뒤로 배경을 확장할 수 없음
                 MainScreen()
             }
