@@ -43,6 +43,8 @@ object StashIcons {
     // 설정
     val Languages: ImageVector @Composable get() = vector(R.drawable.ic_languages)
     val Moon: ImageVector @Composable get() = vector(R.drawable.ic_moon)
+    val Info: ImageVector @Composable get() = vector(R.drawable.ic_info)
+    val HelpCircle: ImageVector @Composable get() = vector(R.drawable.ic_help_circle)
 }
 
 @Composable

@@ -16,14 +16,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.jayys.stashmap.core.designsystem.icon.StashIcons
 import com.jayys.stashmap.core.designsystem.layout.SpacerHeight
-import com.jayys.stashmap.core.designsystem.R
 import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
 import com.jayys.stashmap.core.designsystem.theme.stash.isStashDarkTheme
 import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
@@ -33,7 +32,7 @@ import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
 fun StatCard(
     title: String,
     content: String,
-    icon: Painter,
+    icon: ImageVector,
     iconTint: Color,
     modifier: Modifier = Modifier,
     height: Dp = 78.dp
@@ -72,8 +71,8 @@ fun StatCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    painter = icon,
-                    contentDescription = "",
+                    imageVector = icon,
+                    contentDescription = null,
                     tint = iconTint
                 )
 
@@ -104,7 +103,7 @@ private fun PreviewStatCard() {
     StatCard(
         title = "Favorites",
         content = "9999",
-        icon = painterResource(id = R.drawable.ico_favorite),
-        iconTint = MaterialTheme.stashColorTokens.error
+        icon = StashIcons.Smile,
+        iconTint = MaterialTheme.stashColorTokens.success
     )
 }
