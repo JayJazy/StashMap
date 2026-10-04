@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -28,12 +29,14 @@ import com.jayys.stashmap.core.designsystem.theme.stash.stashShadow
  * - [onClick] 지정 시에만 클릭 가능
  *
  * @param onClick 클릭 콜백 (null 이면 비클릭)
+ * @param contentPadding 내부 여백 — 행 리스트를 담을 땐 0 으로 두고 행이 직접 패딩을 갖게 함
  * @param content 카드 내부 콘텐츠
  */
 @Composable
 fun StashCard(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
+    contentPadding: PaddingValues = PaddingValues(StashSpacing.s4),
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val colors = MaterialTheme.stashColorTokens
@@ -52,7 +55,7 @@ fun StashCard(
     }
 
     Column(
-        modifier = withClick.padding(StashSpacing.s4),
+        modifier = withClick.padding(contentPadding),
         content = content,
     )
 }

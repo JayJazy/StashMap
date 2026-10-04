@@ -1,9 +1,10 @@
 <resources>
 
-    <!-- Common -->
+    <!-- Evaluation (StashEvalState) -->
     <string name="favorite">Favorite</string>
     <string name="average">Average</string>
     <string name="avoid">Avoid</string>
+    <string name="want_to_try">Want to try</string>
 
     <!-- Navigation -->
     <string name="profile">Profile</string>

@@ -89,7 +89,9 @@ private fun StashTextSpecimen() {
         StashText(text = "Body 본문 텍스트", role = StashTextRole.Body)
         StashText(text = "Body Small 작은 본문", role = StashTextRole.BodySm)
         StashText(text = "Label 라벨", role = StashTextRole.Label)
+        StashText(text = "Label Strong 강조 라벨", role = StashTextRole.LabelStrong)
         StashText(text = "Caption 캡션", role = StashTextRole.Caption)
+        StashText(text = "Caption Strong 강조 캡션", role = StashTextRole.CaptionStrong)
         StashText(text = "overline", role = StashTextRole.Overline)
         StashText(text = "mono 1234", role = StashTextRole.Mono)
     }

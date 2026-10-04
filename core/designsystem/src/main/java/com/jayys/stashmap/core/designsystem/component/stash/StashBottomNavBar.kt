@@ -2,29 +2,34 @@ package com.jayys.stashmap.core.designsystem.component.stash
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jayys.stashmap.core.designsystem.icon.StashIcons
 import com.jayys.stashmap.core.designsystem.modifier.clickableNoRipple
+import com.jayys.stashmap.core.designsystem.theme.stash.StashIconSize
+import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
 import com.jayys.stashmap.core.designsystem.theme.stash.StashSpacing
 import com.jayys.stashmap.core.designsystem.theme.stash.StashTextRole
 import com.jayys.stashmap.core.designsystem.theme.stash.StashTheme
@@ -38,6 +43,7 @@ import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
  * @param selected 선택 여부
  * @param onClick 클릭 콜백
  */
+@Immutable
 data class StashNavItem(
     val icon: ImageVector,
     val label: String,
@@ -48,7 +54,13 @@ data class StashNavItem(
 /**
  * Stash Design System 하단 네비게이션 바
  *
- * surface 배경 + 상단 divider 보더(1dp) / 선택 accent, 비선택 fgMuted
+ * surface 배경 + 상단 divider 보더(1dp)
+ *
+ * 선택된 탭은 아이콘 뒤에 accentSubtle 알약(Material 3 인디케이터)이 깔림
+ *
+ * Scaffold 의 bottomBar 는 인셋이 적용되지 않는다. 배경만 네비게이션바 뒤로 이어지게 하려면
+ * 호출부가 `modifier` 가 아니라 이 컴포넌트 **안쪽**(배경 다음)에서 인셋을 먹어야 하므로,
+ * 여기서 `.navigationBarsPadding()` 을 직접 적용한다
  *
  * @param items 표시할 항목 목록
  */
@@ -63,6 +75,7 @@ fun StashBottomNavBar(
         modifier = modifier
             .fillMaxWidth()
             .background(colors.surface)
+            .navigationBarsPadding()
     ) {
         HorizontalDivider(
             thickness = 1.dp,
@@ -90,25 +103,33 @@ private fun StashNavBarItem(
 
     Column(
         modifier = modifier
-            .defaultMinSize(minHeight = 56.dp)
+            .defaultMinSize(minHeight = 64.dp)
             .clickableNoRipple(role = Role.Tab, onClick = item.onClick)
             .semantics { selected = item.selected }
             .padding(horizontal = StashSpacing.s3, vertical = StashSpacing.s2),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        Icon(
-            imageVector = item.icon,
-            contentDescription = item.label,
-            tint = tint,
-            modifier = Modifier.size(24.dp),
-        )
+        Box(
+            modifier = Modifier
+                .clip(StashRadius.full)
+                .background(if (item.selected) colors.accentSubtle else Color.Transparent)
+                .padding(horizontal = StashSpacing.s4, vertical = StashSpacing.s1),
+        ) {
+            Icon(
+                imageVector = item.icon,
+                contentDescription = null,
+                tint = tint,
+                modifier = Modifier.size(StashIconSize.lg),
+            )
+        }
 
         StashText(
             text = item.label,
-            role = StashTextRole.Caption,
-            color = tint,
+            role = if (item.selected) StashTextRole.CaptionStrong else StashTextRole.Caption,
+            color = if (item.selected) colors.fg else tint,
             maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
             modifier = Modifier.padding(top = StashSpacing.s1),
         )
     }
@@ -122,9 +143,9 @@ private fun StashBottomNavBarShowcase() {
     ) {
         StashBottomNavBar(
             items = listOf(
-                StashNavItem(icon = Icons.Default.Home, label = "홈", selected = true, onClick = {}),
-                StashNavItem(icon = Icons.Default.Search, label = "검색", selected = false, onClick = {}),
-                StashNavItem(icon = Icons.Default.Person, label = "프로필", selected = false, onClick = {}),
+                StashNavItem(icon = StashIcons.Home, label = "홈", selected = false, onClick = {}),
+                StashNavItem(icon = StashIcons.Utensils, label = "맛집", selected = true, onClick = {}),
+                StashNavItem(icon = StashIcons.User, label = "마이", selected = false, onClick = {}),
             ),
         )
     }

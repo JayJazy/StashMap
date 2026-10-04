@@ -1,9 +1,10 @@
 <resources>
 
-    <!-- Common -->
+    <!-- Evaluation (StashEvalState) -->
     <string name="favorite">다시 먹을래요</string>
     <string name="average">보통이에요</string>
     <string name="avoid">다신 안 먹을래요</string>
+    <string name="want_to_try">먹어보고 싶어요</string>
 
     <!-- Navigation -->
     <string name="profile">프로필</string>

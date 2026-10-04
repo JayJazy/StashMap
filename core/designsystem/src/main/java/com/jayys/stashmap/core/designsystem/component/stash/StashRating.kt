@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.jayys.stashmap.core.designsystem.modifier.clickableNoRipple
+import com.jayys.stashmap.core.designsystem.theme.stash.StashMinTouchTarget
 import com.jayys.stashmap.core.designsystem.theme.stash.StashSpacing
 import com.jayys.stashmap.core.designsystem.theme.stash.StashTheme
 import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
@@ -103,7 +104,7 @@ fun StashRating(
                 // 시각 별은 starSize 유지, 터치 타깃만 최소 48dp 로 확장
                 Box(
                     modifier = Modifier
-                        .sizeIn(minWidth = MinTouchTarget, minHeight = MinTouchTarget)
+                        .sizeIn(minWidth = StashMinTouchTarget, minHeight = StashMinTouchTarget)
                         .clickableNoRipple(
                             role = Role.Button,
                             onClickLabel = "${index + 1} 점",
@@ -119,8 +120,6 @@ fun StashRating(
     }
 }
 
-/** 인터랙티브 별점의 최소 터치 타깃 (Material 접근성 권장치) */
-private val MinTouchTarget: Dp = 48.dp
 
 /** [canvasSize] 에 내접하는 5각 별 [Path] 생성 */
 private fun DrawScope.starPath(canvasSize: Size): Path {

@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -26,8 +24,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.jayys.stashmap.core.designsystem.icon.StashIcons
 import com.jayys.stashmap.core.designsystem.theme.stash.StashColors
+import com.jayys.stashmap.core.designsystem.theme.stash.StashIconSize
 import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
 import com.jayys.stashmap.core.designsystem.theme.stash.StashSpacing
 import com.jayys.stashmap.core.designsystem.theme.stash.StashTextRole
@@ -47,6 +48,22 @@ enum class StashButtonVariant {
 
     /** 파괴적 액션 — error 배경 + errorFg 텍스트 */
     Destructive,
+}
+
+/** Stash 버튼의 크기 단계 */
+enum class StashButtonSize(
+    internal val minHeight: Dp,
+    internal val horizontalPadding: Dp,
+    internal val iconSize: Dp,
+) {
+    /** 카드 안 보조 액션 — 권장 터치 타깃 48dp 보다 작으니 조밀한 자리에만 */
+    Sm(minHeight = 36.dp, horizontalPadding = StashSpacing.s3, iconSize = StashIconSize.xs),
+
+    /** 기본 */
+    Md(minHeight = 44.dp, horizontalPadding = StashSpacing.s4, iconSize = StashIconSize.sm),
+
+    /** 화면 하단 주 액션 */
+    Lg(minHeight = 52.dp, horizontalPadding = StashSpacing.s5, iconSize = StashIconSize.md),
 }
 
 /** 버튼 변형별 색상 묶음 */
@@ -105,6 +122,7 @@ private fun StashButtonVariant.colors(colors: StashColors, enabled: Boolean): St
  * @param text 버튼 라벨
  * @param onClick 클릭 콜백
  * @param variant 시각 변형 (기본 [StashButtonVariant.Primary])
+ * @param size 크기 단계 (기본 [StashButtonSize.Md]) — 박스와 아이콘만 커지고 라벨은 14sp 고정
  * @param enabled 활성화 여부
  * @param leadingIcon 텍스트 앞 아이콘 (선택)
  * @param loading 로딩 상태 — true 면 라벨 대신 인디케이터 표시 + 클릭 비활성
@@ -115,6 +133,7 @@ fun StashButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     variant: StashButtonVariant = StashButtonVariant.Primary,
+    size: StashButtonSize = StashButtonSize.Md,
     enabled: Boolean = true,
     leadingIcon: ImageVector? = null,
     loading: Boolean = false,
@@ -129,7 +148,7 @@ fun StashButton(
 
     Row(
         modifier = modifier
-            .defaultMinSize(minHeight = 44.dp)
+            .defaultMinSize(minHeight = size.minHeight)
             .clip(StashRadius.md)
             .background(container)
             .let { base ->
@@ -142,13 +161,13 @@ fun StashButton(
                 role = Role.Button,
                 onClick = onClick,
             )
-            .padding(horizontal = StashSpacing.s4, vertical = StashSpacing.s2),
+            .padding(horizontal = size.horizontalPadding, vertical = StashSpacing.s2),
         horizontalArrangement = Arrangement.spacedBy(StashSpacing.s2, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (loading) {
             CircularProgressIndicator(
-                modifier = Modifier.size(18.dp),
+                modifier = Modifier.size(size.iconSize),
                 color = buttonColors.content,
                 strokeWidth = 2.dp,
             )
@@ -158,12 +177,12 @@ fun StashButton(
                     imageVector = leadingIcon,
                     contentDescription = null,
                     tint = buttonColors.content,
-                    modifier = Modifier.size(18.dp),
+                    modifier = Modifier.size(size.iconSize),
                 )
             }
             StashText(
                 text = text,
-                role = StashTextRole.Label,
+                role = StashTextRole.LabelStrong,
                 color = buttonColors.content,
             )
         }
@@ -178,12 +197,30 @@ private fun StashButtonShowcase() {
             .padding(StashSpacing.s4),
         verticalArrangement = Arrangement.spacedBy(StashSpacing.s4),
     ) {
-        StashButton(text = "Primary", onClick = {}, variant = StashButtonVariant.Primary, leadingIcon = Icons.Default.Add)
-        StashButton(text = "Secondary", onClick = {}, variant = StashButtonVariant.Secondary)
-        StashButton(text = "Ghost", onClick = {}, variant = StashButtonVariant.Ghost)
-        StashButton(text = "Destructive", onClick = {}, variant = StashButtonVariant.Destructive)
-        StashButton(text = "Loading", onClick = {}, loading = true)
-        StashButton(text = "Disabled", onClick = {}, enabled = false)
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(StashSpacing.s2),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            StashButton(text = "기록 저장", onClick = {}, variant = StashButtonVariant.Primary)
+            StashButton(text = "수정", onClick = {}, variant = StashButtonVariant.Secondary)
+            StashButton(text = "더보기", onClick = {}, variant = StashButtonVariant.Ghost)
+            StashButton(
+                text = "삭제",
+                onClick = {},
+                variant = StashButtonVariant.Destructive,
+                leadingIcon = StashIcons.Trash,
+            )
+        }
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(StashSpacing.s2),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            StashButton(text = "작게", onClick = {}, size = StashButtonSize.Sm)
+            StashButton(text = "기록하기", onClick = {}, size = StashButtonSize.Md, leadingIcon = StashIcons.Plus)
+            StashButton(text = "크게", onClick = {}, size = StashButtonSize.Lg)
+        }
+        StashButton(text = "저장 중", onClick = {}, loading = true)
+        StashButton(text = "비활성", onClick = {}, enabled = false)
     }
 }
 
