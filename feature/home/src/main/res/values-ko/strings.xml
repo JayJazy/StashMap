@@ -1,0 +1,25 @@
+<resources>
+
+    <!-- Greeting + monthly summary -->
+    <string name="home_greeting">오늘은 어떤 맛집을 기록할까요?</string>
+    <plurals name="home_monthly_recorded">
+        <item quantity="other">이번 달 %1$s곳 기록했어요</item>
+    </plurals>
+    <plurals name="home_monthly_revisit">
+        <item quantity="other">그중 다시 갈 집은 %1$s곳이에요</item>
+    </plurals>
+
+    <!-- Quick record CTA -->
+    <string name="home_quick_record_title">빠른 기록</string>
+    <string name="home_quick_record_subtitle">이름과 평가만 있으면 끝나요</string>
+
+    <!-- Sections -->
+    <string name="home_section_recent">최근 기록</string>
+    <string name="home_section_wishlist">가보고 싶은 곳</string>
+    <string name="home_see_all">전체보기</string>
+
+    <!-- FAB -->
+    <string name="home_fab_label">기록</string>
+    <string name="home_fab_description">맛집 기록하기</string>
+
+</resources>
