@@ -64,10 +64,7 @@ fun LanguageContent(
             modifier = modifier
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 20.dp)
-                .padding(
-                    top = paddingValues.calculateTopPadding(),
-                    bottom = 60.dp
-                )
+                .padding(top = paddingValues.calculateTopPadding())
         ) {
             LanguageSearchBar(
                 searchQuery = uiState.searchQuery,
