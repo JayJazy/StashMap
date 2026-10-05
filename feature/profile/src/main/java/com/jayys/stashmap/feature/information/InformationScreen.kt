@@ -20,7 +20,7 @@ fun InformationScreen(
     Scaffold(
         topBar = {
             SMTopBar(
-                topBarTitle = stringResource(id = R.string.informateion),
+                topBarTitle = stringResource(id = R.string.information),
                 onClick = onBack,
             )
         },

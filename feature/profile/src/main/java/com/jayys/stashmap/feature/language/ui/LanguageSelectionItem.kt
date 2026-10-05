@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jayys.stashmap.core.designsystem.component.legacy.HDivider
 import com.jayys.stashmap.core.designsystem.component.stash.StashCard
+import com.jayys.stashmap.core.designsystem.component.stash.StashDivider
 import com.jayys.stashmap.core.model.StashMapLanguage
 
 @Composable
@@ -31,7 +31,7 @@ fun LanguageSelectionItem(
             )
 
             if (index < languages.size - 1) {
-                HDivider()
+                StashDivider()
             }
         }
     }

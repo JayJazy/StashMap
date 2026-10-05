@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.jayys.stashmap.core.designsystem.component.legacy.HDivider
 import com.jayys.stashmap.core.designsystem.component.stash.StashCard
+import com.jayys.stashmap.core.designsystem.component.stash.StashDivider
 import com.jayys.stashmap.core.designsystem.component.stash.StashSettingRow
 import com.jayys.stashmap.core.designsystem.icon.StashIcons
 import com.jayys.stashmap.core.designsystem.theme.stash.StashSpacing
@@ -40,7 +40,7 @@ fun PreferenceItem(
             onClick = onLanguageClick
         )
 
-        HDivider()
+        StashDivider()
 
         StashSettingRow(
             label = stringResource(id = R.string.system_theme),
@@ -48,15 +48,15 @@ fun PreferenceItem(
             onClick = onThemeClick
         )
 
-        HDivider()
+        StashDivider()
 
         StashSettingRow(
-            label = stringResource(id = R.string.informateion),
+            label = stringResource(id = R.string.information),
             icon = StashIcons.Info,
             onClick = onInformationClick
         )
 
-        HDivider()
+        StashDivider()
 
         StashSettingRow(
             label = stringResource(id = R.string.contact),

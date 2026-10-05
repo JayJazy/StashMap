@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.jayys.stashmap.core.designsystem.icon.StashIcons
 import com.jayys.stashmap.core.designsystem.theme.stash.StashColors
 import com.jayys.stashmap.core.designsystem.theme.stash.StashIconSize
+import com.jayys.stashmap.core.designsystem.theme.stash.StashMinTouchTarget
 import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
 import com.jayys.stashmap.core.designsystem.theme.stash.StashSpacing
 import com.jayys.stashmap.core.designsystem.theme.stash.StashTextRole
@@ -63,10 +64,10 @@ enum class StashButtonSize(
     Sm(minHeight = 36.dp, horizontalPadding = StashSpacing.s3, iconSize = StashIconSize.xs),
 
     /** 기본 */
-    Md(minHeight = 44.dp, horizontalPadding = StashSpacing.s4, iconSize = StashIconSize.sm),
+    Md(minHeight = StashMinTouchTarget, horizontalPadding = StashSpacing.s4, iconSize = StashIconSize.sm),
 
     /** 화면 하단 주 액션 */
-    Lg(minHeight = 52.dp, horizontalPadding = StashSpacing.s5, iconSize = StashIconSize.md),
+    Lg(minHeight = 56.dp, horizontalPadding = StashSpacing.s5, iconSize = StashIconSize.md),
 }
 
 /** 버튼 변형별 색상 묶음 */

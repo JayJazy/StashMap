@@ -95,7 +95,7 @@ private fun StatCell(
         )
     val withClick = if (onClick != null) {
         base
-            .selectableNoRipple(selected = selected, role = Role.Button, onClick = onClick)
+            .selectableNoRipple(selected = selected, role = Role.RadioButton, onClick = onClick)
     } else {
         base
     }

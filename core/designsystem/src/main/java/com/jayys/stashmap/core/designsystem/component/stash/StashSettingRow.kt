@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
@@ -170,7 +169,7 @@ private fun StashSettingRowShowcase() {
                 value = "한국어",
                 onClick = {},
             )
-            HorizontalDivider(thickness = 1.dp, color = colors.divider)
+            StashDivider()
             StashSwitchRow(
                 label = "다크 모드",
                 checked = dark,
