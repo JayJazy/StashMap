@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jayys.stashmap.core.designsystem.theme.stash.StashMinTouchTarget
 import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
 import com.jayys.stashmap.core.designsystem.theme.stash.StashSpacing
 import com.jayys.stashmap.core.designsystem.theme.stash.StashTextRole
@@ -90,7 +91,7 @@ fun StashTextField(
                 // 포커스 링 — 바깥쪽 옅은 보더로 표현
                 .border(width = if (focused && !isError) 3.dp else 0.dp, color = ringColor, shape = StashRadius.md)
                 .border(width = borderWidth, color = borderColor, shape = StashRadius.md)
-                .defaultMinSize(minHeight = 44.dp),
+                .defaultMinSize(minHeight = StashMinTouchTarget),
             enabled = enabled,
             textStyle = MaterialTheme.stashTypography[StashTextRole.Body].copy(color = colors.fg),
             cursorBrush = SolidColor(colors.accent),

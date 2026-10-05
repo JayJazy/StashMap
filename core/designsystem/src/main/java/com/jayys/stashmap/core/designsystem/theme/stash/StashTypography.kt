@@ -25,7 +25,9 @@ enum class StashTextRole(internal val defaultUsesMuted: Boolean) {
     Body(false),
     BodySm(true),
     Label(false),
+    LabelStrong(false),
     Caption(true),
+    CaptionStrong(false),
     Overline(true),
     Mono(false),
 }
@@ -41,7 +43,9 @@ data class StashTypography(
     val body: TextStyle,
     val bodySm: TextStyle,
     val label: TextStyle,
+    val labelStrong: TextStyle,
     val caption: TextStyle,
+    val captionStrong: TextStyle,
     val overline: TextStyle,
     val mono: TextStyle,
 ) {
@@ -55,7 +59,9 @@ data class StashTypography(
         StashTextRole.Body -> body
         StashTextRole.BodySm -> bodySm
         StashTextRole.Label -> label
+        StashTextRole.LabelStrong -> labelStrong
         StashTextRole.Caption -> caption
+        StashTextRole.CaptionStrong -> captionStrong
         StashTextRole.Overline -> overline
         StashTextRole.Mono -> mono
     }
@@ -99,7 +105,9 @@ fun stashTypography(): StashTypography = StashTypography(
     body = stashStyle(sizeSp = 16, weight = FontWeight.Normal, lineHeightMultiplier = 1.5f, trackingEm = 0f),
     bodySm = stashStyle(sizeSp = 14, weight = FontWeight.Normal, lineHeightMultiplier = 1.5f, trackingEm = 0f),
     label = stashStyle(sizeSp = 14, weight = FontWeight.Normal, lineHeightMultiplier = 1.35f, trackingEm = 0f),
+    labelStrong = stashStyle(sizeSp = 14, weight = FontWeight.Bold, lineHeightMultiplier = 1.35f, trackingEm = 0f),
     caption = stashStyle(sizeSp = 12, weight = FontWeight.Normal, lineHeightMultiplier = 1.35f, trackingEm = 0.02f),
+    captionStrong = stashStyle(sizeSp = 12, weight = FontWeight.Bold, lineHeightMultiplier = 1.35f, trackingEm = 0.02f),
     overline = stashStyle(sizeSp = 12, weight = FontWeight.Bold, lineHeightMultiplier = 1.35f, trackingEm = 0.08f),
     mono = stashStyle(
         sizeSp = 14,

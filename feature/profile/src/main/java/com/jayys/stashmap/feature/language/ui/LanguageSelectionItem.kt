@@ -1,17 +1,13 @@
 package com.jayys.stashmap.feature.language.ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jayys.stashmap.core.designsystem.component.legacy.HDivider
-import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
-import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
+import com.jayys.stashmap.core.designsystem.component.stash.StashCard
 import com.jayys.stashmap.core.model.StashMapLanguage
 
 @Composable
@@ -21,18 +17,9 @@ fun LanguageSelectionItem(
     onLanguageSelect: (StashMapLanguage) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .border(
-                width = 1.dp,
-                color = MaterialTheme.stashColorTokens.border,
-                shape = StashRadius.lg
-            )
-            .background(
-                color = MaterialTheme.stashColorTokens.surface,
-                shape = StashRadius.lg
-            )
-            .fillMaxWidth()
+    StashCard(
+        modifier = modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(0.dp)
     ) {
         languages.forEachIndexed { index, language ->
             val isSelected = selectedLanguage == language

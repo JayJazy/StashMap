@@ -1,30 +1,25 @@
 package com.jayys.stashmap.feature.profile.ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.jayys.stashmap.core.designsystem.component.legacy.HDivider
-import com.jayys.stashmap.core.designsystem.component.legacy.SMSettingItem
-import com.jayys.stashmap.core.designsystem.R as DesignSystemR
-import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
-import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
-import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
+import com.jayys.stashmap.core.designsystem.component.stash.StashCard
+import com.jayys.stashmap.core.designsystem.component.stash.StashSettingRow
+import com.jayys.stashmap.core.designsystem.icon.StashIcons
+import com.jayys.stashmap.core.designsystem.theme.stash.StashSpacing
+import com.jayys.stashmap.core.designsystem.theme.stash.StashTheme
 import com.jayys.stashmap.core.model.StashMapLanguage
 import com.jayys.stashmap.feature.profile.R
 
+/**
+ * 프로필의 설정 묶음 — 언어 / 테마 / 정보 / 문의
+ *
+ * 행 자체가 좌우 여백을 가지므로 카드는 위아래 여백만 줌
+ */
 @Composable
 fun PreferenceItem(
     selectedLanguage: StashMapLanguage,
@@ -34,99 +29,45 @@ fun PreferenceItem(
     onContactClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .border(
-                width = 1.dp,
-                color = MaterialTheme.stashColorTokens.border,
-                shape = StashRadius.lg
-            )
-            .background(
-                color = MaterialTheme.stashColorTokens.surface,
-                shape = StashRadius.lg
-            )
-            .fillMaxWidth()
+    StashCard(
+        modifier = modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(vertical = StashSpacing.s2)
     ) {
-        SMSettingItem(
-            title = stringResource(id = R.string.language),
-            icon = painterResource(id = DesignSystemR.drawable.ico_globe),
-            iconTint = MaterialTheme.stashColorTokens.success,
-            onClick = onLanguageClick,
-            trailing = {
-                Row(
-                    modifier = Modifier,
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(6.dp)
-                ) {
-                    Text(
-                        text = selectedLanguage.displayName,
-                        style = MaterialTheme.stashTypography.caption.copy(
-                            color = MaterialTheme.stashColorTokens.fgMuted
-                        )
-                    )
-
-                    Icon(
-                        painter = painterResource(id = DesignSystemR.drawable.ico_arrow_right),
-                        contentDescription = "",
-                        tint = MaterialTheme.stashColorTokens.fgMuted
-                    )
-                }
-            }
+        StashSettingRow(
+            label = stringResource(id = R.string.language),
+            icon = StashIcons.Languages,
+            value = selectedLanguage.displayName,
+            onClick = onLanguageClick
         )
 
         HDivider()
 
-        SMSettingItem(
-            title = stringResource(id = R.string.system_theme),
-            icon = painterResource(id = DesignSystemR.drawable.ico_moon),
-            iconTint = MaterialTheme.stashColorTokens.warning,
-            onClick = onThemeClick,
-            trailing = {
-                Icon(
-                    painter = painterResource(id = DesignSystemR.drawable.ico_arrow_right),
-                    contentDescription = "",
-                    tint = MaterialTheme.stashColorTokens.fgMuted
-                )
-            }
+        StashSettingRow(
+            label = stringResource(id = R.string.system_theme),
+            icon = StashIcons.Moon,
+            onClick = onThemeClick
         )
 
         HDivider()
 
-        SMSettingItem(
-            title = stringResource(id = R.string.informateion),
-            icon = painterResource(id = DesignSystemR.drawable.ico_information),
-            iconTint = MaterialTheme.stashColorTokens.fgMuted,
-            onClick = onInformationClick,
-            trailing = {
-                Icon(
-                    painter = painterResource(id = DesignSystemR.drawable.ico_arrow_right),
-                    contentDescription = "",
-                    tint = MaterialTheme.stashColorTokens.fgMuted
-                )
-            }
+        StashSettingRow(
+            label = stringResource(id = R.string.informateion),
+            icon = StashIcons.Info,
+            onClick = onInformationClick
         )
 
         HDivider()
 
-        SMSettingItem(
-            title = stringResource(id = R.string.contact),
-            icon = painterResource(id = DesignSystemR.drawable.ico_help),
-            iconTint = MaterialTheme.stashColorTokens.fgMuted,
-            onClick = onContactClick,
-            trailing = {
-                Icon(
-                    painter = painterResource(id = DesignSystemR.drawable.ico_arrow_right),
-                    contentDescription = "",
-                    tint = MaterialTheme.stashColorTokens.fgMuted
-                )
-            }
+        StashSettingRow(
+            label = stringResource(id = R.string.contact),
+            icon = StashIcons.HelpCircle,
+            onClick = onContactClick
         )
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-private fun PreviewPreferenceItem() {
+private fun PreferenceItemSample() {
     PreferenceItem(
         selectedLanguage = StashMapLanguage.KOREAN,
         onLanguageClick = {},
@@ -134,4 +75,20 @@ private fun PreviewPreferenceItem() {
         onInformationClick = {},
         onContactClick = {}
     )
+}
+
+@Preview(showBackground = true, widthDp = 390)
+@Composable
+private fun PreferenceItemLightPreview() {
+    StashTheme(darkTheme = false) {
+        PreferenceItemSample()
+    }
+}
+
+@Preview(showBackground = true, widthDp = 390)
+@Composable
+private fun PreferenceItemDarkPreview() {
+    StashTheme(darkTheme = true) {
+        PreferenceItemSample()
+    }
 }

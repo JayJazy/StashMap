@@ -1,26 +1,27 @@
 package com.jayys.stashmap.core.designsystem.component.stash
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.selected
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jayys.stashmap.core.designsystem.modifier.clickableNoRipple
+import com.jayys.stashmap.core.designsystem.modifier.selectableNoRipple
+import com.jayys.stashmap.core.designsystem.theme.stash.StashIconSize
 import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
 import com.jayys.stashmap.core.designsystem.theme.stash.StashSpacing
 import com.jayys.stashmap.core.designsystem.theme.stash.StashTextRole
@@ -30,8 +31,8 @@ import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 /**
  * Stash Design System 칩
  *
- * - 기본 chipBg/chipFg, 선택 시 accentSubtle/accentSubtleFg
- * - full 반경 알약 형태, [onClick] 이 있을 때만 클릭 가능
+ * - 기본은 회색 알약, 선택되면 배경을 비우고 accent 테두리로 바뀜
+ * - [onClick] 이 있을 때만 클릭 가능
  *
  * @param label 칩 라벨
  * @param selected 선택 상태
@@ -47,21 +48,22 @@ fun StashChip(
     leadingIcon: ImageVector? = null,
 ) {
     val colors = MaterialTheme.stashColorTokens
-    val container = if (selected) colors.accentSubtle else colors.chipBg
-    val content = if (selected) colors.accentSubtleFg else colors.chipFg
+    val content = if (selected) colors.accent else colors.chipFg
 
     val base = modifier
+        .minimumInteractiveComponentSize()
+        .defaultMinSize(minHeight = MinHeight)
         .clip(StashRadius.full)
-        .background(container)
-        .semantics { this.selected = selected }
+        .background(if (selected) Color.Transparent else colors.chipBg)
+        .let { if (selected) it.border(1.5.dp, colors.accent, StashRadius.full) else it }
     val withClick = if (onClick != null) {
-        base.clickableNoRipple(role = Role.Button, onClick = onClick)
+        base.selectableNoRipple(selected = selected, role = Role.Button, onClick = onClick)
     } else {
         base
     }
 
     Row(
-        modifier = withClick.padding(horizontal = StashSpacing.s3, vertical = StashSpacing.s1),
+        modifier = withClick.padding(horizontal = StashSpacing.s4, vertical = StashSpacing.s2),
         horizontalArrangement = Arrangement.spacedBy(StashSpacing.s1),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -70,7 +72,7 @@ fun StashChip(
                 imageVector = leadingIcon,
                 contentDescription = null,
                 tint = content,
-                modifier = Modifier.size(16.dp),
+                modifier = Modifier.size(StashIconSize.xs),
             )
         }
         StashText(
@@ -81,6 +83,9 @@ fun StashChip(
     }
 }
 
+/** 보이는 높이. 터치 타깃은 minimumInteractiveComponentSize 가 48dp 로 보장 */
+private val MinHeight = 40.dp
+
 @Composable
 private fun StashChipShowcase() {
     Column(
@@ -89,9 +94,10 @@ private fun StashChipShowcase() {
             .padding(StashSpacing.s4),
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(StashSpacing.s2)) {
-            StashChip(label = "기본", onClick = {})
             StashChip(label = "선택됨", selected = true, onClick = {})
-            StashChip(label = "아이콘", leadingIcon = Icons.Default.Favorite, onClick = {})
+            StashChip(label = "한식", onClick = {})
+            StashChip(label = "일식", onClick = {})
+            StashChip(label = "양식", onClick = {})
         }
     }
 }

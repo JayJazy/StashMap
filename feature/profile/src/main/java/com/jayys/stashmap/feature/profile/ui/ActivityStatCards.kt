@@ -8,11 +8,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jayys.stashmap.core.designsystem.R as DesignSystemR
+import com.jayys.stashmap.core.designsystem.icon.StashIcons
 import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 import com.jayys.stashmap.feature.profile.R
 
@@ -34,7 +33,7 @@ fun ActivityStatCards(
             StatCard(
                 title = stringResource(id = R.string.preferred_category),
                 content = topCategory,
-                icon = painterResource(id = DesignSystemR.drawable.ico_restaurant),
+                icon = StashIcons.Utensils,
                 iconTint = MaterialTheme.stashColorTokens.warning,
                 height = 78.dp,
                 modifier = Modifier.weight(1f)
@@ -43,7 +42,7 @@ fun ActivityStatCards(
             StatCard(
                 title = stringResource(id = R.string.restaurants_this_month),
                 content = addedThisMonth,
-                icon = painterResource(id = DesignSystemR.drawable.ico_calendar),
+                icon = StashIcons.Calendar,
                 iconTint = MaterialTheme.stashColorTokens.success,
                 height = 78.dp,
                 modifier = Modifier.weight(1f)
