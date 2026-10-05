@@ -5,6 +5,13 @@ import androidx.navigation3.runtime.NavKey
 
 fun EntryProviderScope<NavKey>.homeEntries(onBack: () -> Unit) {
     entry<HomeRoute> { _ ->
-        HomeScreen()
+        // 기록 등록·목록 화면이 아직 없어 전부 no-op
+        HomeScreen(
+            onQuickRecordClick = { },
+            onRecordClick = { },
+            onSeeAllRecentClick = { },
+            onSeeAllWishlistClick = { },
+            onFabClick = { },
+        )
     }
 }

@@ -1,0 +1,27 @@
+<resources>
+
+    <!-- Greeting + monthly summary -->
+    <string name="home_greeting">What are you recording today?</string>
+    <plurals name="home_monthly_recorded">
+        <item quantity="one">You recorded %1$s place this month</item>
+        <item quantity="other">You recorded %1$s places this month</item>
+    </plurals>
+    <plurals name="home_monthly_revisit">
+        <item quantity="one">%1$s of them is worth a return</item>
+        <item quantity="other">%1$s of them are worth a return</item>
+    </plurals>
+
+    <!-- Quick record CTA -->
+    <string name="home_quick_record_title">Quick record</string>
+    <string name="home_quick_record_subtitle">Just a name and a rating</string>
+
+    <!-- Sections -->
+    <string name="home_section_recent">Recent</string>
+    <string name="home_section_wishlist">Want to try</string>
+    <string name="home_see_all">See all</string>
+
+    <!-- FAB -->
+    <string name="home_fab_label">Record</string>
+    <string name="home_fab_description">Record a restaurant</string>
+
+</resources>
