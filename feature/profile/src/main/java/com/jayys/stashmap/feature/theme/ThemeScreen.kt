@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,7 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jayys.stashmap.core.designsystem.component.legacy.SMTopBar
 import com.jayys.stashmap.core.designsystem.R as DesignSystemR
-import com.jayys.stashmap.core.designsystem.modifier.clickableNoRipple
+import com.jayys.stashmap.core.designsystem.modifier.selectableNoRipple
 import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
 import com.jayys.stashmap.feature.profile.R
@@ -61,7 +62,7 @@ fun ThemeScreen(
         ) {
             Column(
                 modifier = Modifier
-                    .clickableNoRipple {
+                    .selectableNoRipple(selected = !isDarkMode, role = Role.RadioButton) {
                         viewModel.selectTheme(false)
                     }
                     .fillMaxWidth()
@@ -87,9 +88,8 @@ fun ThemeScreen(
                 ) {
                     RadioButton(
                         selected = !isDarkMode,
-                        onClick = {
-                            viewModel.selectTheme(false)
-                        },
+                        // 선택 시맨틱은 카드가 가짐
+                        onClick = null,
                         modifier = Modifier.size(30.dp)
                     )
 
@@ -103,7 +103,7 @@ fun ThemeScreen(
 
             Column(
                 modifier = Modifier
-                    .clickableNoRipple {
+                    .selectableNoRipple(selected = isDarkMode, role = Role.RadioButton) {
                         viewModel.selectTheme(true)
                     }
                     .fillMaxWidth()
@@ -129,9 +129,8 @@ fun ThemeScreen(
                 ) {
                     RadioButton(
                         selected = isDarkMode,
-                        onClick = {
-                            viewModel.selectTheme(true)
-                        },
+                        // 선택 시맨틱은 카드가 가짐
+                        onClick = null,
                         modifier = Modifier.size(30.dp)
                     )
 

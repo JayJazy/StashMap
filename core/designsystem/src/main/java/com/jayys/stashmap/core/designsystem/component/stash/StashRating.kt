@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -24,10 +24,12 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.jayys.stashmap.core.designsystem.R
 import com.jayys.stashmap.core.designsystem.modifier.clickableNoRipple
 import com.jayys.stashmap.core.designsystem.theme.stash.StashMinTouchTarget
 import com.jayys.stashmap.core.designsystem.theme.stash.StashSpacing
@@ -60,6 +62,7 @@ fun StashRating(
     onRatingChange: ((Int) -> Unit)? = null,
 ) {
     val colors = MaterialTheme.stashColorTokens
+    val description = stringResource(R.string.rating_value_description, max, rating.toString())
     val filledOutline = colors.gold500
     val filledFill = colors.gold400
     val emptyOutline = colors.fgSubtle
@@ -67,7 +70,7 @@ fun StashRating(
 
     Row(
         modifier = modifier.semantics {
-            contentDescription = "$max 점 만점에 $rating 점"
+            contentDescription = description
         },
         horizontalArrangement = Arrangement.spacedBy(StashSpacing.s1),
         verticalAlignment = Alignment.CenterVertically,
@@ -107,7 +110,7 @@ fun StashRating(
                         .sizeIn(minWidth = StashMinTouchTarget, minHeight = StashMinTouchTarget)
                         .clickableNoRipple(
                             role = Role.Button,
-                            onClickLabel = "${index + 1} 점",
+                            onClickLabel = stringResource(R.string.rating_set_label, index + 1),
                         ) { onRatingChange(index + 1) },
                     contentAlignment = Alignment.Center,
                 ) {
@@ -144,7 +147,7 @@ private fun DrawScope.starPath(canvasSize: Size): Path {
 
 @Composable
 private fun StashRatingShowcase() {
-    var rating by remember { mutableStateOf(3) }
+    var rating by remember { mutableIntStateOf(3) }
 
     Column(
         modifier = Modifier

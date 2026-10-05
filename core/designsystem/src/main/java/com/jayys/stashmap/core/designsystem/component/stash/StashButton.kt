@@ -24,6 +24,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -168,8 +170,11 @@ fun StashButton(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (loading) {
+            // 라벨이 사라지므로 버튼 노드에 이름을 남긴다
             CircularProgressIndicator(
-                modifier = Modifier.size(size.iconSize),
+                modifier = Modifier
+                    .size(size.iconSize)
+                    .semantics { contentDescription = text },
                 color = buttonColors.content,
                 strokeWidth = 2.dp,
             )

@@ -6,8 +6,10 @@
     <string name="avoid">Avoid</string>
     <string name="want_to_try">Want to try</string>
 
-    <!-- Navigation -->
-    <string name="profile">Profile</string>
-    <string name="settings">Settings</string>
-    <string name="theme">Theme</string>
+    <!-- Accessibility -->
+    <string name="back">Back</string>
+    <string name="close">Close</string>
+    <string name="rating_value_description">%2$s out of %1$d</string>
+    <string name="rating_set_label">Rate %1$d</string>
+
 </resources>

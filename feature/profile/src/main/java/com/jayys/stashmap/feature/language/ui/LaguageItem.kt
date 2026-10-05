@@ -12,9 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.jayys.stashmap.core.designsystem.modifier.clickableNoRipple
+import com.jayys.stashmap.core.designsystem.modifier.selectableNoRipple
 import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
 import com.jayys.stashmap.core.model.StashMapLanguage
@@ -28,7 +29,7 @@ fun LanguageItem(
 ) {
     Row(
         modifier = modifier
-            .clickableNoRipple { onLanguageSelect(language) }
+            .selectableNoRipple(selected = isSelected, role = Role.RadioButton) { onLanguageSelect(language) }
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -49,7 +50,8 @@ fun LanguageItem(
 
         Checkbox(
             checked = isSelected,
-            onCheckedChange = { onLanguageSelect(language) },
+            // 선택 시맨틱은 행이 가짐
+            onCheckedChange = null,
             modifier = Modifier.size(20.dp),
             colors = CheckboxDefaults.colors(
                 checkedColor = MaterialTheme.stashColorTokens.success,

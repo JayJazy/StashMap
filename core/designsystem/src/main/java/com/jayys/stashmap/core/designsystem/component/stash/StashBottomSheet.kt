@@ -22,6 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import com.jayys.stashmap.core.designsystem.R
 import com.jayys.stashmap.core.designsystem.modifier.clickableNoRipple
 import com.jayys.stashmap.core.designsystem.theme.stash.StashMotion
 import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
@@ -66,7 +68,7 @@ fun StashBottomSheet(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(colors.overlay)
-                    .clickableNoRipple(onClickLabel = "닫기", onClick = onDismiss),
+                    .clickableNoRipple(onClickLabel = stringResource(R.string.close), onClick = onDismiss),
             )
 
             // 하단 패널 — 열릴 때 아래→위 슬라이드 인, 닫힐 때 아래로 슬라이드 아웃
