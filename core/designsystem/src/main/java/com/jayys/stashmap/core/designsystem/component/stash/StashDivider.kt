@@ -1,10 +1,8 @@
 package com.jayys.stashmap.core.designsystem.component.stash
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -23,6 +21,9 @@ import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
  *
  * 카드 안에 행을 여러 개 쌓을 때 그 사이를 가름. 색은 divider 토큰 고정
  *
+ * 행과 행 **사이**를 전제한다. 카드의 첫·마지막 자식으로 두면 카드 라운드가 선 양끝을 자른다.
+ * 들여쓴 구분선이 필요하면 `StashDivider(Modifier.padding(horizontal = ...))` 로 호출할 것
+ *
  * @param thickness 선 굵기
  */
 @Composable
@@ -31,7 +32,7 @@ fun StashDivider(
     thickness: Dp = 1.dp,
 ) {
     HorizontalDivider(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier,
         thickness = thickness,
         color = MaterialTheme.stashColorTokens.divider,
     )

@@ -41,6 +41,8 @@ import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
  *
  * - Material3 스타일 회피 → [BasicTextField] 위에 토큰 기반 데코레이션 직접 구성
  * - 포커스 시 accent 보더 + accentRing / 에러 시 error 보더 + errorSubtleFg 보조 텍스트
+ * - 내부가 Row + weight 라 **가용 폭을 채운다**. 좁게 쓰려면 호출부가 `Modifier.width()` 로 묶을 것
+ *   (가로 스크롤처럼 폭 제약이 무한인 부모 안에서는 입력 영역이 0 으로 접힌다)
  *
  * @param value 현재 입력값
  * @param onValueChange 입력 변경 콜백
@@ -49,7 +51,7 @@ import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
  * @param label 필드 상단 라벨
  * @param isError 에러 상태 여부
  * @param supportingText 하단 보조 문구
- * @param singleLine 단일 행 여부
+ * @param singleLine 단일 행 여부 — true 면 [minLines] 는 1 이어야 한다 (BasicTextField 제약)
  * @param minLines 최소 행 수
  * @param enabled 활성화 여부
  */

@@ -1,6 +1,10 @@
 package com.jayys.stashmap.core.designsystem.component.stash
 
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertCountEquals
+import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertHasNoClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotSelected
@@ -104,7 +108,10 @@ class StashEvalStatGridTest {
             )
         }
 
-        composeTestRule.onNodeWithText(labelOf(StashEvalState.Average)).assertIsSelected()
+        composeTestRule.onNodeWithText(labelOf(StashEvalState.Average))
+            .assertIsSelected()
+            // 필터는 한 번에 하나 — selectedState 가 nullable 단일 값이다
+            .assert(SemanticsMatcher.expectValue(SemanticsProperties.Role, Role.RadioButton))
         StashEvalState.entries
             .filterNot { it == StashEvalState.Average }
             .forEach { composeTestRule.onNodeWithText(labelOf(it)).assertIsNotSelected() }

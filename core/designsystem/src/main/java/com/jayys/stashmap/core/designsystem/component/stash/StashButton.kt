@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import com.jayys.stashmap.core.designsystem.icon.StashIcons
 import com.jayys.stashmap.core.designsystem.theme.stash.StashColors
 import com.jayys.stashmap.core.designsystem.theme.stash.StashIconSize
-import com.jayys.stashmap.core.designsystem.theme.stash.StashMinTouchTarget
 import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
 import com.jayys.stashmap.core.designsystem.theme.stash.StashSpacing
 import com.jayys.stashmap.core.designsystem.theme.stash.StashTextRole
@@ -54,17 +53,21 @@ enum class StashButtonVariant {
     Destructive,
 }
 
-/** Stash 버튼의 크기 단계 */
+/**
+ * Stash 버튼의 크기 단계
+ *
+ * 40 / 48 / 56dp — 8dp 간격. Md 는 [StashTextField]·[StashTapRow] 와 폼에서 줄이 맞는 높이
+ */
 enum class StashButtonSize(
     internal val minHeight: Dp,
     internal val horizontalPadding: Dp,
     internal val iconSize: Dp,
 ) {
-    /** 카드 안 보조 액션 — 보이는 높이만 작고 터치 타깃은 48dp 로 유지됨 */
-    Sm(minHeight = 36.dp, horizontalPadding = StashSpacing.s3, iconSize = StashIconSize.xs),
+    /** 카드 안 보조 액션 — 보이는 높이만 작고 터치 타깃은 minimumInteractiveComponentSize 가 48dp 로 유지 */
+    Sm(minHeight = 40.dp, horizontalPadding = StashSpacing.s3, iconSize = StashIconSize.xs),
 
     /** 기본 */
-    Md(minHeight = StashMinTouchTarget, horizontalPadding = StashSpacing.s4, iconSize = StashIconSize.sm),
+    Md(minHeight = 48.dp, horizontalPadding = StashSpacing.s4, iconSize = StashIconSize.sm),
 
     /** 화면 하단 주 액션 */
     Lg(minHeight = 56.dp, horizontalPadding = StashSpacing.s5, iconSize = StashIconSize.md),

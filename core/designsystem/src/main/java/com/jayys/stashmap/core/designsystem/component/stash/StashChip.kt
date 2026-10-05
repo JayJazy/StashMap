@@ -32,7 +32,8 @@ import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
  * Stash Design System 칩
  *
  * - 기본은 회색 알약, 선택되면 배경을 비우고 accent 테두리로 바뀜
- * - 필터처럼 여러 개를 켜고 끄는 자리를 가정 (role = Checkbox)
+ * - 카테고리처럼 **여럿 중 하나**를 고르는 자리를 가정 (role = RadioButton).
+ *   여러 개를 동시에 켜는 자리라면 [StashSegmentedSelect] 쪽이 맞다
  * - [onClick] 이 있을 때만 클릭 가능
  *
  * @param label 칩 라벨
@@ -58,7 +59,7 @@ fun StashChip(
         .background(if (selected) Color.Transparent else colors.chipBg)
         .let { if (selected) it.border(1.5.dp, colors.accent, StashRadius.full) else it }
     val withClick = if (onClick != null) {
-        base.selectableNoRipple(selected = selected, role = Role.Checkbox, onClick = onClick)
+        base.selectableNoRipple(selected = selected, role = Role.RadioButton, onClick = onClick)
     } else {
         base
     }
