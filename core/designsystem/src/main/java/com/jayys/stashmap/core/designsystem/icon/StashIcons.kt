@@ -3,17 +3,18 @@ package com.jayys.stashmap.core.designsystem.icon
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import com.jayys.stashmap.core.designsystem.R
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * Stash Design System 아이콘 세트
  *
  * - 디자인 시안이 쓴 Lucide(lucide.dev, ISC) path 를 그대로 옮긴 `res/drawable/ic_*.xml`
  * - 24x24 뷰포트 / 2dp 외곽선 / round cap·join. [Bookmark] 만 채움꼴
- * - 리소스에 박힌 색은 의미 없음. 색은 `Icon(tint = ...)` 이 덮어씀
- * - legacy `ico_*` 와 이름을 일부러 분리했다. `ico_home`·`ico_calendar` 등은
- *   아직 기존 화면들이 쓰고 있어서, 같은 이름으로 덮으면 그 화면 아이콘이 말없이 바뀐다
+ * - 리소스에 박힌 색은 의미 없음. 색은 `Icon(tint = ...)` 이 덮어씀 — `Image` 로 쓰면 검정 그대로 나온다
+ * - 파싱 결과를 프로세스 단위로 캐싱한다 ([vector] 주석 참고)
  */
 object StashIcons {
 
@@ -70,5 +71,19 @@ object StashIcons {
     val Salad: ImageVector @Composable get() = vector(R.drawable.ic_salad)
 }
 
+/**
+ * 드로어블 하나를 [ImageVector] 로 읽어 프로세스 단위로 캐싱
+ *
+ * `@Composable` 인 `ImageVector.vectorResource(id)` 는 호출 지점 슬롯에만 remember 해서,
+ * 같은 아이콘이라도 리스트 아이템마다 XML 을 새로 파싱한다. (전역 캐시를 타는 건 `painterResource` 쪽)
+ * 아이콘이 전부 qualifier 없는 `drawable/` 한 벌이라 구성·테마에 따라 달라지지 않으므로 resId 만 키로 쓴다
+ */
 @Composable
-private fun vector(@DrawableRes id: Int): ImageVector = ImageVector.vectorResource(id)
+private fun vector(@DrawableRes id: Int): ImageVector {
+    val context = LocalContext.current
+    return vectorCache.getOrPut(id) {
+        ImageVector.vectorResource(context.theme, context.resources, id)
+    }
+}
+
+private val vectorCache = ConcurrentHashMap<Int, ImageVector>()
