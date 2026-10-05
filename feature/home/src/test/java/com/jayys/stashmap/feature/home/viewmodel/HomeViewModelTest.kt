@@ -5,7 +5,9 @@ import com.jayys.stashmap.feature.home.model.HomeSampleData
 import com.jayys.stashmap.feature.home.model.HomeUiState
 import com.jayys.stashmap.feature.testing.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -21,6 +23,9 @@ import org.junit.Test
  * 저장소가 없어 주입할 더블도 없고 입력이 [HomeSampleData] 로 고정이다
  * → 값을 통째로 베껴 비교하지 않고 "무엇이 참이어야 하는가" 로 단언한다
  * (상한 3·1 두 건만 샘플 구성에 기대며, 그 전제를 테스트 안에서 먼저 확인한다)
+ *
+ * `uiState` 는 `SharingStarted.WhileSubscribed` → **구독자가 없으면 combine 이 돌지 않는다.**
+ * `uiState.value` 를 읽는 건 구독이 아니므로 [startCollectingUiState] 로 수집을 먼저 걸어야 한다
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 class HomeViewModelTest {
@@ -35,26 +40,32 @@ class HomeViewModelTest {
         viewModel = HomeViewModel()
     }
 
-    /**
-     * `SharingStarted.Eagerly` 라도 [kotlinx.coroutines.test.StandardTestDispatcher] 아래선
-     * combine 코루틴이 큐에 쌓인 채다 — 실행시킨 뒤에 읽어야 파생값이 보인다
-     */
-    private fun TestScope.uiStateAfterIdle(): HomeUiState {
+    /** 테스트 종료 시 자동 취소되는 [TestScope.backgroundScope] 에서 수집 시작 */
+    private fun TestScope.startCollectingUiState() {
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
+            viewModel.uiState.collect { }
+        }
+    }
+
+    /** 구독을 걸고 combine 이 돌 때까지 진행시킨 뒤의 상태 */
+    private fun TestScope.uiStateAfterCollect(): HomeUiState {
+        startCollectingUiState()
         advanceUntilIdle()
         return viewModel.uiState.value
     }
 
     // ---------------------------------------------------------------------
-    // uiState 노출 시점 — stateIn 초기값 성질
+    // uiState 노출 시점 — WhileSubscribed 계약
     // ---------------------------------------------------------------------
 
     @Test
-    fun `uiState는 combine이 실행되기 전까지 stateIn 초기값을 노출한다`() =
+    fun `uiState는 구독자가 생기기 전까지 stateIn 초기값을 노출한다`() =
         runTest(mainDispatcherRule.testDispatcher) {
-            // 회귀 방어 — "테스트가 느리다" 며 advanceUntilIdle() 을 지우면
-            // 아래 두 단언이 자리를 바꿔 실패한다
+            // 아무도 보지 않으면 시간이 아무리 흘러도 combine 이 돌지 않는다
+            advanceUntilIdle()
             assertEquals(HomeUiState(), viewModel.uiState.value)
 
+            startCollectingUiState()
             advanceUntilIdle()
 
             assertNotEquals(HomeUiState(), viewModel.uiState.value)
@@ -67,7 +78,7 @@ class HomeViewModelTest {
     @Test
     fun `recentRecords에는 가보고싶어요 기록이 섞이지 않는다`() =
         runTest(mainDispatcherRule.testDispatcher) {
-            val recentRecords = uiStateAfterIdle().recentRecords
+            val recentRecords = uiStateAfterCollect().recentRecords
 
             // 비어 있으면 아래 none 단언이 공허하게 통과한다
             assertTrue(recentRecords.isNotEmpty())
@@ -82,7 +93,7 @@ class HomeViewModelTest {
                 .count { it.evaluation != StashEvalState.WantToTry }
             assertTrue("샘플의 비위시리스트 기록이 3건 이하면 상한을 검증할 수 없다", candidateCount > 3)
 
-            assertEquals(3, uiStateAfterIdle().recentRecords.size)
+            assertEquals(3, uiStateAfterCollect().recentRecords.size)
         }
 
     // ---------------------------------------------------------------------
@@ -92,7 +103,7 @@ class HomeViewModelTest {
     @Test
     fun `wishlistRecords는 가보고싶어요 기록만 담는다`() =
         runTest(mainDispatcherRule.testDispatcher) {
-            val wishlistRecords = uiStateAfterIdle().wishlistRecords
+            val wishlistRecords = uiStateAfterCollect().wishlistRecords
 
             assertTrue(wishlistRecords.isNotEmpty())
             assertTrue(wishlistRecords.all { it.evaluation == StashEvalState.WantToTry })
@@ -106,7 +117,7 @@ class HomeViewModelTest {
                 .count { it.evaluation == StashEvalState.WantToTry }
             assertTrue("샘플의 가보고싶어요 기록이 1건 이하면 상한을 검증할 수 없다", candidateCount > 1)
 
-            assertEquals(1, uiStateAfterIdle().wishlistRecords.size)
+            assertEquals(1, uiStateAfterCollect().wishlistRecords.size)
         }
 
     // ---------------------------------------------------------------------
@@ -116,7 +127,7 @@ class HomeViewModelTest {
     @Test
     fun `stats와 monthlySummary는 가공 없이 그대로 전달된다`() =
         runTest(mainDispatcherRule.testDispatcher) {
-            val uiState = uiStateAfterIdle()
+            val uiState = uiStateAfterCollect()
 
             assertEquals(HomeSampleData.stats, uiState.stats)
             assertEquals(HomeSampleData.monthlySummary, uiState.monthlySummary)
