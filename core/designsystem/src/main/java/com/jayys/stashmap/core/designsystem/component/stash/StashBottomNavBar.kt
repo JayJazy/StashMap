@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -79,10 +78,7 @@ fun StashBottomNavBar(
             .background(colors.surface)
     ) {
         // 보더는 인셋 바깥 — 가로모드 3버튼 네비에서도 화면 끝까지 닿아야 함
-        HorizontalDivider(
-            thickness = 1.dp,
-            color = colors.divider
-        )
+        StashDivider()
 
         Row(
             modifier = Modifier

@@ -348,6 +348,8 @@ OO국밥  (한식 · ₩₩)
 - 색상: `StashMapColors` (색상군 × 4단계 Light1/Light2/Dark1/Dark2 + bgColor/baseColor)
 - 타이포: `TextStyleEnum` (Title1~4, Body1~3, HeadLine0~3, Caption, OverLine 등)
 - 컴포넌트: `SMTopBar`, `SMBaseCard`, `SMSettingItem`, `HDivider`
+  - (2026-10-05 갱신) 위 구조는 모두 Stash DS로 교체됨 — 색 `StashColors`, 타이포 `StashTextRole`,
+    컴포넌트 `Stash*` 24종. legacy 로는 `SMTopBar` 만 남음
 
 > 디자인 확정 후, 이 repo의 `Color.kt`/`LightColor.kt`/`DarkColor.kt`/`Type.kt`를 새 시스템으로 갱신하는 작업이 별도로 필요하다.
 

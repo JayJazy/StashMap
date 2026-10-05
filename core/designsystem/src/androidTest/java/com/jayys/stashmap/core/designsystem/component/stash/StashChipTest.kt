@@ -1,6 +1,10 @@
 package com.jayys.stashmap.core.designsystem.component.stash
 
 import androidx.compose.foundation.layout.Row
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertHasNoClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotSelected
@@ -33,7 +37,10 @@ class StashChipTest {
             }
         }
 
-        composeTestRule.onNodeWithText("한식").assertIsSelected()
+        composeTestRule.onNodeWithText("한식")
+            .assertIsSelected()
+            // 카테고리는 12개 중 1개 — 다중 토글이 아니라 단일 선택이다
+            .assert(SemanticsMatcher.expectValue(SemanticsProperties.Role, Role.RadioButton))
         composeTestRule.onNodeWithText("일식").assertIsNotSelected()
     }
 

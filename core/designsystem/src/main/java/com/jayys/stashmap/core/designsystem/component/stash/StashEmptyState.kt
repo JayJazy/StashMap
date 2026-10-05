@@ -91,7 +91,7 @@ fun StashEmptyState(
     }
 }
 
-private val CircleSize = 96.dp
+private val CircleSize = 80.dp
 
 @Composable
 private fun StashEmptyStateShowcase() {

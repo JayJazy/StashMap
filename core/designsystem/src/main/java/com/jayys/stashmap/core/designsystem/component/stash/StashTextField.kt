@@ -7,20 +7,27 @@ import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.jayys.stashmap.core.designsystem.icon.StashIcons
+import com.jayys.stashmap.core.designsystem.theme.stash.StashIconSize
 import com.jayys.stashmap.core.designsystem.theme.stash.StashMinTouchTarget
 import com.jayys.stashmap.core.designsystem.theme.stash.StashRadius
 import com.jayys.stashmap.core.designsystem.theme.stash.StashSpacing
@@ -34,14 +41,17 @@ import com.jayys.stashmap.core.designsystem.theme.stash.stashTypography
  *
  * - Material3 스타일 회피 → [BasicTextField] 위에 토큰 기반 데코레이션 직접 구성
  * - 포커스 시 accent 보더 + accentRing / 에러 시 error 보더 + errorSubtleFg 보조 텍스트
+ * - 내부가 Row + weight 라 **가용 폭을 채운다**. 좁게 쓰려면 호출부가 `Modifier.width()` 로 묶을 것
+ *   (가로 스크롤처럼 폭 제약이 무한인 부모 안에서는 입력 영역이 0 으로 접힌다)
  *
  * @param value 현재 입력값
  * @param onValueChange 입력 변경 콜백
  * @param placeholder 비어 있을 때 표시할 안내 문구
+ * @param leadingIcon 입력 영역 앞 아이콘 (검색 필드 등)
  * @param label 필드 상단 라벨
  * @param isError 에러 상태 여부
  * @param supportingText 하단 보조 문구
- * @param singleLine 단일 행 여부
+ * @param singleLine 단일 행 여부 — true 면 [minLines] 는 1 이어야 한다 (BasicTextField 제약)
  * @param minLines 최소 행 수
  * @param enabled 활성화 여부
  */
@@ -51,6 +61,7 @@ fun StashTextField(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: String? = null,
+    leadingIcon: ImageVector? = null,
     label: String? = null,
     isError: Boolean = false,
     supportingText: String? = null,
@@ -99,20 +110,34 @@ fun StashTextField(
             minLines = minLines,
             interactionSource = interactionSource,
             decorationBox = { innerTextField ->
-                Box(
+                Row(
                     modifier = Modifier.padding(
                         horizontal = StashSpacing.s3,
                         vertical = StashSpacing.s3,
                     ),
+                    horizontalArrangement = Arrangement.spacedBy(StashSpacing.s2),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    if (value.isEmpty() && placeholder != null) {
-                        StashText(
-                            text = placeholder,
-                            role = StashTextRole.Body,
-                            color = colors.fgSubtle,
+                    if (leadingIcon != null) {
+                        Icon(
+                            imageVector = leadingIcon,
+                            // placeholder·label 이 의미를 전달하므로 장식
+                            contentDescription = null,
+                            tint = colors.fgSubtle,
+                            modifier = Modifier.size(StashIconSize.md),
                         )
                     }
-                    innerTextField()
+
+                    Box(modifier = Modifier.weight(1f)) {
+                        if (value.isEmpty() && placeholder != null) {
+                            StashText(
+                                text = placeholder,
+                                role = StashTextRole.Body,
+                                color = colors.fgSubtle,
+                            )
+                        }
+                        innerTextField()
+                    }
                 }
             },
         )
@@ -151,6 +176,12 @@ private fun StashTextFieldShowcase() {
             label = "에러 필드",
             isError = true,
             supportingText = "에러 메시지",
+        )
+        StashTextField(
+            value = "",
+            onValueChange = {},
+            placeholder = "언어 검색",
+            leadingIcon = StashIcons.Search,
         )
         StashTextField(
             value = "비활성 값",

@@ -6,7 +6,7 @@
     <string name="preferences">설정</string>
     <string name="language">언어</string>
     <string name="system_theme">테마</string>
-    <string name="informateion">정보</string>
+    <string name="information">정보</string>
     <string name="contact">문의하기</string>
     <string name="version">버전 : %s</string>
     <string name="light_mode">라이트 모드</string>
