@@ -25,9 +25,12 @@ data class StashColors(
     val surface3: Color,
     val overlay: Color,
     // Foreground / text
+    // 아래 셋은 중립 면(surface/bg) 기준값 — 색조 면(`*Subtle`) 위엔 짝 토큰 `*SubtleFg` 를 쓸 것.
+    // 그대로 올리면 AA 가 깨진다 (fgMuted on Accent50 = 4.34:1, 라이트 기준)
     val fg: Color,
     val fgMuted: Color,
     val fgSubtle: Color,
+    // accent 면 전용 — 위 규칙과 무관
     val fgOnAccent: Color,
     // Lines
     val border: Color,

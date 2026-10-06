@@ -97,7 +97,9 @@ fun StashPlaceResultRow(
                     StashText(
                         text = category,
                         role = StashTextRole.Caption,
-                        color = colors.fgMuted,
+                        // 선택 시 배경이 accentSubtle 로 바뀜 — fgMuted 는 라이트에서 4.34:1 (AA 미달).
+                        // 다크는 5.93:1 로 통과였지만 규칙 통일을 택함 (name 과의 명도 위계는 그만큼 줄어듦)
+                        color = if (selected) colors.accentSubtleFg else colors.fgMuted,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -107,7 +109,7 @@ fun StashPlaceResultRow(
             StashText(
                 text = address,
                 role = StashTextRole.BodySm,
-                color = colors.fgMuted,
+                color = if (selected) colors.accentSubtleFg else colors.fgMuted,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -117,7 +119,7 @@ fun StashPlaceResultRow(
             StashText(
                 text = distance,
                 role = StashTextRole.Caption,
-                color = colors.fgMuted,
+                color = if (selected) colors.accentSubtleFg else colors.fgMuted,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
