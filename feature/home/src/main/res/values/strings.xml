@@ -13,7 +13,7 @@
 
     <!-- Quick record CTA -->
     <string name="home_quick_record_title">Quick record</string>
-    <string name="home_quick_record_subtitle">Just a name and a rating</string>
+    <string name="home_quick_record_subtitle">Just a name and how it went</string>
 
     <!-- Sections -->
     <string name="home_section_recent">Recent</string>

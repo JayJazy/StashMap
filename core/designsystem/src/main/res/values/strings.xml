@@ -9,7 +9,5 @@
     <!-- Accessibility -->
     <string name="back">Back</string>
     <string name="close">Close</string>
-    <string name="rating_value_description">%2$s out of %1$d</string>
-    <string name="rating_set_label">Rate %1$d</string>
 
 </resources>

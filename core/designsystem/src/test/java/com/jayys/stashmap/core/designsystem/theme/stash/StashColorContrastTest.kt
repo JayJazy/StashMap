@@ -96,7 +96,7 @@ class StashColorContrastTest {
         "chip" to (c.chipBg to c.chipFg),
     )
 
-    /** 배경을 직접 칠하지 않는 자리(Chip 선택·Ghost·Rating·SettingRow)는 부모 면 = surface 기준 */
+    /** 배경을 직접 칠하지 않는 자리(Chip 선택·Ghost·SettingRow)는 부모 면 = surface 기준 */
     private fun textUsages(c: StashColors) = listOf(
         Usage("SegmentedSelect 선택 라벨", c.accentSubtle, c.accentSubtleFg),
         Usage("PlaceResultRow 선택 보조 텍스트", c.accentSubtle, c.accentSubtleFg),
@@ -115,8 +115,14 @@ class StashColorContrastTest {
         Usage("TextField leadingIcon", c.fieldBg, c.fgMuted),
         Usage("TapRow chevron", c.fieldBg, c.fgMuted),
         Usage("SettingRow chevron", c.surface, c.fgMuted),
-        Usage("Rating 빈 별 외곽선", c.surface, c.fgMuted),
         Usage("StatCard warning 아이콘", c.surface, c.warning),
+        // 컨트롤 테두리 — 1.4.11 의 adjacent color 는 복수형이라 안쪽 면과 바깥 면(= 화면 바탕 bg) 둘 다 본다
+        // 포커스 상태는 빠져 있다 — 3dp accentRing 이 accent 테두리 바깥이 아니라 위에 덮여(Modifier.border 는
+        //  바깥으로 안 자라고, 먼저 선언된 쪽이 나중에 칠해진다) 실제 인접색이 합성색이라 여기서 못 잰다
+        Usage("TextField 테두리 안쪽", c.fieldBg, c.fieldBorder),
+        Usage("TextField disabled 테두리 안쪽", c.surface2, c.fieldBorder),
+        Usage("TextField 테두리 바깥쪽", c.bg, c.fieldBorder),
+        Usage("TextField 에러 테두리 안쪽", c.fieldBg, c.error),
     ) + evalBorderUsages(c)
 
     /** StatGrid·SelectCard 선택 테두리 — solid 은 짝 subtle 위 라이트 3.07 이라 subtleFg 로 그린다 */

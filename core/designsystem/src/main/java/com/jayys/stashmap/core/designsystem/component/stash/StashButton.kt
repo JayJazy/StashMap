@@ -95,6 +95,7 @@ private fun StashButtonVariant.colors(colors: StashColors, enabled: Boolean): St
             container = colors.surface,
             containerPressed = colors.surface2,
             content = colors.fg,
+            // 컨트롤 외곽인데 border(surface 위 1.20) — surface-on-bg 1.05 라 bg 위에선 라벨 말고 식별 수단이 없다. 프로덕션 미사용이라 보류, 상세 화면(§6.4) 적용 전 재검토
             border = colors.border,
         )
 

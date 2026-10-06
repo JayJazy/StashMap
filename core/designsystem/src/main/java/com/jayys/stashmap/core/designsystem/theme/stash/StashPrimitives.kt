@@ -67,8 +67,4 @@ internal object StashPrimitives {
     val Blue500 = Color(0xFF3B82F6)
     val Blue600 = Color(0xFF2563EB)
     val Blue700 = Color(0xFF1D4ED8)
-
-    // Gold (rating)
-    val Gold400 = Color(0xFFFBBF24)
-    val Gold500 = Color(0xFFF59E0B)
 }
