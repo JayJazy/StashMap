@@ -33,7 +33,9 @@ data class StashColors(
     val fgSubtle: Color,
     // accent 면 전용 — 위 규칙과 무관
     val fgOnAccent: Color,
-    // Lines
+    // Lines — 1.20~1.48 이라 3:1 을 못 넘는다. 컨테이너 외곽·구분선, 그리고 내용물(썸네일·아이콘·라벨)이
+    //  스스로 식별되는 컨트롤 외곽까지는 1.4.11 비대상이라 괜찮다 (StashCard·StashEvalStatGrid 미선택 셀 등).
+    //  내용물만으로 컨트롤임을 알 수 없는 자리에는 쓰지 말 것 — 그 자리는 fieldBorder
     val border: Color,
     val borderStrong: Color,
     val divider: Color,
@@ -71,12 +73,12 @@ data class StashColors(
     val infoSubtleFg: Color,
     // Field / chip
     val fieldBg: Color,
+    // 컨트롤 외곽 — 흰 필드가 흰 바탕 위라(면차 1.05) 테두리가 유일한 식별 수단이다. 1.4.11(3:1) 대상.
+    // 라이트·다크 모두 Slate500 고정. 다크 fieldBg 위 기준 1.72 → 3.75, 전 면 최저는 3.07(다크 surface2).
+    // Slate400 은 라이트 2.56 이라 못 쓰고 램프의 다음 단계가 바로 Slate500 이다
     val fieldBorder: Color,
     val chipBg: Color,
     val chipFg: Color,
-    // Rating
-    val gold400: Color,
-    val gold500: Color,
 )
 
 /** 라이트 테마 시맨틱 색상 */
@@ -117,11 +119,9 @@ val LightStashColors: StashColors = StashColors(
     infoSubtle = StashPrimitives.Blue50,
     infoSubtleFg = StashPrimitives.Blue700,
     fieldBg = StashPrimitives.Slate0,
-    fieldBorder = StashPrimitives.Slate300,
+    fieldBorder = StashPrimitives.Slate500,
     chipBg = StashPrimitives.Slate100,
     chipFg = StashPrimitives.Slate700,
-    gold400 = StashPrimitives.Gold400,
-    gold500 = StashPrimitives.Gold500,
 )
 
 /**
@@ -167,11 +167,9 @@ val DarkStashColors: StashColors = StashColors(
     infoSubtle = lerp(StashPrimitives.Slate900, StashPrimitives.Blue500, 0.18f),
     infoSubtleFg = StashPrimitives.Blue300,
     fieldBg = StashPrimitives.Slate900,
-    fieldBorder = StashPrimitives.Slate700,
+    fieldBorder = StashPrimitives.Slate500,
     chipBg = StashPrimitives.Slate800,
     chipFg = StashPrimitives.Slate200,
-    gold400 = StashPrimitives.Gold400,
-    gold500 = StashPrimitives.Gold500,
 )
 
 /** 현재 컴포지션의 Stash 색상 토큰 — 기본값 [LightStashColors] */

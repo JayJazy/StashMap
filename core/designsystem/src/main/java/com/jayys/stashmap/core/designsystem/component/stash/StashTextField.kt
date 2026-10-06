@@ -99,7 +99,8 @@ fun StashTextField(
             modifier = Modifier
                 .clip(StashRadius.md)
                 .background(if (enabled) colors.fieldBg else colors.surface2)
-                // 포커스 링 — 바깥쪽 옅은 보더로 표현
+                // 포커스 링 — border 는 바깥으로 안 자라고 먼저 선언된 쪽이 위에 칠해진다.
+                // 즉 이 3dp 링이 아래 borderColor 를 덮는다 (바깥에 덧대는 게 아님)
                 .border(width = if (focused && !isError) 3.dp else 0.dp, color = ringColor, shape = StashRadius.md)
                 .border(width = borderWidth, color = borderColor, shape = StashRadius.md)
                 .defaultMinSize(minHeight = StashMinTouchTarget),
