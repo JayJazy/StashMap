@@ -112,7 +112,8 @@ private fun StatCell(
             StashText(
                 text = style.label,
                 role = StashTextRole.Caption,
-                color = colors.fgMuted,
+                // fgMuted 는 중립 surface 기준 토큰 — 선택 시 색조 면 위로 올라가면 4.35:1 까지 떨어진다
+                color = if (selected) style.subtleFg else colors.fgMuted,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )

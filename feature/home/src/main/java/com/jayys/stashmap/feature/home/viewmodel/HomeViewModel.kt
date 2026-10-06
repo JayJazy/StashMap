@@ -2,9 +2,12 @@ package com.jayys.stashmap.feature.home.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jayys.stashmap.core.designsystem.theme.stash.StashEvalState
-import com.jayys.stashmap.feature.home.model.HomeSampleData
+import com.jayys.stashmap.core.model.Evaluation
+import com.jayys.stashmap.core.model.evaluationCounts
+import com.jayys.stashmap.core.model.sample.SampleRecords
+import com.jayys.stashmap.core.model.sortedByNewest
 import com.jayys.stashmap.feature.home.model.HomeUiState
+import com.jayys.stashmap.feature.home.model.SampleMonthlySummary
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -23,22 +26,22 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor() : ViewModel() {
 
-    private val _records = MutableStateFlow(HomeSampleData.records)
-    private val _stats = MutableStateFlow(HomeSampleData.stats)
-    private val _monthlySummary = MutableStateFlow(HomeSampleData.monthlySummary)
+    private val _records = MutableStateFlow(SampleRecords.records)
+    private val _monthlySummary = MutableStateFlow(SampleMonthlySummary)
 
-    // 최근 기록 / 위시리스트는 따로 들고 있지 않고 기록 목록에서 매번 파생
+    // 최근 기록 / 위시리스트 / 통계는 따로 들고 있지 않고 기록 목록에서 매번 파생
     val uiState: StateFlow<HomeUiState> = combine(
         _records,
-        _stats,
         _monthlySummary,
-    ) { records, stats, monthlySummary ->
+    ) { records, monthlySummary ->
         HomeUiState(
-            recentRecords = records.filterNot { it.evaluation == StashEvalState.WantToTry }
+            // 정렬 없이 take 하면 "최근"이 거짓말이 된다 — 맛집 탭과 같은 비교자를 쓴다
+            recentRecords = records.filterNot { it.evaluation == Evaluation.WantToTry }
+                .sortedByNewest()
                 .take(RECENT_RECORD_LIMIT),
-            wishlistRecords = records.filter { it.evaluation == StashEvalState.WantToTry }
+            wishlistRecords = records.filter { it.evaluation == Evaluation.WantToTry }
                 .take(WISHLIST_LIMIT),
-            stats = stats,
+            stats = records.evaluationCounts(),
             monthlySummary = monthlySummary,
         )
     }.stateIn(

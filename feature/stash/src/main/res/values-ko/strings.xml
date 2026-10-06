@@ -1,0 +1,24 @@
+<resources>
+
+    <!-- Screen title -->
+    <string name="stash_title">맛집</string>
+
+    <!-- Filter summary row -->
+    <string name="stash_filter_all">전체</string>
+    <plurals name="stash_filter_count">
+        <item quantity="other">%1$s곳</item>
+    </plurals>
+    <string name="stash_sort_newest">최신순</string>
+    <string name="stash_sort_current_description">%1$s 정렬</string>
+
+    <!-- Empty state -->
+    <string name="stash_empty_title">첫 맛집을 기록해보세요</string>
+    <string name="stash_empty_description">다녀온 가게를 남기면 다시 갈 집이 한눈에 보여요.</string>
+    <string name="stash_empty_action">기록하기</string>
+    <string name="stash_filtered_empty_title">조건에 맞는 기록이 없어요</string>
+
+    <!-- FAB -->
+    <string name="stash_fab_label">기록</string>
+    <string name="stash_fab_description">맛집 기록하기</string>
+
+</resources>

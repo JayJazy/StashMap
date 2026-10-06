@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import com.jayys.stashmap.core.designsystem.R
 import com.jayys.stashmap.core.designsystem.icon.StashIcons
+import com.jayys.stashmap.core.model.Evaluation
 
 /**
  * StashMap 의 행동 기반 평가 4상태
@@ -87,3 +88,19 @@ val StashEvalState.style: StashEvalStyle
             )
         }
     }
+
+/** core:model 의 평가 → DS 표현 상태. when 으로 적어 둬야 한쪽에 상태가 늘면 컴파일이 막는다 */
+fun Evaluation.toStashEvalState(): StashEvalState = when (this) {
+    Evaluation.Favorite -> StashEvalState.Favorite
+    Evaluation.Average -> StashEvalState.Average
+    Evaluation.Avoid -> StashEvalState.Avoid
+    Evaluation.WantToTry -> StashEvalState.WantToTry
+}
+
+/** DS 표현 상태 → core:model 의 평가 */
+fun StashEvalState.toEvaluation(): Evaluation = when (this) {
+    StashEvalState.Favorite -> Evaluation.Favorite
+    StashEvalState.Average -> Evaluation.Average
+    StashEvalState.Avoid -> Evaluation.Avoid
+    StashEvalState.WantToTry -> Evaluation.WantToTry
+}
