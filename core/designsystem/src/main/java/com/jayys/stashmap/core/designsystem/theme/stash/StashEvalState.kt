@@ -29,10 +29,11 @@ enum class StashEvalState(@StringRes val labelRes: Int) {
  *
  * @param icon 상태 아이콘
  * @param label 현재 로케일의 상태 라벨
- * @param solid 꽉 찬 배경색 — 연한 배경 위 아이콘 색으로도 씀
+ * @param solid 꽉 찬 배경색. 전경으로 쓰지 말 것 — [subtle] 위에서 라이트 Average 가 2.07:1 로 1.4.11(3:1) 미달.
+ *   테두리로 써도 같은 수치라 StatGrid·SelectCard 의 선택 테두리는 아직 미해결
  * @param onSolid [solid] 배경 위에 올리는 색
  * @param subtle 연한 배경색
- * @param subtleFg [subtle] 배경 위 강조 텍스트 색
+ * @param subtleFg [subtle] 배경 위에 올리는 전경색 — 텍스트·아이콘 공용
  */
 @Immutable
 data class StashEvalStyle(

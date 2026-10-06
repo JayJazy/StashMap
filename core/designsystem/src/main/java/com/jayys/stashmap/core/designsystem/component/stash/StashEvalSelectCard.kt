@@ -75,7 +75,7 @@ fun StashEvalSelectCard(
             Icon(
                 imageVector = style.icon,
                 contentDescription = null,
-                tint = if (selected) style.onSolid else style.solid,
+                tint = if (selected) style.onSolid else style.subtleFg,
                 modifier = Modifier.size(StashIconSize.xl),
             )
         }
