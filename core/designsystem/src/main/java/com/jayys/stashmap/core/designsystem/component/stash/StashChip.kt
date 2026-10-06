@@ -50,7 +50,7 @@ fun StashChip(
     leadingIcon: ImageVector? = null,
 ) {
     val colors = MaterialTheme.stashColorTokens
-    val content = if (selected) colors.accent else colors.chipFg
+    val content = if (selected) colors.accentSubtleFg else colors.chipFg
 
     val base = modifier
         .minimumInteractiveComponentSize()

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -65,7 +66,16 @@ fun StashDistBar(
             .background(colors.surface3)
             .semantics { if (total > 0) contentDescription = description },
     ) {
-        segments.forEach { (style, count) ->
+        // 맞닿으면 라이트에서 Favorite|Average 경계가 1.03 이라 안 보인다 (Green600·Amber600 휘도가 거의 같음)
+        segments.forEachIndexed { index, (style, count) ->
+            if (index > 0) {
+                Box(
+                    modifier = Modifier
+                        .width(SegmentGap)
+                        .fillMaxHeight()
+                        .background(colors.surface),
+                )
+            }
             Box(
                 modifier = Modifier
                     .weight(count.toFloat())
@@ -75,6 +85,8 @@ fun StashDistBar(
         }
     }
 }
+
+private val SegmentGap = 2.dp
 
 @Composable
 private fun StashDistBarShowcase() {

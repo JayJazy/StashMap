@@ -115,7 +115,7 @@ fun StashSettingRow(
                 Icon(
                     imageVector = StashIcons.ChevronRight,
                     contentDescription = null,
-                    tint = colors.fgSubtle,
+                    tint = colors.fgMuted,
                     modifier = Modifier.size(StashIconSize.md),
                 )
             }

@@ -90,7 +90,7 @@ private fun StatCell(
         .background(if (selected) style.subtle else colors.surface)
         .border(
             width = if (selected) 2.dp else 1.dp,
-            color = if (selected) style.solid else colors.border,
+            color = if (selected) style.subtleFg else colors.border,
             shape = StashRadius.lg,
         )
     val withClick = if (onClick != null) {

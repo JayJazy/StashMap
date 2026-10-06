@@ -123,7 +123,7 @@ fun StashTextField(
                             imageVector = leadingIcon,
                             // placeholder·label 이 의미를 전달하므로 장식
                             contentDescription = null,
-                            tint = colors.fgSubtle,
+                            tint = colors.fgMuted,
                             modifier = Modifier.size(StashIconSize.md),
                         )
                     }
@@ -133,7 +133,7 @@ fun StashTextField(
                             StashText(
                                 text = placeholder,
                                 role = StashTextRole.Body,
-                                color = colors.fgSubtle,
+                                color = colors.fgMuted,
                             )
                         }
                         innerTextField()

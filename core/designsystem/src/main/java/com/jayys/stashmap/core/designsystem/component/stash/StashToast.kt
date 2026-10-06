@@ -41,7 +41,7 @@ private fun StashToastVariant.colors(colors: StashColors): StashToastColors = wh
         container = colors.surface,
         content = colors.fg,
         border = colors.border,
-        action = colors.accent,
+        action = colors.accentSubtleFg,
     )
 
     StashToastVariant.Success -> StashToastColors(

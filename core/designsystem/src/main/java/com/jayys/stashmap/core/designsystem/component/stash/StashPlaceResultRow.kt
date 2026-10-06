@@ -129,7 +129,7 @@ fun StashPlaceResultRow(
             Icon(
                 imageVector = StashIcons.Check,
                 contentDescription = null,
-                tint = colors.accent,
+                tint = colors.accentSubtleFg,
                 modifier = Modifier.size(StashIconSize.md),
             )
         }

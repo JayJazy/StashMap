@@ -101,7 +101,7 @@ private fun StashButtonVariant.colors(colors: StashColors, enabled: Boolean): St
         StashButtonVariant.Ghost -> StashButtonColors(
             container = Color.Transparent,
             containerPressed = colors.accentSubtle,
-            content = colors.accent,
+            content = colors.accentSubtleFg,
             border = null,
         )
 

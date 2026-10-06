@@ -75,7 +75,7 @@ fun StashTapRow(
         StashText(
             text = if (hasValue) text.orEmpty() else placeholder.orEmpty(),
             role = StashTextRole.Body,
-            color = if (hasValue) colors.fg else colors.fgSubtle,
+            color = if (hasValue) colors.fg else colors.fgMuted,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.weight(1f),
@@ -84,7 +84,7 @@ fun StashTapRow(
         Icon(
             imageVector = StashIcons.ChevronRight,
             contentDescription = null,
-            tint = colors.fgSubtle,
+            tint = colors.fgMuted,
             modifier = Modifier.size(StashIconSize.md),
         )
     }
