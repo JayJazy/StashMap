@@ -1,4 +1,4 @@
-package com.jayys.stashmap.feature.testing
+package com.jayys.stashmap.core.testing
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
