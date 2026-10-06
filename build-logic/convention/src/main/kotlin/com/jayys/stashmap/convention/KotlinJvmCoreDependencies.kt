@@ -25,7 +25,7 @@ private object KotlinJvmCoreLibraries {
 
 /**
  * Kotlin/JVM Core 모듈에 공통 dependencies 적용
- * :core:model, :core:domain
+ * :core:model, :core:domain, :core:testing
  */
 internal fun Project.applyKotlinJvmCoreDependencies() {
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")

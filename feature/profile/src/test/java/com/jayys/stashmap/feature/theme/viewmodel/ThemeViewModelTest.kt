@@ -1,7 +1,7 @@
 package com.jayys.stashmap.feature.theme.viewmodel
 
+import com.jayys.stashmap.core.testing.MainDispatcherRule
 import com.jayys.stashmap.feature.testing.FakeSettingsRepository
-import com.jayys.stashmap.feature.testing.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest

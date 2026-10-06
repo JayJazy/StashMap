@@ -39,6 +39,11 @@ private object FeatureLibraries {
         "hilt.compiler"
     )
 
+    // Test module dependencies
+    val testModules = listOf(
+        ":core:testing"
+    )
+
     // Test dependencies
     val testLibraries = listOf(
         "junit",
@@ -86,6 +91,11 @@ internal fun Project.applyFeatureDependencies() {
         // KSP/Kapt dependencies
         FeatureLibraries.kspLibraries.forEach { libraryKey ->
             add("ksp", libs.findLibrary(libraryKey).get())
+        }
+
+        // Test module dependencies
+        FeatureLibraries.testModules.forEach { module ->
+            add("testImplementation", project(module))
         }
 
         // Test dependencies

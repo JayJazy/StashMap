@@ -3,8 +3,8 @@ package com.jayys.stashmap.feature.stash.viewmodel
 import com.jayys.stashmap.core.model.Evaluation
 import com.jayys.stashmap.core.model.evaluationCounts
 import com.jayys.stashmap.core.model.sample.SampleRecords
+import com.jayys.stashmap.core.testing.MainDispatcherRule
 import com.jayys.stashmap.feature.stash.model.StashUiState
-import com.jayys.stashmap.feature.testing.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
