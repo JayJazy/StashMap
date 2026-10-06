@@ -49,7 +49,7 @@ data class StashColors(
     val successFg: Color,
     val successSubtle: Color,
     val successSubtleFg: Color,
-    // Warning
+    // Warning — 라이트만 Amber500 로 한 단계 밝다. 밝은 면 위 전경으로 쓰면 2.15:1 이라 못 씀
     val warning: Color,
     val warningFg: Color,
     val warningSubtle: Color,

@@ -45,7 +45,7 @@ enum class StashEvalChipSize(internal val box: Dp, internal val icon: Dp, intern
 /**
  * 평가 상태를 아이콘 하나로 보여주는 칩 — 리스트·카드·상세 어디서나 같은 모양
  *
- * 연한 상태색 배경 + 진한 상태색 아이콘
+ * 연한 상태색 배경 + 짝 전경색 아이콘 (라이트는 진하게, 다크는 연하게)
  *
  * @param state 표시할 평가 상태
  * @param size 칩 크기 단계
@@ -92,7 +92,8 @@ private fun EvalChipBox(
         Icon(
             imageVector = style.icon,
             contentDescription = contentDescription,
-            tint = style.solid,
+            // subtle 면 위라 짝 토큰 — solid 를 쓰면 1.4.11 미달
+            tint = style.subtleFg,
             modifier = Modifier.size(size.icon),
         )
     }
