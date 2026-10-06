@@ -59,7 +59,7 @@ fun StashThumbnail(
             Icon(
                 imageVector = StashIcons.Photo,
                 contentDescription = null,
-                tint = colors.fgSubtle,
+                tint = colors.fgMuted,
                 modifier = Modifier.size(size / 3),
             )
         }

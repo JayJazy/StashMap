@@ -58,7 +58,7 @@ fun StashEvalSelectCard(
             .background(if (selected) style.subtle else colors.surface)
             .border(
                 width = if (selected) 2.dp else 1.dp,
-                color = if (selected) style.solid else colors.border,
+                color = if (selected) style.subtleFg else colors.border,
                 shape = StashRadius.lg,
             )
             .selectableNoRipple(selected = selected, role = Role.RadioButton, onClick = onClick)

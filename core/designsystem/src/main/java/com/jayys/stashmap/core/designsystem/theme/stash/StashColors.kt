@@ -26,9 +26,10 @@ data class StashColors(
     val overlay: Color,
     // Foreground / text
     // 아래 셋은 중립 면(surface/bg) 기준값 — 색조 면(`*Subtle`) 위엔 짝 토큰 `*SubtleFg` 를 쓸 것.
-    // 그대로 올리면 AA 가 깨진다 (fgMuted on Accent50 = 4.34:1, 라이트 기준)
+    // 그대로 올리면 라이트 fgMuted on Accent50 = 4.34 로 1.4.3(4.5:1) 미달
     val fg: Color,
     val fgMuted: Color,
+    // 라이트 최대 2.56(흰 면 위) — 텍스트도 아이콘도 불가. 의미 있는 전경은 fgMuted 가 하한, 여긴 장식만
     val fgSubtle: Color,
     // accent 면 전용 — 위 규칙과 무관
     val fgOnAccent: Color,
@@ -36,7 +37,9 @@ data class StashColors(
     val border: Color,
     val borderStrong: Color,
     val divider: Color,
-    // Accent
+    // Accent — 전경으로 쓸 수 있는 자리가 좁다. 다크 기준 accentSubtle 위 3.59 / surface 위 4.22 로 둘 다
+    //  1.4.3(4.5:1) 미달이라 본문·라벨에는 accentSubtleFg 를 쓴다.
+    //  중립 면(bg/surface) 위 큰 텍스트는 예외 — 1.4.11(3:1) 기준이라 통과한다 (Home 워드마크·카운트 강조)
     val accent: Color,
     val accentHover: Color,
     val accentPress: Color,
@@ -49,8 +52,10 @@ data class StashColors(
     val successFg: Color,
     val successSubtle: Color,
     val successSubtleFg: Color,
-    // Warning — 라이트만 Amber500 로 한 단계 밝다. 밝은 면 위 전경으로 쓰면 2.15:1 이라 못 씀
+    // Warning — 라이트 Amber600 은 면에 따라 갈린다. surface 3.19 / bg 3.04 까지만 아이콘 가능(StatCard),
+    //  surface2 이하는 2.91 이라 1.4.11(3:1) 미달. 텍스트는 어느 면에서도 불가 — warningSubtleFg 를 쓴다
     val warning: Color,
+    // 라이트는 Slate900 유지 — 다른 600 토큰처럼 Slate0 로 맞추면 3.19 라 1.4.3(4.5:1) 미달
     val warningFg: Color,
     val warningSubtle: Color,
     val warningSubtleFg: Color,
@@ -99,7 +104,7 @@ val LightStashColors: StashColors = StashColors(
     successFg = StashPrimitives.Slate0,
     successSubtle = StashPrimitives.Green50,
     successSubtleFg = StashPrimitives.Green700,
-    warning = StashPrimitives.Amber500,
+    warning = StashPrimitives.Amber600,
     warningFg = StashPrimitives.Slate900,
     warningSubtle = StashPrimitives.Amber50,
     warningSubtleFg = StashPrimitives.Amber700,

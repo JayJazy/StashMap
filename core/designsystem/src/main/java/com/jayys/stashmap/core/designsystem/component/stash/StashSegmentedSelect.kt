@@ -86,7 +86,7 @@ private fun SegmentCell(
     modifier: Modifier = Modifier,
 ) {
     val colors = MaterialTheme.stashColorTokens
-    val content = if (selected) colors.accent else colors.fg
+    val content = if (selected) colors.accentSubtleFg else colors.fg
 
     Row(
         modifier = modifier

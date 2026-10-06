@@ -52,6 +52,31 @@ class StashColorContrastTest {
         )
     }
 
+    /**
+     * 컴포넌트가 실제로 올리는 (바탕면, 전경) — 텍스트 자리는 1.4.3(4.5:1)
+     *
+     * [textUsages]·[nonTextUsages] 는 손으로 적은 목록이라 코드와 자동 동기화되지 않는다 →
+     * 사용처를 바꾸고 목록을 안 고치면 못 잡는다. 새 위반을 막는 가드가 아니라, 고친 값을 되돌리면 깨지게 박아 둔 못이다
+     */
+    @Test
+    fun `컴포넌트가 쓰는 텍스트 조합은 텍스트 대비를 넘는다`() {
+        themes().forEach { (themeName, colors) ->
+            textUsages(colors).forEach { usage ->
+                assertAtLeast(TEXT_MIN, usage.surface, usage.foreground, "$themeName ${usage.label}")
+            }
+        }
+    }
+
+    /** 아이콘·테두리 자리는 1.4.11(3:1) — 목록의 한계는 위 텍스트 쪽 설명과 같다 */
+    @Test
+    fun `컴포넌트가 쓰는 아이콘과 테두리 조합은 비텍스트 대비를 넘는다`() {
+        themes().forEach { (themeName, colors) ->
+            nonTextUsages(colors).forEach { usage ->
+                assertAtLeast(NON_TEXT_MIN, usage.surface, usage.foreground, "$themeName ${usage.label}")
+            }
+        }
+    }
+
     private fun themes() = listOf("라이트" to LightStashColors, "다크" to DarkStashColors)
 
     private fun subtlePairs(c: StashColors) = listOf(
@@ -71,6 +96,37 @@ class StashColorContrastTest {
         "chip" to (c.chipBg to c.chipFg),
     )
 
+    /** 배경을 직접 칠하지 않는 자리(Chip 선택·Ghost·Rating·SettingRow)는 부모 면 = surface 기준 */
+    private fun textUsages(c: StashColors) = listOf(
+        Usage("SegmentedSelect 선택 라벨", c.accentSubtle, c.accentSubtleFg),
+        Usage("PlaceResultRow 선택 보조 텍스트", c.accentSubtle, c.accentSubtleFg),
+        Usage("Chip 선택 라벨", c.surface, c.accentSubtleFg),
+        Usage("Button Ghost 라벨", c.surface, c.accentSubtleFg),
+        Usage("Toast Neutral 액션", c.surface, c.accentSubtleFg),
+        Usage("TextField placeholder", c.fieldBg, c.fgMuted),
+        Usage("TapRow placeholder", c.fieldBg, c.fgMuted),
+    )
+
+    // fgMuted 는 surface3 위 라이트 3.97 — 아이콘은 되고 텍스트는 안 되니 여긴 비텍스트만 모은다
+    private fun nonTextUsages(c: StashColors) = listOf(
+        Usage("BottomNavBar 선택 아이콘", c.accentSubtle, c.accentSubtleFg),
+        Usage("PlaceResultRow 선택 체크 아이콘", c.accentSubtle, c.accentSubtleFg),
+        Usage("Thumbnail 빈 이미지 아이콘", c.surface3, c.fgMuted),
+        Usage("TextField leadingIcon", c.fieldBg, c.fgMuted),
+        Usage("TapRow chevron", c.fieldBg, c.fgMuted),
+        Usage("SettingRow chevron", c.surface, c.fgMuted),
+        Usage("Rating 빈 별 외곽선", c.surface, c.fgMuted),
+        Usage("StatCard warning 아이콘", c.surface, c.warning),
+    ) + evalBorderUsages(c)
+
+    /** StatGrid·SelectCard 선택 테두리 — solid 은 짝 subtle 위 라이트 3.07 이라 subtleFg 로 그린다 */
+    private fun evalBorderUsages(c: StashColors) = listOf(
+        "Favorite" to (c.successSubtle to c.successSubtleFg),
+        "Average" to (c.warningSubtle to c.warningSubtleFg),
+        "Avoid" to (c.errorSubtle to c.errorSubtleFg),
+        "WantToTry" to (c.infoSubtle to c.infoSubtleFg),
+    ).map { (state, pair) -> Usage("평가 선택 테두리 $state", pair.first, pair.second) }
+
     private fun assertAtLeast(min: Double, surface: Color, foreground: Color, label: String) {
         val ratio = contrast(surface, foreground)
         assertTrue(
@@ -78,6 +134,9 @@ class StashColorContrastTest {
             ratio >= min,
         )
     }
+
+    /** 한 컴포넌트가 한 자리에 올리는 (바탕면, 전경) */
+    private data class Usage(val label: String, val surface: Color, val foreground: Color)
 
     private companion object {
         const val TEXT_MIN = 4.5
@@ -91,7 +150,7 @@ class StashColorContrastTest {
     }
 }
 
-/** WCAG 2.x 상대휘도 — lerp 결과는 Oklab 공간이라 sRGB 로 되돌린 뒤 읽어야 한다 */
+/** WCAG 2.x 상대휘도 — 다크 *Subtle 은 Oklab 에서 보간되지만 lerp 반환은 sRGB. 토큰이 바뀌어도 안전하게 명시 변환 */
 private fun contrast(a: Color, b: Color): Double {
     val la = a.relativeLuminance()
     val lb = b.relativeLuminance()

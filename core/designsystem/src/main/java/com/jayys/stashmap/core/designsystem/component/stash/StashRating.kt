@@ -44,7 +44,7 @@ import kotlin.math.sin
  * Stash Design System 별점 표시/입력
  *
  * - 5각 별을 [Canvas]/[Path] 로 직접 그림
- * - 채워진 별 gold500 외곽선 + gold400 채움 / 빈 별 fgSubtle 외곽선
+ * - 채워진 별 gold500 외곽선 + gold400 채움 / 빈 별 fgMuted 외곽선
  * - 소수 점수는 가로 클립으로 부분 채움
  * - [onRatingChange] 가 있으면 별 단위 탭 입력
  *
@@ -65,7 +65,7 @@ fun StashRating(
     val description = stringResource(R.string.rating_value_description, max, rating.toString())
     val filledOutline = colors.gold500
     val filledFill = colors.gold400
-    val emptyOutline = colors.fgSubtle
+    val emptyOutline = colors.fgMuted
     val interactive = onRatingChange != null
 
     Row(

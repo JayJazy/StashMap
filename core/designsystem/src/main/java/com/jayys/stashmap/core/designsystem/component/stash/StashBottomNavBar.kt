@@ -99,7 +99,7 @@ private fun StashNavBarItem(
     modifier: Modifier = Modifier,
 ) {
     val colors = MaterialTheme.stashColorTokens
-    val tint = if (item.selected) colors.accent else colors.fgMuted
+    val tint = if (item.selected) colors.accentSubtleFg else colors.fgMuted
 
     Column(
         modifier = modifier
