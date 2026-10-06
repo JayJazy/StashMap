@@ -42,6 +42,7 @@ object StashIcons {
     val Close: ImageVector @Composable get() = vector(R.drawable.ic_close)
     val ChevronRight: ImageVector @Composable get() = vector(R.drawable.ic_chevron_right)
     val ChevronLeft: ImageVector @Composable get() = vector(R.drawable.ic_chevron_left)
+    val ChevronDown: ImageVector @Composable get() = vector(R.drawable.ic_chevron_down)
     val ArrowRight: ImageVector @Composable get() = vector(R.drawable.ic_arrow_right)
     val Search: ImageVector @Composable get() = vector(R.drawable.ic_search)
     val Filter: ImageVector @Composable get() = vector(R.drawable.ic_filter)

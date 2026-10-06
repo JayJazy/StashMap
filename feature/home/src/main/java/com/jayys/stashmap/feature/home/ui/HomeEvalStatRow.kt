@@ -22,7 +22,9 @@ import com.jayys.stashmap.core.designsystem.theme.stash.StashSpacing
 import com.jayys.stashmap.core.designsystem.theme.stash.StashTextRole
 import com.jayys.stashmap.core.designsystem.theme.stash.StashTheme
 import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
-import com.jayys.stashmap.feature.home.model.HomeEvalStats
+import com.jayys.stashmap.core.model.EvaluationCounts
+import com.jayys.stashmap.core.model.evaluationCounts
+import com.jayys.stashmap.core.model.sample.SampleRecords
 
 /**
  * 평가 4상태 개수를 가로 한 줄로 보여주는 통계 줄
@@ -31,7 +33,7 @@ import com.jayys.stashmap.feature.home.model.HomeEvalStats
  */
 @Composable
 fun HomeEvalStatRow(
-    stats: HomeEvalStats,
+    stats: EvaluationCounts,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -97,7 +99,7 @@ private fun HomeEvalStatRowPreviewContent() {
             .padding(StashSpacing.s4),
     ) {
         HomeEvalStatRow(
-            stats = HomeEvalStats(favorite = 12, average = 5, avoid = 3, wantToTry = 8),
+            stats = SampleRecords.records.evaluationCounts(),
         )
     }
 }

@@ -1,0 +1,25 @@
+<resources>
+
+    <!-- Screen title -->
+    <string name="stash_title">Restaurants</string>
+
+    <!-- Filter summary row -->
+    <string name="stash_filter_all">All</string>
+    <plurals name="stash_filter_count">
+        <item quantity="one">%1$s place</item>
+        <item quantity="other">%1$s places</item>
+    </plurals>
+    <string name="stash_sort_newest">Newest</string>
+    <string name="stash_sort_current_description">Sorted by %1$s</string>
+
+    <!-- Empty state -->
+    <string name="stash_empty_title">Record your first place</string>
+    <string name="stash_empty_description">Save where you have been and the places worth a return will stand out.</string>
+    <string name="stash_empty_action">Record</string>
+    <string name="stash_filtered_empty_title">No places match this filter</string>
+
+    <!-- FAB -->
+    <string name="stash_fab_label">Record</string>
+    <string name="stash_fab_description">Record a restaurant</string>
+
+</resources>
