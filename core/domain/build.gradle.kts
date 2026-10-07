@@ -3,5 +3,6 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":core:model"))
+    // SettingsRepository 가 StashMapLanguage 를 공개 시그니처로 내보낸다 → api
+    api(project(":core:model"))
 }
