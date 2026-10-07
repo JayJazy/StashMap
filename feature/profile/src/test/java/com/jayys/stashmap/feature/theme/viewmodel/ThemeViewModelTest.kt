@@ -2,7 +2,6 @@ package com.jayys.stashmap.feature.theme.viewmodel
 
 import com.jayys.stashmap.core.testing.MainDispatcherRule
 import com.jayys.stashmap.feature.testing.FakeSettingsRepository
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -22,7 +21,6 @@ import org.junit.Test
  * 2. 저장소 위임이 정확히 1회 → 중복 호출은 불필요한 재구성 유발
  * 3. `isDarkMode` 는 저장소 StateFlow 를 그대로 노출 → 별도 사본 없음
  */
-@OptIn(ExperimentalCoroutinesApi::class)
 class ThemeViewModelTest {
 
     @get:Rule
