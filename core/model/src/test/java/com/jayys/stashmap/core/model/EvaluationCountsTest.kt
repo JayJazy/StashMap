@@ -50,7 +50,6 @@ class EvaluationCountsTest {
         evaluation = evaluation,
         category = "",
         area = "",
-        distance = "",
         memo = "",
         visitedAt = null,
     )

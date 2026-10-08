@@ -119,13 +119,13 @@ class StashCardComponentsTest {
                 name = "성수동 국밥",
                 state = StashEvalState.Favorite,
                 onClick = {},
-                meta = "한식 · 성수동 · 1.2km",
+                meta = "한식 · 성수동",
                 memo = "국물이 진하다",
             )
         }
 
         composeTestRule.onNodeWithText("성수동 국밥").assertIsDisplayed()
-        composeTestRule.onNodeWithText("한식 · 성수동 · 1.2km").assertIsDisplayed()
+        composeTestRule.onNodeWithText("한식 · 성수동").assertIsDisplayed()
         composeTestRule.onNodeWithText("국물이 진하다").assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription(labelOf(StashEvalState.Favorite))
             .assertIsDisplayed()

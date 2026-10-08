@@ -3,9 +3,11 @@ package com.jayys.stashmap.feature.home.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jayys.stashmap.core.model.Evaluation
+import com.jayys.stashmap.core.model.RestaurantRecord
 import com.jayys.stashmap.core.model.evaluationCounts
 import com.jayys.stashmap.core.model.sample.SampleRecords
 import com.jayys.stashmap.core.model.sortedByNewest
+import com.jayys.stashmap.feature.home.model.HomeRecordCard
 import com.jayys.stashmap.feature.home.model.HomeUiState
 import com.jayys.stashmap.feature.home.model.SampleMonthlySummary
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,12 +37,15 @@ class HomeViewModel @Inject constructor() : ViewModel() {
         _monthlySummary,
     ) { records, monthlySummary ->
         HomeUiState(
-            // 정렬 없이 take 하면 "최근"이 거짓말이 된다 — 맛집 탭과 같은 비교자를 쓴다
+            // 정렬 없이 take 하면 "최근"이 거짓말이 된다 — 맛집 탭과 같은 비교자를 쓴다.
+            // 매핑은 take 뒤 — 버릴 기록까지 포맷할 이유가 없다
             recentRecords = records.filterNot { it.evaluation == Evaluation.WantToTry }
                 .sortedByNewest()
-                .take(RECENT_RECORD_LIMIT),
+                .take(RECENT_RECORD_LIMIT)
+                .map { it.toCard() },
             wishlistRecords = records.filter { it.evaluation == Evaluation.WantToTry }
-                .take(WISHLIST_LIMIT),
+                .take(WISHLIST_LIMIT)
+                .map { it.toCard() },
             stats = records.evaluationCounts(),
             monthlySummary = monthlySummary,
         )
@@ -55,3 +60,27 @@ class HomeViewModel @Inject constructor() : ViewModel() {
         const val WISHLIST_LIMIT = 1
     }
 }
+
+// internal — Preview 도 이 매퍼를 타야 화면과 안 갈린다
+internal fun RestaurantRecord.toCard(): HomeRecordCard = HomeRecordCard(
+    id = id,
+    name = name,
+    evaluation = evaluation,
+    visitedAt = visitedAt,
+    meta = metaLine(),
+    memo = memo.ifBlank { null },
+)
+
+/**
+ * 카테고리 · 지역 — 빈 값은 빼고 이어 붙인다. 전부 비면 null (빈 줄 방지)
+ *
+ * 맛집에 같은 함수가 있다 — 포맷을 바꾸면 StashViewModel 과 양쪽 ToCardTest 까지 네 군데.
+ * 방문일은 Phase 4 에서 카드 전용 자리로 (meta 에 넣으면 10자가 앞을 먹어 지역이 잘린다)
+ */
+private fun RestaurantRecord.metaLine(): String? =
+    listOf(category, area)
+        .filter { it.isNotBlank() }
+        .joinToString(separator = MetaSeparator)
+        .ifEmpty { null }
+
+private const val MetaSeparator = " · "

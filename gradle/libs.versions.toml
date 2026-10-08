@@ -4,6 +4,9 @@ agp = "8.13.2"
 kotlin = "2.0.21"
 ksp = "2.0.21-1.0.28"
 
+# Core Library Desugaring
+desugarJdkLibs = "2.1.5"
+
 # AndroidX Core
 coreKtx = "1.17.0"
 lifecycleRuntimeKtx = "2.10.0"
@@ -38,6 +41,9 @@ androidxTestRunner = "1.7.0"
 # Build Logic (build-logic에서 compileOnly로 사용)
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+
+# Core Library Desugaring (minSdk 24 에서 java.time 쓰려면 필요)
+android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugarJdkLibs" }
 
 # AndroidX Core
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
