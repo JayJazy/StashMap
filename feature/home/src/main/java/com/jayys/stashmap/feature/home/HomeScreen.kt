@@ -27,10 +27,10 @@ import com.jayys.stashmap.core.designsystem.theme.stash.StashTheme
 import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 import com.jayys.stashmap.core.designsystem.theme.stash.toStashEvalState
 import com.jayys.stashmap.core.model.Evaluation
-import com.jayys.stashmap.core.model.RestaurantRecord
 import com.jayys.stashmap.core.model.evaluationCounts
 import com.jayys.stashmap.core.model.sample.SampleRecords
 import com.jayys.stashmap.core.model.sortedByNewest
+import com.jayys.stashmap.feature.home.model.HomeRecordCard
 import com.jayys.stashmap.feature.home.model.HomeUiState
 import com.jayys.stashmap.feature.home.model.SampleMonthlySummary
 import com.jayys.stashmap.feature.home.ui.HomeEvalStatRow
@@ -39,6 +39,7 @@ import com.jayys.stashmap.feature.home.ui.HomeHeader
 import com.jayys.stashmap.feature.home.ui.HomeQuickRecordCta
 import com.jayys.stashmap.feature.home.ui.HomeSectionLabel
 import com.jayys.stashmap.feature.home.viewmodel.HomeViewModel
+import com.jayys.stashmap.feature.home.viewmodel.toCard
 
 @Composable
 fun HomeScreen(
@@ -136,7 +137,7 @@ fun HomeContent(
 @Composable
 private fun RecordSection(
     title: String,
-    records: List<RestaurantRecord>,
+    records: List<HomeRecordCard>,
     onSeeAllClick: () -> Unit,
     onRecordClick: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -149,41 +150,35 @@ private fun RecordSection(
         SpacerHeight(StashSpacing.s2)
 
         Column(verticalArrangement = Arrangement.spacedBy(StashSpacing.s3)) {
-            records.forEach { record ->
+            records.forEach { card ->
                 StashRestaurantCard(
-                    name = record.name,
-                    state = record.evaluation.toStashEvalState(),
-                    onClick = { onRecordClick(record.id) },
-                    meta = record.metaLine(),
-                    memo = record.memo.ifBlank { null },
+                    name = card.name,
+                    state = card.evaluation.toStashEvalState(),
+                    onClick = { onRecordClick(card.id) },
+                    meta = card.meta,
+                    memo = card.memo,
                 )
             }
         }
     }
 }
 
-/** 카테고리 · 지역 · 거리 — 빈 값은 빼고 이어 붙인다. 전부 비면 null (빈 줄 방지) */
-private fun RestaurantRecord.metaLine(): String? =
-    listOf(category, area, distance)
-        .filter { it.isNotBlank() }
-        .joinToString(separator = MetaSeparator)
-        .ifEmpty { null }
-
-private const val MetaSeparator = " · "
 private val ScrollBottomPadding = 88.dp
 
 @Composable
 private fun HomeContentPreviewContent() {
     HomeContent(
         uiState = HomeUiState(
-            // HomeViewModel 과 같은 순서여야 한다 — 한쪽만 고치면 Preview 가 화면과 다른 카드를 띄운다
+            // HomeViewModel 과 같은 순서·같은 매퍼여야 한다 — 한쪽만 고치면 Preview 가 화면과 다른 카드를 띄운다
             recentRecords = SampleRecords.records
                 .filterNot { it.evaluation == Evaluation.WantToTry }
                 .sortedByNewest()
-                .take(3),
+                .take(3)
+                .map { it.toCard() },
             wishlistRecords = SampleRecords.records
                 .filter { it.evaluation == Evaluation.WantToTry }
-                .take(1),
+                .take(1)
+                .map { it.toCard() },
             stats = SampleRecords.records.evaluationCounts(),
             monthlySummary = SampleMonthlySummary,
         ),

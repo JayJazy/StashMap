@@ -36,13 +36,14 @@ import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
 import com.jayys.stashmap.core.designsystem.theme.stash.toEvaluation
 import com.jayys.stashmap.core.designsystem.theme.stash.toStashEvalState
 import com.jayys.stashmap.core.model.Evaluation
-import com.jayys.stashmap.core.model.RestaurantRecord
 import com.jayys.stashmap.core.model.evaluationCounts
 import com.jayys.stashmap.core.model.sample.SampleRecords
+import com.jayys.stashmap.core.model.sortedByNewest
 import com.jayys.stashmap.feature.stash.model.StashUiState
 import com.jayys.stashmap.feature.stash.ui.FilterSummaryRow
 import com.jayys.stashmap.feature.stash.ui.TitleHeader
 import com.jayys.stashmap.feature.stash.viewmodel.StashViewModel
+import com.jayys.stashmap.feature.stash.viewmodel.toCard
 
 @Composable
 fun StashScreen(
@@ -176,32 +177,25 @@ private fun RecordList(
             }
         } else {
             // 필터가 목록을 통째로 갈아끼우므로 key 없이는 항목 재사용이 어긋난다
-            items(items = uiState.records, key = { it.id }) { record ->
+            items(items = uiState.records, key = { it.id }) { card ->
                 StashRestaurantCard(
-                    name = record.name,
-                    state = record.evaluation.toStashEvalState(),
-                    onClick = { onRecordClick(record.id) },
-                    meta = record.metaLine(),
-                    memo = record.memo.ifBlank { null },
+                    name = card.name,
+                    state = card.evaluation.toStashEvalState(),
+                    onClick = { onRecordClick(card.id) },
+                    meta = card.meta,
+                    memo = card.memo,
                 )
             }
         }
     }
 }
 
-/** 카테고리 · 지역 · 거리 — 빈 값은 빼고 이어 붙인다. 전부 비면 null (빈 줄 방지) */
-private fun RestaurantRecord.metaLine(): String? =
-    listOf(category, area, distance)
-        .filter { it.isNotBlank() }
-        .joinToString(separator = MetaSeparator)
-        .ifEmpty { null }
-
-private const val MetaSeparator = " · "
 private val ListBottomPadding = 88.dp
 
 private val PreviewLoadedState = StashUiState(
     isLoading = false,
-    records = SampleRecords.records,
+    // StashViewModel 과 같은 순서·같은 매퍼여야 한다 — 한쪽만 고치면 Preview 가 화면과 다른 카드를 띄운다
+    records = SampleRecords.records.sortedByNewest().map { it.toCard() },
     counts = SampleRecords.records.evaluationCounts(),
 )
 

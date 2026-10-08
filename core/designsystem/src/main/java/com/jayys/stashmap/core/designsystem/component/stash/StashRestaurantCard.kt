@@ -26,7 +26,7 @@ import com.jayys.stashmap.core.designsystem.theme.stash.stashColorTokens
  * @param name 가게 이름
  * @param state 평가 상태
  * @param onClick 카드 클릭 콜백
- * @param meta 카테고리·지역·거리를 한 줄로 이은 문자열 (예: "양식 · 성수동 · 1.2km")
+ * @param meta 카테고리·지역을 한 줄로 이은 문자열 (예: "양식 · 성수동"). maxLines 1 이라 긴 값은 뒤가 잘린다
  * @param memo 한줄 메모
  * @param thumbnail 썸네일 이미지 (null 이면 플레이스홀더)
  */
@@ -100,14 +100,14 @@ private fun StashRestaurantCardShowcase() {
             name = "마루 비스트로",
             state = StashEvalState.Favorite,
             onClick = {},
-            meta = "양식 · 성수동 · 1.2km",
+            meta = "양식 · 성수동",
             memo = "여기 파스타 짱. 창가 자리 추천.",
         )
         StashRestaurantCard(
             name = "강남 우동집",
             state = StashEvalState.Average,
             onClick = {},
-            meta = "일식 · 역삼동 · 0.4km",
+            meta = "일식 · 역삼동",
         )
         StashRestaurantCard(
             name = "가보고 싶은 베이커리",

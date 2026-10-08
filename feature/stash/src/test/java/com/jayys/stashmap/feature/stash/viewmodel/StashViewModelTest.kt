@@ -103,7 +103,10 @@ class StashViewModelTest {
 
             assertNull(uiState.selectedEvaluation)
             assertEquals(SampleRecords.records.size, uiState.records.size)
-            assertEquals(SampleRecords.records.toSet(), uiState.records.toSet())
+            assertEquals(
+                SampleRecords.records.map { it.id }.toSet(),
+                uiState.records.map { it.id }.toSet(),
+            )
             // 홈 탭과 달리 맛집 탭은 가보고싶어요도 같이 보여준다
             assertTrue(uiState.records.any { it.evaluation == Evaluation.WantToTry })
         }
@@ -123,7 +126,7 @@ class StashViewModelTest {
                 assertTrue("샘플에 $target 기록이 없어 필터를 검증할 수 없다", expected.isNotEmpty())
 
                 assertEquals(target, uiState.selectedEvaluation)
-                assertEquals(expected.toSet(), uiState.records.toSet())
+                assertEquals(expected.map { it.id }.toSet(), uiState.records.map { it.id }.toSet())
                 assertTrue(uiState.records.all { it.evaluation == target })
             }
         }
