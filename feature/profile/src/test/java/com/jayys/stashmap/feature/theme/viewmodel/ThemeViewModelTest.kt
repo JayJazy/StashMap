@@ -1,7 +1,7 @@
 package com.jayys.stashmap.feature.theme.viewmodel
 
 import com.jayys.stashmap.core.testing.MainDispatcherRule
-import com.jayys.stashmap.feature.testing.FakeSettingsRepository
+import com.jayys.stashmap.core.domain.testing.FakeSettingsRepository
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals

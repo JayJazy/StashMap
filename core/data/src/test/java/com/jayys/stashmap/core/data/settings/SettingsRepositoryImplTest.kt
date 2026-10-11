@@ -1,6 +1,6 @@
 package com.jayys.stashmap.core.data.settings
 
-import com.jayys.stashmap.core.data.sharedpreferences.FakePreferenceStorage
+import com.jayys.stashmap.core.domain.testing.FakePreferenceStorage
 import com.jayys.stashmap.core.domain.sharedpreferences.PreferenceStorage
 import com.jayys.stashmap.core.domain.sharedpreferences.SharedPreferenceKeys
 import com.jayys.stashmap.core.model.StashMapLanguage

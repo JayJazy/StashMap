@@ -1,4 +1,4 @@
-package com.jayys.stashmap.feature.testing
+package com.jayys.stashmap.core.domain.testing
 
 import com.jayys.stashmap.core.domain.settings.SettingsRepository
 import com.jayys.stashmap.core.model.StashMapLanguage
