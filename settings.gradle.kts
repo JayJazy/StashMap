@@ -24,6 +24,7 @@ rootProject.name = "StashMap"
 include(":app")
 
 // Core modules
+include(":core:common")
 include(":core:model")
 include(":core:domain")
 include(":core:data")

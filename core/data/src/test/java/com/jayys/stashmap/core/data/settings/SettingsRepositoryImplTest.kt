@@ -1,6 +1,7 @@
 package com.jayys.stashmap.core.data.settings
 
 import com.jayys.stashmap.core.data.sharedpreferences.FakePreferenceStorage
+import com.jayys.stashmap.core.domain.sharedpreferences.PreferenceStorage
 import com.jayys.stashmap.core.domain.sharedpreferences.SharedPreferenceKeys
 import com.jayys.stashmap.core.model.StashMapLanguage
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -30,6 +31,9 @@ import java.util.Locale
 @OptIn(ExperimentalCoroutinesApi::class)
 class SettingsRepositoryImplTest {
 
+    // 디스패처를 주입받으므로 쓰기가 실제 IO 스레드 풀을 타지 않는다
+    private val testDispatcher = UnconfinedTestDispatcher()
+
     private lateinit var originalLocale: Locale
 
     @Before
@@ -44,6 +48,9 @@ class SettingsRepositoryImplTest {
         Locale.setDefault(originalLocale)
     }
 
+    private fun newRepository(storage: PreferenceStorage = FakePreferenceStorage()) =
+        SettingsRepositoryImpl(storage, testDispatcher)
+
     // ---------------------------------------------------------------------
     // 초기 상태 구성 (생성 시점에 저장된 값을 읽는가)
     // ---------------------------------------------------------------------
@@ -54,14 +61,14 @@ class SettingsRepositoryImplTest {
             mapOf(SharedPreferenceKeys.KEY_LANGUAGE to StashMapLanguage.ENGLISH.code)
         )
 
-        val repository = SettingsRepositoryImpl(storage)
+        val repository = newRepository(storage)
 
         assertEquals(StashMapLanguage.ENGLISH, repository.language.value)
     }
 
     @Test
     fun `저장된 언어 코드가 없으면 초기 language는 시스템 기본 언어다`() {
-        val repository = SettingsRepositoryImpl(FakePreferenceStorage())
+        val repository = newRepository(FakePreferenceStorage())
 
         // setUp 에서 시스템 로케일을 ko 로 고정
         assertEquals(StashMapLanguage.KOREAN, repository.language.value)
@@ -73,7 +80,7 @@ class SettingsRepositoryImplTest {
             mapOf(SharedPreferenceKeys.KEY_LANGUAGE to "알수없는코드")
         )
 
-        val repository = SettingsRepositoryImpl(storage)
+        val repository = newRepository(storage)
 
         assertEquals(StashMapLanguage.KOREAN, repository.language.value)
     }
@@ -84,14 +91,14 @@ class SettingsRepositoryImplTest {
             mapOf(SharedPreferenceKeys.KEY_THEME_MODE to true)
         )
 
-        val repository = SettingsRepositoryImpl(storage)
+        val repository = newRepository(storage)
 
         assertTrue(repository.darkMode.value)
     }
 
     @Test
     fun `저장된 다크모드 값이 없으면 초기 darkMode는 false다`() {
-        val repository = SettingsRepositoryImpl(FakePreferenceStorage())
+        val repository = newRepository(FakePreferenceStorage())
 
         assertFalse(repository.darkMode.value)
     }
@@ -101,21 +108,21 @@ class SettingsRepositoryImplTest {
     // ---------------------------------------------------------------------
 
     @Test
-    fun `setLanguage가 완료되면 language StateFlow가 새 언어로 갱신된다`() = runTest {
-        val repository = SettingsRepositoryImpl(
+    fun `setLanguage가 완료되면 language StateFlow가 새 언어로 갱신된다`() = runTest(testDispatcher) {
+        val repository = newRepository(
             FakePreferenceStorage(mapOf(SharedPreferenceKeys.KEY_LANGUAGE to StashMapLanguage.KOREAN.code))
         )
 
-        // setLanguage 내부 withContext(Dispatchers.IO) 완료까지 실제 대기
+        // Unconfined 를 주입해 withContext 가 인라인 실행된다 — 별도 대기 불필요
         repository.setLanguage(StashMapLanguage.ENGLISH)
 
         assertEquals(StashMapLanguage.ENGLISH, repository.language.value)
     }
 
     @Test
-    fun `setLanguage가 완료되면 언어 코드가 PreferenceStorage에 저장된다`() = runTest {
+    fun `setLanguage가 완료되면 언어 코드가 PreferenceStorage에 저장된다`() = runTest(testDispatcher) {
         val storage = FakePreferenceStorage()
-        val repository = SettingsRepositoryImpl(storage)
+        val repository = newRepository(storage)
 
         repository.setLanguage(StashMapLanguage.ENGLISH)
 
@@ -123,11 +130,11 @@ class SettingsRepositoryImplTest {
     }
 
     @Test
-    fun `setLanguage는 저장과 상태 갱신을 모두 수행한다`() = runTest {
+    fun `setLanguage는 저장과 상태 갱신을 모두 수행한다`() = runTest(testDispatcher) {
         val storage = FakePreferenceStorage(
             mapOf(SharedPreferenceKeys.KEY_LANGUAGE to StashMapLanguage.KOREAN.code)
         )
-        val repository = SettingsRepositoryImpl(storage)
+        val repository = newRepository(storage)
 
         repository.setLanguage(StashMapLanguage.ENGLISH)
 
@@ -145,19 +152,19 @@ class SettingsRepositoryImplTest {
     }
 
     @Test
-    fun `setLanguage로 저장한 언어는 새로 생성된 저장소의 초기값으로 읽힌다`() = runTest {
+    fun `setLanguage로 저장한 언어는 새로 생성된 저장소의 초기값으로 읽힌다`() = runTest(testDispatcher) {
         val storage = FakePreferenceStorage()
-        SettingsRepositoryImpl(storage).setLanguage(StashMapLanguage.ENGLISH)
+        newRepository(storage).setLanguage(StashMapLanguage.ENGLISH)
 
         // Activity recreate / 앱 재시작 시나리오 — 저장소를 새로 만들어도 값이 살아 있어야 함
-        val recreated = SettingsRepositoryImpl(storage)
+        val recreated = newRepository(storage)
 
         assertEquals(StashMapLanguage.ENGLISH, recreated.language.value)
     }
 
     @Test
-    fun `language 구독자는 setLanguage 이후 새 언어를 통지받는다`() = runTest {
-        val repository = SettingsRepositoryImpl(
+    fun `language 구독자는 setLanguage 이후 새 언어를 통지받는다`() = runTest(testDispatcher) {
+        val repository = newRepository(
             FakePreferenceStorage(mapOf(SharedPreferenceKeys.KEY_LANGUAGE to StashMapLanguage.KOREAN.code))
         )
         val emitted = mutableListOf<StashMapLanguage>()
@@ -173,8 +180,8 @@ class SettingsRepositoryImplTest {
     }
 
     @Test
-    fun `같은 언어를 다시 저장해도 중복 통지하지 않는다`() = runTest {
-        val repository = SettingsRepositoryImpl(
+    fun `같은 언어를 다시 저장해도 중복 통지하지 않는다`() = runTest(testDispatcher) {
+        val repository = newRepository(
             FakePreferenceStorage(mapOf(SharedPreferenceKeys.KEY_LANGUAGE to StashMapLanguage.KOREAN.code))
         )
         val emitted = mutableListOf<StashMapLanguage>()
@@ -194,9 +201,9 @@ class SettingsRepositoryImplTest {
     // ---------------------------------------------------------------------
 
     @Test
-    fun `setDarkMode는 저장과 상태 갱신을 모두 수행한다`() = runTest {
+    fun `setDarkMode는 저장과 상태 갱신을 모두 수행한다`() = runTest(testDispatcher) {
         val storage = FakePreferenceStorage()
-        val repository = SettingsRepositoryImpl(storage)
+        val repository = newRepository(storage)
 
         repository.setDarkMode(true)
 
@@ -205,11 +212,11 @@ class SettingsRepositoryImplTest {
     }
 
     @Test
-    fun `setDarkMode로 false를 저장하면 저장과 상태가 모두 false가 된다`() = runTest {
+    fun `setDarkMode로 false를 저장하면 저장과 상태가 모두 false가 된다`() = runTest(testDispatcher) {
         val storage = FakePreferenceStorage(
             mapOf(SharedPreferenceKeys.KEY_THEME_MODE to true)
         )
-        val repository = SettingsRepositoryImpl(storage)
+        val repository = newRepository(storage)
 
         repository.setDarkMode(false)
 
@@ -218,11 +225,11 @@ class SettingsRepositoryImplTest {
     }
 
     @Test
-    fun `setDarkMode로 저장한 값은 새로 생성된 저장소의 초기값으로 읽힌다`() = runTest {
+    fun `setDarkMode로 저장한 값은 새로 생성된 저장소의 초기값으로 읽힌다`() = runTest(testDispatcher) {
         val storage = FakePreferenceStorage()
-        SettingsRepositoryImpl(storage).setDarkMode(true)
+        newRepository(storage).setDarkMode(true)
 
-        val recreated = SettingsRepositoryImpl(storage)
+        val recreated = newRepository(storage)
 
         assertTrue(recreated.darkMode.value)
     }

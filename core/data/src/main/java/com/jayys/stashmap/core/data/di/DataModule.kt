@@ -2,6 +2,8 @@ package com.jayys.stashmap.core.data.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.jayys.stashmap.core.common.di.Dispatcher
+import com.jayys.stashmap.core.common.di.StashMapDispatchers
 import com.jayys.stashmap.core.data.settings.SettingsRepositoryImpl
 import com.jayys.stashmap.core.data.sharedpreferences.PreferenceStorageImpl
 import com.jayys.stashmap.core.domain.settings.SettingsRepository
@@ -12,6 +14,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
 
 @Module
@@ -37,8 +40,9 @@ object DataModule {
     @Provides
     @Singleton
     fun provideSettingsRepository(
-        preferenceStorage: PreferenceStorage
+        preferenceStorage: PreferenceStorage,
+        @Dispatcher(StashMapDispatchers.IO) ioDispatcher: CoroutineDispatcher
     ): SettingsRepository {
-        return SettingsRepositoryImpl(preferenceStorage)
+        return SettingsRepositoryImpl(preferenceStorage, ioDispatcher)
     }
 }
