@@ -1,10 +1,12 @@
 package com.jayys.stashmap.core.data.settings
 
+import com.jayys.stashmap.core.common.di.Dispatcher
+import com.jayys.stashmap.core.common.di.StashMapDispatchers
 import com.jayys.stashmap.core.domain.settings.SettingsRepository
 import com.jayys.stashmap.core.domain.sharedpreferences.PreferenceStorage
 import com.jayys.stashmap.core.domain.sharedpreferences.SharedPreferenceKeys
 import com.jayys.stashmap.core.model.StashMapLanguage
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,7 +23,8 @@ import javax.inject.Inject
  * - 싱글톤 주입 필수 — 아니면 상태가 앱 전역에서 공유되지 않음
  */
 class SettingsRepositoryImpl @Inject constructor(
-    private val storage: PreferenceStorage
+    private val storage: PreferenceStorage,
+    @Dispatcher(StashMapDispatchers.IO) private val ioDispatcher: CoroutineDispatcher,
 ) : SettingsRepository {
 
     private val _darkMode = MutableStateFlow(readDarkMode())
@@ -31,14 +34,14 @@ class SettingsRepositoryImpl @Inject constructor(
     override val language: StateFlow<StashMapLanguage> = _language.asStateFlow()
 
     override suspend fun setDarkMode(isDark: Boolean) {
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             storage.putBoolean(SharedPreferenceKeys.KEY_THEME_MODE, isDark)
         }
         _darkMode.value = isDark
     }
 
     override suspend fun setLanguage(language: StashMapLanguage) {
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             storage.putString(SharedPreferenceKeys.KEY_LANGUAGE, language.code)
         }
         _language.value = language

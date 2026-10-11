@@ -2,7 +2,7 @@ package com.jayys.stashmap.feature.language.viewmodel
 
 import com.jayys.stashmap.core.model.StashMapLanguage
 import com.jayys.stashmap.core.testing.MainDispatcherRule
-import com.jayys.stashmap.feature.testing.FakeSettingsRepository
+import com.jayys.stashmap.core.domain.testing.FakeSettingsRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
